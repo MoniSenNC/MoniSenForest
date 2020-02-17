@@ -1,0 +1,477 @@
+#,Tree Species List for the Monitoring Site 1000 Project,,,,,,,,,,,,,,,,,,,
+#,name_jp: Japanese name used in moni1000 sites,,,,,,,,,,,,,,,,,,,
+#,name_jp_std: Japanese name according to GreenList/YList,,,,,,,,,,,,,,,,,,,
+#,name_greenlist: scientific name according to GreenList/YList,,,,,,,,,,,,,,,,,,,
+#,match_type: match type in GBIF search,,,,,,,,,,,,,,,,,,,
+#,status: taxonomic status of the scientific name query in GBIF,,,,,,,,,,,,,,,,,,,
+#,name_gbif_accepted: accepted name in GBIF,,,,,,,,,,,,,,,,,,,
+#,"species: species name includes the ranks of subspecies, variety and forma",,,,,,,,,,,,,,,,,,,
+#,genus: genus name,,,,,,,,,,,,,,,,,,,
+#,family: family name,,,,,,,,,,,,,,,,,,,
+#,order: order name,,,,,,,,,,,,,,,,,,,
+#,species_jp: species name in Japanese (standard name),,,,,,,,,,,,,,,,,,,
+#,family_jp: family name in Japanese,,,,,,,,,,,,,,,,,,,
+#,order_jp: order name in Japanese,,,,,,,,,,,,,,,,,,,
+#,"categ: 1, Conifer excluding Abies and Tsuga; 2, Abies; 3, Tsuga; 4, Broadleaf",,,,,,,,,,,,,,,,,,,
+#,"categ2: 1, Conifer, 4: Broadleaf",,,,,,,,,,,,,,,,,,,
+#,"categ3: 1, formal japanese species name; 0, synonym in japanese",,,,,,,,,,,,,,,,,,,
+#,"categ4: 1, Conifer; 2, Abies; 3, Tsuga; 4, Deciduous broadleaf; 5, Evergreen broadleaf. (use for a tree biomass estimation with allometric equations)",,,,,,,,,,,,,,,,,,,
+#,"categ5: 1, Conifer; 4, Deciduous broadleaf; 5, Evergreen broadleaf",,,,,,,,,,,,,,,,,,,
+#,"categ6: 1, Sub-boreal conifer; 2, Temperate conifer; 4, Deciduous broadleaf; 5, Evergreen broadleaf",,,,,,,,,,,,,,,,,,,
+#,"categ7: 1,  Pteridophyte; 2, Gymnosperm; 3, Angiosperm",,,,,,,,,,,,,,,,,,,
+#,シダ植物は常緑広葉樹と同じカテゴリとする,,,,,,,,,,,,,,,,,,,
+#,アカギは半常緑性だが常緑とする,,,,,,,,,,,,,,,,,,,
+#,マルハチ（木性シダ）は常緑広葉樹とする,,,,,,,,,,,,,,,,,,,
+#,20130209　アオツヅラフジ（佐田山）、リンゴツバキ、ヒメヒサカキ（屋久島スギ林）を新規に登録。（佐伯）,,,,,,,,,,,,,,,,,,,
+#,20130709 カキバカンコノキ（与那サイト）を新規登録（日高）,,,,,,,,,,,,,,,,,,,
+#,20170213 タニウツギ（カヌマ沢）、チョウセンゴヨウ（苫小牧アカエゾマツ）を新規登録（日野）,,,,,,,,,,,,,,,,,,,
+#,20180203 ヒメモチ（大佐渡）オオツリバナ（足寄）、オニツルウメモドキ（足寄）アマクサギ（与那）を新規登録（日野）,,,,,,,,,,,,,,,,,,,
+#,20180323 ショウロウクサギ（与那）を新規登録（日野）,,,,,,,,,,,,,,,,,,,
+#,20180420 ミツバアケビ（筑波山）を新規登録（日野）,,,,,,,,,,,,,,,,,,,
+#,20180611 ヘゴ、オガサワラアオグス、パパイヤ（小笠原石門）を新規登録（日野）,,,,,,,,,,,,,,,,,,,
+#,20190913 最新のAPG・PPGで分類が変更になった種も多いため大幅改訂（甲山）,,,,,,,,,,,,,,,,,,,
+#,GreenListで和名から学名を検索（GreenListにない和名はYList／旧リストで検索・照合） >>> GreenListの学名をGBIFで検索し、synonymとなっている種についてはWCSPなど他データベースで都度確認,,,,,,,,,,,,,,,,,,,
+#,列名を適宜変更し、旧リストの必要のない列は削除: sp_roman; old_sp; sp_ylist; sp_satake_print; sp_satake; subsp; sp; spjp; order1; order2; order3; familyAPGjpn; familyAPGcode; genusKew; familyAPG; familyKew,,,,,,,,,,,,,,,,,,,
+#,20190913 ヤマトアオダモ（芦生モンドリ谷）を新規登録（甲山）,,,,,,,,,,,,,,,,,,,
+name_jp,name_jp_std,name_greenlist,match_type,status,name_gbif_accepted,species,genus,family,order,species_jp,family_jp,order_jp,categ,categ2,categ3,categ4,categ5,categ6,categ7,remarks
+ヘゴ,,Cyathea spinulosa Wall. ex Hook.,EXACT,synonym,Alsophila spinulosa (Hook.) R.M.Tryon,Alsophila spinulosa,Alsophila,Cyatheaceae,Cyatheales,ヘゴ,ヘゴ科,ヘゴ目,4,4,1,5,5,5,1,use gbif name; checked  in PPG
+マルハチ,,Cyathea mertensiana (Kunze) Copel.,EXACT,synonym,Sphaeropteris mertensiana (Kunze) R.M.Tryon,Sphaeropteris mertensiana,Sphaeropteris,Cyatheaceae,Cyatheales,マルハチ,ヘゴ科,ヘゴ目,4,4,1,5,5,5,1,use gbif name; checked  in PPG
+イヌガヤ,,Cephalotaxus harringtonia (Knight ex Forbes) K.Koch var. harringtonia,EXACT,accepted,Cephalotaxus harringtonia var. harringtonia,Cephalotaxus harringtonia var. harringtonia,Cephalotaxus,Cephalotaxaceae,Pinales,イヌガヤ,イヌガヤ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ハイイヌガヤ,,Cephalotaxus harringtonia (Knight ex Forbes) K.Koch var. nana (Nakai) Rehder,EXACT,synonym,Cephalotaxus harringtonii var. nana (Nakai) Rehd.,Cephalotaxus harringtonii var. nana,Cephalotaxus,Cephalotaxaceae,Pinales,ハイイヌガヤ,イヌガヤ科,マツ目,1,1,1,1,1,2,2,use gbif name; checked  in WCSP
+ヒノキ,,Chamaecyparis obtusa (Siebold et Zucc.) Endl.,EXACT,accepted,Chamaecyparis obtusa (Siebold & Zucc.) Endl.,Chamaecyparis obtusa,Chamaecyparis,Cupressaceae,Pinales,ヒノキ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+サワラ,,Chamaecyparis pisifera (Siebold et Zucc.) Endl.,EXACT,accepted,Chamaecyparis pisifera (Siebold & Zucc.) Endl.,Chamaecyparis pisifera,Chamaecyparis,Cupressaceae,Pinales,サワラ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+スギ,,Cryptomeria japonica (L.f.) D.Don,EXACT,accepted,Cryptomeria japonica D.Don,Cryptomeria japonica,Cryptomeria,Cupressaceae,Pinales,スギ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ネズ,,Juniperus rigida Siebold et Zucc.,EXACT,accepted,Juniperus rigida Siebold & Zucc.,Juniperus rigida,Juniperus,Cupressaceae,Pinales,ネズ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ネズミサシ,ネズ,Juniperus rigida Siebold et Zucc.,EXACT,accepted,Juniperus rigida Siebold & Zucc.,Juniperus rigida,Juniperus,Cupressaceae,Pinales,ネズ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+アスナロ,,Thujopsis dolabrata (L.f.) Siebold et Zucc.,EXACT,accepted,Thujopsis dolabrata Siebold & Zucc.,Thujopsis dolabrata,Thujopsis,Cupressaceae,Pinales,アスナロ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ヒノキアスナロ,,Thujopsis dolabrata (L.f.) Siebold et Zucc. var. hondae Makino,EXACT,accepted,Thujopsis dolabrata var. hondae Makino,Thujopsis dolabrata var. hondae,Thujopsis,Cupressaceae,Pinales,ヒノキアスナロ,ヒノキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ヒバ,ヒノキアスナロ,Thujopsis dolabrata (L.f.) Siebold et Zucc. var. hondae Makino,EXACT,accepted,Thujopsis dolabrata var. hondae Makino,Thujopsis dolabrata var. hondae,Thujopsis,Cupressaceae,Pinales,ヒノキアスナロ,ヒノキ科,マツ目,1,1,0,1,1,2,2,not found in GreenList; not found in YList
+モミ,,Abies firma Siebold et Zucc.,EXACT,accepted,Abies firma Siebold & Zucc.,Abies firma,Abies,Pinaceae,Pinales,モミ,マツ科,マツ目,2,1,1,2,1,2,2,use gbif name
+ウラジロモミ,,Abies homolepis Siebold et Zucc.,EXACT,accepted,Abies homolepis Siebold & Zucc.,Abies homolepis,Abies,Pinaceae,Pinales,ウラジロモミ,マツ科,マツ目,2,1,1,2,1,2,2,use gbif name
+オオシラビソ,,Abies mariesii Mast.,EXACT,accepted,Abies mariesii Mast.,Abies mariesii,Abies,Pinaceae,Pinales,オオシラビソ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+オオシラベ,オオシラビソ,Abies mariesii Mast.,EXACT,accepted,Abies mariesii Mast.,Abies mariesii,Abies,Pinaceae,Pinales,オオシラビソ,マツ科,マツ目,1,1,0,1,1,1,2,not found in GreenList; not found in YList
+トドマツ,,Abies sachalinensis (F.Schmidt) Mast. var. sachalinensis,EXACT,accepted,Abies sachalinensis var. sachalinensis,Abies sachalinensis var. sachalinensis,Abies,Pinaceae,Pinales,トドマツ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+シラビソ,,Abies veitchii Lindl.,EXACT,accepted,Abies veitchii Lindl.,Abies veitchii,Abies,Pinaceae,Pinales,シラビソ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+シラベ,シラビソ,Abies veitchii Lindl.,EXACT,accepted,Abies veitchii Lindl.,Abies veitchii,Abies,Pinaceae,Pinales,シラビソ,マツ科,マツ目,1,1,0,1,1,1,2,use gbif name
+カラマツ,,Larix kaempferi (Lamb.) Carrière,EXACT,accepted,Larix kaempferi (Lamb.) Carrière,Larix kaempferi,Larix,Pinaceae,Pinales,カラマツ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+アカエゾマツ,,Picea glehnii (F.Schmidt) Mast.,EXACT,accepted,Picea glehnii Mast.,Picea glehnii,Picea,Pinaceae,Pinales,アカエゾマツ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+エゾマツ,,Picea jezoensis (Siebold et Zucc.) Carrière,EXACT,accepted,Picea jezoensis Carrière,Picea jezoensis,Picea,Pinaceae,Pinales,エゾマツ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name
+トウヒ,,Picea jezoensis (Siebold et Zucc.) Carrière var. hondoensis (Mayr) Rehder,EXACT,synonym,Picea jezoensis subsp. hondoensis (Mayr) P.A.Schmidt,Picea jezoensis subsp. hondoensis,Picea,Pinaceae,Pinales,トウヒ,マツ科,マツ目,1,1,1,1,1,1,2,use gbif name; checked  in  WCSP
+バラモミ,ハリモミ,Picea polita (Siebold et Zucc.) Carrière,EXACT,synonym,Picea torano Koehne,Picea polita,Picea,Pinaceae,Pinales,ハリモミ,マツ科,マツ目,1,1,0,1,1,2,2,not found in GreenList; not found in YList
+ハリモミ,,Picea polita (Siebold et Zucc.) Carrière,EXACT,synonym,Picea torano Koehne,Picea polita,Picea,Pinaceae,Pinales,ハリモミ,マツ科,マツ目,1,1,1,1,1,2,2,not found in GreenList; found in YList; use greenlist name; checked  in WCSP
+アカマツ,,Pinus densiflora Siebold et Zucc.,EXACT,accepted,Pinus densiflora Siebold & Zucc.,Pinus densiflora,Pinus,Pinaceae,Pinales,アカマツ,マツ科,マツ目,1,1,1,1,1,2,2,use gbif name
+チョウセンゴヨウ,,Pinus koraiensis Siebold et Zucc.,EXACT,accepted,Pinus koraiensis Siebold & Zucc.,Pinus koraiensis,Pinus,Pinaceae,Pinales,チョウセンゴヨウ,マツ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ゴヨウマツ,ヒメコマツ,Pinus parviflora Siebold et Zucc. var. parviflora,EXACT,accepted,Pinus parviflora var. parviflora,Pinus parviflora var. parviflora,Pinus,Pinaceae,Pinales,ヒメコマツ,マツ科,マツ目,1,1,1,1,1,2,2,use gbif name
+ヒメコマツ,,Pinus parviflora Siebold et Zucc. var. parviflora,EXACT,accepted,Pinus parviflora var. parviflora,Pinus parviflora var. parviflora,Pinus,Pinaceae,Pinales,ヒメコマツ,マツ科,マツ目,1,1,0,1,1,2,2,use gbif name
+キタゴヨウ,,Pinus parviflora Siebold et Zucc. var. pentaphylla (Mayr) A.Henry,EXACT,accepted,Pinus parviflora var. pentaphylla (Mayr) A.Henry,Pinus parviflora var. pentaphylla,Pinus,Pinaceae,Pinales,キタゴヨウ,マツ科,マツ目,1,1,1,1,1,2,2,use gbif name
+トガサワラ,,Pseudotsuga japonica (Shiras.) Beissner,EXACT,accepted,Pseudotsuga japonica (Shiras.) Beissn.,Pseudotsuga japonica,Pseudotsuga,Pinaceae,Pinales,トガサワラ,マツ科,マツ目,1,1,1,1,1,2,2,use gbif name
+コメツガ,,Tsuga diversifolia (Maxim.) Mast.,EXACT,accepted,Tsuga diversifolia (Maxim.) Mast.,Tsuga diversifolia,Tsuga,Pinaceae,Pinales,コメツガ,マツ科,マツ目,3,1,1,3,1,1,2,use gbif name
+ツガ,,Tsuga sieboldii Carrière,EXACT,accepted,Tsuga sieboldii Carrière,Tsuga sieboldii,Tsuga,Pinaceae,Pinales,ツガ,マツ科,マツ目,3,1,1,3,1,2,2,use gbif name
+ナギ,,Nageia nagi (Thunb.) Kuntze,EXACT,accepted,Nageia nagi Kuntze,Nageia nagi,Nageia,Podocarpaceae,Pinales,ナギ,マキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+イヌマキ,,Podocarpus macrophyllus (Thunb.) Sweet,EXACT,accepted,Podocarpus macrophyllus Sweet,Podocarpus macrophyllus,Podocarpus,Podocarpaceae,Pinales,イヌマキ,マキ科,マツ目,1,1,1,1,1,2,2,use gbif name
+イチイ,,Taxus cuspidata Siebold et Zucc.,EXACT,accepted,Taxus cuspidata Siebold & Zucc.,Taxus cuspidata,Taxus,Taxaceae,Pinales,イチイ,イチイ科,マツ目,1,1,1,1,1,2,2,use gbif name
+カヤ,,Torreya nucifera (L.) Siebold et Zucc.,EXACT,accepted,Torreya nucifera Siebold & Zucc.,Torreya nucifera,Torreya,Taxaceae,Pinales,カヤ,イチイ科,マツ目,1,1,1,1,1,2,2,use gbif name
+タラノキ,,Aralia elata (Miq.) Seem.,EXACT,accepted,Aralia elata (Miq.) Seem.,Aralia elata,Aralia,Araliaceae,Apiales,タラノキ,ウコギ科,セリ目,4,4,1,4,4,4,3,use gbif name
+コシアブラ,,Chengiopanax sciadophylloides (Franch. et Sav.) C.B.Shang et J.Y.Huang,EXACT,accepted,Chengiopanax sciadophylloides (Franch. & Sav.) C.B.Shang & J.Y.Huang,Chengiopanax sciadophylloides,Chengiopanax,Araliaceae,Apiales,コシアブラ,ウコギ科,セリ目,4,4,1,4,4,4,3,use gbif name
+カクレミノ,,Dendropanax trifidus (Thunb.) Makino ex H.Hara,EXACT,accepted,Dendropanax trifidus (Thunb.) Makino ex Hara,Dendropanax trifidus,Dendropanax,Araliaceae,Apiales,カクレミノ,ウコギ科,セリ目,4,4,1,5,5,5,3,use gbif name
+タカノツメ,,"Gamblea innovans (Siebold et Zucc.) C.B.Shang, Lowry et Frodin",EXACT,accepted,"Gamblea innovans (Siebold & Zucc.) C.B.Shang, Lowry & Frodin",Gamblea innovans,Gamblea,Araliaceae,Apiales,タカノツメ,ウコギ科,セリ目,4,4,1,4,4,4,3,use gbif name
+キヅタ,,Hedera rhombea (Miq.) Bean,EXACT,accepted,Hedera rhombea (Miq.) Paul,Hedera rhombea,Hedera,Araliaceae,Apiales,キヅタ,ウコギ科,セリ目,4,4,1,5,5,5,3,use gbif name
+ハリギリ,,Kalopanax septemlobus (Thunb.) Koidz. subsp. septemlobus,EXACT,accepted,Kalopanax septemlobus subsp. septemlobus,Kalopanax septemlobus subsp. septemlobus,Kalopanax,Araliaceae,Apiales,ハリギリ,ウコギ科,セリ目,4,4,1,4,4,4,3,use gbif name
+フカノキ,,Schefflera heptaphylla (L.) Frodin,EXACT,accepted,Schefflera heptaphylla (L.) Frodin,Schefflera heptaphylla,Schefflera,Araliaceae,Apiales,フカノキ,ウコギ科,セリ目,4,4,1,5,5,5,3,use gbif name
+トベラ,,Pittosporum tobira (Thunb.) W.T.Aiton,EXACT,accepted,Pittosporum tobira (Murray) Aiton fil.,Pittosporum tobira,Pittosporum,Pittosporaceae,Apiales,トベラ,トベラ科,セリ目,4,4,1,5,5,5,3,use gbif name
+シイモチ,,Ilex buergeri Miq.,EXACT,accepted,Ilex buergeri Miq.,Ilex buergeri,Ilex,Aquifoliaceae,Aquifoliales,シイモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+ナナミノキ,,Ilex chinensis Sims,EXACT,accepted,Ilex chinensis Sims,Ilex chinensis,Ilex,Aquifoliaceae,Aquifoliales,ナナミノキ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+ツクシイヌツゲ,,Ilex crenata Thunb. var. fukasawana Makino,EXACT,synonym,Ilex crenata Thunb.,Ilex crenata var. fukasawana,Ilex,Aquifoliaceae,Aquifoliales,ツクシイヌツゲ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use greenlist name
+イヌツゲ,,Ilex crenata Thunb. var. crenata,EXACT,accepted,Ilex crenata var. crenata,Ilex crenata var. crenata,Ilex,Aquifoliaceae,Aquifoliales,イヌツゲ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+フウリンウメモドキ,,Ilex geniculata Maxim.,EXACT,accepted,Ilex geniculata Maxim.,Ilex geniculata,Ilex,Aquifoliaceae,Aquifoliales,フウリンウメモドキ,モチノキ科,モチノキ目,4,4,1,4,4,4,3,use gbif name
+ツゲモチ,,Ilex goshiensis Hayata,EXACT,accepted,Ilex goshiensis Hayata,Ilex goshiensis,Ilex,Aquifoliaceae,Aquifoliales,ツゲモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+モチノキ,,Ilex integra Thunb. var. integra,HIGHERRANK,accepted,Ilex integra Thunb.,Ilex integra var. integra,Ilex,Aquifoliaceae,Aquifoliales,モチノキ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use greenlist name
+ヒメモチ,,Ilex leucoclada (Maxim.) Makino,EXACT,accepted,Ilex leucoclada Makino,Ilex leucoclada,Ilex,Aquifoliaceae,Aquifoliales,ヒメモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+リュウキュウモチ,,Ilex liukiuensis Loes.,EXACT,accepted,Ilex liukiuensis Loes.,Ilex liukiuensis,Ilex,Aquifoliaceae,Aquifoliales,リュウキュウモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+アオハダ,,Ilex macropoda Miq.,EXACT,accepted,Ilex macropoda Miq.,Ilex macropoda,Ilex,Aquifoliaceae,Aquifoliales,アオハダ,モチノキ科,モチノキ目,4,4,1,4,4,4,3,use gbif name
+タマミズキ,,Ilex micrococca Maxim.,EXACT,accepted,Ilex micrococca Maxim.,Ilex micrococca,Ilex,Aquifoliaceae,Aquifoliales,タマミズキ,モチノキ科,モチノキ目,4,4,1,4,4,4,3,use gbif name
+ソヨゴ,,Ilex pedunculosa Miq. var. pedunculosa,HIGHERRANK,accepted,Ilex pedunculosa Miq.,Ilex pedunculosa var. pedunculosa,Ilex,Aquifoliaceae,Aquifoliales,ソヨゴ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use greenlist name
+クロガネモチ,,Ilex rotunda Thunb.,EXACT,accepted,Ilex rotunda Thunb.,Ilex rotunda,Ilex,Aquifoliaceae,Aquifoliales,クロガネモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+イヌウメモドキ,,Ilex serrata Thunb. f. argutidens (Miq.) Sa.Kurata,EXACT,synonym,Ilex serrata Thunb.,Ilex serrata f. argutidens,Ilex,Aquifoliaceae,Aquifoliales,イヌウメモドキ,モチノキ科,モチノキ目,4,4,1,4,4,4,3,use greenlist name
+ウメモドキ,,Ilex serrata Thunb.,EXACT,accepted,Ilex serrata Thunb.,Ilex serrata,Ilex,Aquifoliaceae,Aquifoliales,ウメモドキ,モチノキ科,モチノキ目,4,4,1,4,4,4,3,use gbif name
+クロソヨゴ,,Ilex sugerokii Maxim. var. sugerokii,EXACT,synonym,Ilex sugerokii Maxim.,Ilex sugerokii var. sugerokii,Ilex,Aquifoliaceae,Aquifoliales,クロソヨゴ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use greenlist name
+シマイヌツゲ,ムッチャガラ,Ilex maximowicziana Loes. var. kanehirae (Yamam.) T.Yamaz.,EXACT,synonym,Ilex triflora var. kanehirai (Yamamoto) S.Y.Hu,Ilex maximowicziana var. kanehirai,Ilex,Aquifoliaceae,Aquifoliales,ムッチャガラ,モチノキ科,モチノキ目,4,4,0,5,5,5,3,use greenlist name
+ムッチャガラ,,Ilex maximowicziana Loes. var. kanehirae (Yamam.) T.Yamaz.,EXACT,synonym,Ilex triflora var. kanehirai (Yamamoto) S.Y.Hu,Ilex maximowicziana var. kanehirai,Ilex,Aquifoliaceae,Aquifoliales,ムッチャガラ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use greenlist name
+オオシイバモチ,,Ilex warburgii Loes.,EXACT,accepted,Ilex warburgii Loes.,Ilex warburgii,Ilex,Aquifoliaceae,Aquifoliales,オオシイバモチ,モチノキ科,モチノキ目,4,4,1,5,5,5,3,use gbif name
+シュロ,,Trachycarpus fortunei (Hook.) H.Wendl.,EXACT,accepted,Trachycarpus fortunei H.Wendl.,Trachycarpus fortunei,Trachycarpus,Arecaceae,Arecales,シュロ,ヤシ科,ヤシ目,4,4,1,5,5,5,3,use gbif name
+シキミ,,Illicium anisatum L. var. anisatum,HIGHERRANK,accepted,Illicium anisatum L.,Illicium anisatum var. anisatum,Illicium,Schisandraceae,Austrobaileyales,シキミ,マツブサ科,アウストロバイレヤ目,4,4,1,5,5,5,3,use greenlist name
+チシャノキ,,Ehretia acuminata R.Br. var. obovata (Lindl.) I.M.Johnst.,HIGHERRANK,accepted,Ehretia acuminata R.Br.,Ehretia acuminata,Ehretia,Ehretiaceae,Boraginales,チシャノキ,チシャノキ科,ムラサキ目,4,4,1,4,4,4,3,use gbif name; チシャノキ科はムラサキ科から分けられている
+パパイヤ,,Carica papaya L.,EXACT,accepted,Carica papaya L.,Carica papaya,Carica,Caricaceae,Brassicales,パパイヤ,パパイア科,アブラナ目,4,4,1,5,5,5,3,not found in GreenList; found in YList; use gbif name
+ツゲ,,Buxus microphylla Siebold et Zucc. var. japonica (Müll.Arg. ex Miq.) Rehder et E.H.Wilson,EXACT,accepted,Buxus microphylla var. japonica (Müll.Arg. ex Miq.) Rehd. & Wils.,Buxus microphylla var. japonica,Buxus,Buxaceae,Buxales,ツゲ,ツゲ科,ツゲ目,4,4,1,5,5,5,3,use gbif name
+ウドノキ,,Pisonia umbellifera (J.R. et G.Forst.) Seem.,EXACT,accepted,Pisonia umbellifera (J.R.Forst. & G.Forst.) Seem.,Pisonia umbellifera,Pisonia,Nyctaginaceae,Caryophyllales,ウドノキ,オシロイバナ科,ナデシコ目,4,4,1,5,5,5,3,use gbif name
+ツルウメモドキ,,Celastrus orbiculatus Thunb. var. orbiculatus,EXACT,accepted,Celastrus orbiculatus var. orbiculatus,Celastrus orbiculatus var. orbiculatus,Celastrus,Celastraceae,Celastrales,ツルウメモドキ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name
+オニツルウメモドキ,,Celastrus orbiculatus Thunb. var. strigillosus (Nakai) H.Hara,EXACT,accepted,Celastrus orbiculatus var. strigillosus (Nakai) Makino,Celastrus orbiculatus var. strigillosus,Celastrus,Celastraceae,Celastrales,オニツルウメモドキ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name
+コマユミ,,Euonymus alatus (Thunb.) Siebold var. alatus f. striatus (Thunb.) Makino,EXACT,synonym,Euonymus alatus f. striata (Thunberg) Kitag.,Euonymus alatus f. striata,Euonymus,Celastraceae,Celastrales,コマユミ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name
+ツルマサキ,,Euonymus fortunei (Turcz.) Hand.-Mazz. var. fortunei,EXACT,accepted,Euonymus fortunei var. fortunei,Euonymus fortunei var. fortunei,Euonymus,Celastraceae,Celastrales,ツルマサキ,ニシキギ科,ニシキギ目,4,4,1,5,5,5,3,use gbif name
+マユミ,,Euonymus sieboldianus Blume var. sieboldianus,HIGHERRANK,synonym,Euonymus hamiltonianus Wall.,Euonymus hamiltonianus,Euonymus,Celastraceae,Celastrales,マユミ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name; checked in The Plant List
+ヒロハツリバナ,,Euonymus macropterus Rupr.,EXACT,accepted,Euonymus macropterus Rupr.,Euonymus macropterus,Euonymus,Celastraceae,Celastrales,ヒロハツリバナ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name
+ヒロハノツリバナ,ヒロハツリバナ,Euonymus macropterus Rupr.,EXACT,accepted,Euonymus macropterus Rupr.,Euonymus macropterus,Euonymus,Celastraceae,Celastrales,ヒロハツリバナ,ニシキギ科,ニシキギ目,4,4,0,4,4,4,3,use gbif name
+ツリバナ,,Euonymus oxyphyllus Miq. var. oxyphyllus,HIGHERRANK,accepted,Euonymus oxyphyllus Miq.,Euonymus oxyphyllus var. oxyphyllus,Euonymus,Celastraceae,Celastrales,ツリバナ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use greenlist name
+オオツリバナ,,Euonymus planipes (Koehne) Koehne,EXACT,synonym,Euonymus sachalinensis Maxim.,Euonymus sachalinensis,Euonymus,Celastraceae,Celastrales,オオツリバナ,ニシキギ科,ニシキギ目,4,4,1,4,4,4,3,use gbif name; checked in The Plant List
+アオツリバナ,,Euonymus yakushimensis Makino,EXACT,accepted,Euonymus yakushimensis Makino,Euonymus yakushimensis,Euonymus,Celastraceae,Celastrales,アオツリバナ,ニシキギ科,ニシキギ目,4,4,1,5,5,5,3,use gbif name
+モクレイシ,,Microtropis japonica (Franch. et Sav.) Hallier f. var. japonica,EXACT,accepted,Microtropis japonica Hallier f.,Microtropis japonica,Microtropis,Celastraceae,Celastrales,モクレイシ,ニシキギ科,ニシキギ目,4,4,1,5,5,5,3,use gbif name
+ミズキ,,Cornus controversa Hemsl.,EXACT,accepted,Cornus controversa Hemsl.,Cornus controversa,Cornus,Cornaceae,Cornales,ミズキ,ミズキ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+ヤマボウシ,,Cornus kousa Buerger ex Hance var. chinensis Osborn,EXACT,synonym,Cornus kousa subsp. chinensis (Osborn) Q.Y.Xiang,Cornus kousa subsp. chinensis,Cornus,Cornaceae,Cornales,ヤマボウシ,ミズキ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+クマノミズキ,,Cornus macrophylla Wall.,EXACT,accepted,Cornus macrophylla Wall.,Cornus macrophylla,Cornus,Cornaceae,Cornales,クマノミズキ,ミズキ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+ウツギ,,Deutzia crenata Siebold et Zucc.,EXACT,accepted,Deutzia crenata Siebold & Zucc.,Deutzia crenata,Deutzia,Hydrangeaceae,Cornales,ウツギ,アジサイ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+ツルアジサイ,,Hydrangea petiolaris Siebold et Zucc.,EXACT,synonym,Hydrangea anomala subsp. petiolaris (Siebold & Zucc.) E.M.McClint.,Hydrangea petiolaris,Hydrangea,Hydrangeaceae,Cornales,ツルアジサイ,アジサイ科,ミズキ目,4,4,1,4,4,4,3,use greenlist name
+イワガラミ,,Schizophragma hydrangeoides Siebold et Zucc. var. hydrangeoides,HIGHERRANK,synonym,Hydrangea hydrangeoides (Siebold & Zucc.) Bernd Schulz,Schizophragma hydrangeoides var. hydrangeoides,Hydrangea,Hydrangeaceae,Cornales,イワガラミ,アジサイ科,ミズキ目,4,4,1,4,4,4,3,use greenlist name
+ノリウツギ,,Hydrangea paniculata Siebold,EXACT,accepted,Hydrangea paniculata Siebold,Hydrangea paniculata,Hydrangea,Hydrangeaceae,Cornales,ノリウツギ,アジサイ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+ヤハズアジサイ,,Hydrangea sikokiana Maxim.,EXACT,accepted,Hydrangea sikokiana Maxim.,Hydrangea sikokiana,Hydrangea,Hydrangeaceae,Cornales,ヤハズアジサイ,アジサイ科,ミズキ目,4,4,1,4,4,4,3,use gbif name
+キブシ,,Stachyurus praecox Siebold et Zucc. var. praecox,EXACT,accepted,Stachyurus praecox var. praecox,Stachyurus praecox var. praecox,Stachyurus,Stachyuraceae,Crossosomatales,キブシ,キブシ科,クロッソソマ目,4,4,1,4,4,4,3,use gbif name
+ミツバウツギ,,Staphylea bumalda DC.,EXACT,accepted,Staphylea bumalda DC.,Staphylea bumalda,Staphylea,Staphyleaceae,Crossosomatales,ミツバウツギ,ミツバウツギ科,クロッソソマ目,4,4,1,4,4,4,3,use gbif name
+ゴンズイ,,Euscaphis japonica (Thunb.) Kanitz,EXACT,synonym,Staphylea japonica (Thunb.) Mabb.,Staphylea japonica,Staphylea,Staphyleaceae,Crossosomatales,ゴンズイ,ミツバウツギ科,クロッソソマ目,4,4,1,4,4,4,3,use gbif name; checked in YList
+ショウベンノキ,,Turpinia ternata Nakai,EXACT,synonym,Staphylea ternata (Nakai) Byng & Christenh.,Turpinia ternata,Turpinia,Staphyleaceae,Crossosomatales,ショウベンノキ,ミツバウツギ科,クロッソソマ目,4,4,1,5,5,5,3,use greenlist name; checked The Plant List
+ニワトコ,,Sambucus racemosa L. subsp. sieboldiana (Miq.) H.Hara var. sieboldiana,EXACT,synonym,Sambucus racemosa subsp. sieboldiana (Bl. ex Miq.) Hara,Sambucus racemosa subsp. sieboldiana var. sieboldiana,Sambucus,Adoxaceae,Dipsacales,ニワトコ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use greenlist name
+ガマズミ,,Viburnum dilatatum Thunb.,EXACT,accepted,Viburnum dilatatum Thunb.,Viburnum dilatatum,Viburnum,Adoxaceae,Dipsacales,ガマズミ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+オオカメノキ,,Viburnum furcatum Blume ex Maxim.,EXACT,accepted,Viburnum furcatum Blume ex Hook.f. & Thomson,Viburnum furcatum,Viburnum,Adoxaceae,Dipsacales,オオカメノキ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+ムシカリ,オオカメノキ,Viburnum furcatum Blume ex Maxim.,EXACT,accepted,Viburnum furcatum Blume ex Hook.f. & Thomson,Viburnum furcatum,Viburnum,Adoxaceae,Dipsacales,オオカメノキ,レンプクソウ科,マツムシソウ目,4,4,0,4,4,4,3,use gbif name
+サンゴジュ,,Viburnum odoratissimum Ker Gawl. var. awabuki (K.Koch) Zabel,EXACT,accepted,Viburnum odoratissimum var. awabuki (K.Koch) Zabel,Viburnum odoratissimum var. awabuki,Viburnum,Adoxaceae,Dipsacales,サンゴジュ,レンプクソウ科,マツムシソウ目,4,4,1,5,5,5,3,use gbif name
+コヤブデマリ,,Viburnum plicatum Thunb. var. parvifolium Miq.,EXACT,accepted,Viburnum plicatum var. parvifolium Miq.,Viburnum plicatum var. parvifolium,Viburnum,Adoxaceae,Dipsacales,コヤブデマリ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+ヤブデマリ,,Viburnum plicatum Thunb. var. tomentosum Miq.,EXACT,accepted,Viburnum plicatum var. tomentosum (Thunb. ex Murray) Miq.,Viburnum plicatum var. tomentosum,Viburnum,Adoxaceae,Dipsacales,ヤブデマリ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+オオシマガマズミ,,Viburnum tashiroi Nakai,EXACT,accepted,Viburnum tashiroi Nakai,Viburnum tashiroi,Viburnum,Adoxaceae,Dipsacales,オオシマガマズミ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+オオミヤマガマズミ,,Viburnum wrightii Miq. var. stipellatum Nakai,EXACT,synonym,Viburnum wrightii Miq.,Viburnum wrightii var. stipellatum,Viburnum,Adoxaceae,Dipsacales,オオミヤマガマズミ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+ミヤマガマズミ,,Viburnum wrightii Miq. var. wrightii,HIGHERRANK,accepted,Viburnum wrightii Miq.,Viburnum wrightii var. wrightii,Viburnum,Adoxaceae,Dipsacales,ミヤマガマズミ,レンプクソウ科,マツムシソウ目,4,4,1,4,4,4,3,use greenlist name
+ツクバネウツギ,,Abelia spathulata Siebold et Zucc. var. spathulata,HIGHERRANK,synonym,Diabelia spathulata (Sieb. & Zucc.) Landrein,Abelia spathulata var. spathulata,Diabelia,Caprifoliaceae,Dipsacales,ツクバネウツギ,スイカズラ科,マツムシソウ目,4,4,1,5,5,5,3,use greenlist name
+ネムロブシダマ,,Lonicera chrysantha Turcz. ex Ledeb. var. crassipes Nakai,EXACT,synonym,Lonicera chrysantha Turcz.,Lonicera chrysantha var. crassipes,Lonicera,Caprifoliaceae,Dipsacales,ネムロブシダマ,スイカズラ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+ニシキウツギ,,Weigela decora (Nakai) Nakai var. decora,EXACT,accepted,Weigela decora var. decora,Weigela decora var. decora,Weigela,Caprifoliaceae,Dipsacales,ニシキウツギ,スイカズラ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+ヤブウツギ,,Weigela floribunda (Siebold et Zucc.) K.Koch,EXACT,accepted,Weigela floribunda C.A.Mey.,Weigela floribunda,Weigela,Caprifoliaceae,Dipsacales,ヤブウツギ,スイカズラ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+タニウツギ,,Weigela hortensis (Siebold et Zucc.) K.Koch,EXACT,accepted,Weigela hortensis (Sieb. & Zucc.) K.Koch,Weigela hortensis,Weigela,Caprifoliaceae,Dipsacales,タニウツギ,スイカズラ科,マツムシソウ目,4,4,1,4,4,4,3,use gbif name
+コクワ,,Actinidia arguta (Siebold et Zucc.) Planch. ex Miq. var. arguta f. platyphylla (A.Gray ex Miq.) H.Ohba,EXACT,synonym,Actinidia arguta Miq.,Actinidia arguta,Actinidia,Actinidiaceae,Ericales,コクワ,マタタビ科,ツツジ目,4,4,0,4,4,4,3,not found in GreenList; found in YList; use gbif name
+サルナシ,,Actinidia arguta (Siebold et Zucc.) Planch. ex Miq. var. arguta,EXACT,accepted,Actinidia arguta var. arguta,Actinidia arguta var. arguta,Actinidia,Actinidiaceae,Ericales,サルナシ,マタタビ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+シラクチヅル,サルナシ,Actinidia arguta (Siebold et Zucc.) Planch. ex Miq. var. arguta,EXACT,accepted,Actinidia arguta var. arguta,Actinidia arguta var. arguta,Actinidia,Actinidiaceae,Ericales,サルナシ,マタタビ科,ツツジ目,4,4,0,4,4,4,3,use gbif name
+ミヤママタタビ,,Actinidia kolomikta (Maxim. et Rupr.) Maxim.,EXACT,accepted,Actinidia kolomikta Maxim.,Actinidia kolomikta,Actinidia,Actinidiaceae,Ericales,ミヤママタタビ,マタタビ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+マタタビ,,Actinidia polygama (Siebold et Zucc.) Planch. ex Maxim.,EXACT,accepted,Actinidia polygama (Siebold & Zucc.) Maxim.,Actinidia polygama,Actinidia,Actinidiaceae,Ericales,マタタビ,マタタビ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+リョウブ,,Clethra barbinervis Siebold et Zucc.,EXACT,accepted,Clethra barbinervis Siebold & Zucc.,Clethra barbinervis,Clethra,Clethraceae,Ericales,リョウブ,リョウブ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+シナノガキ,リュウキュウマメガキ,Diospyros japonica Siebold et Zucc.,EXACT,accepted,Diospyros japonica Siebold & Zucc.,Diospyros japonica,Diospyros,Ebenaceae,Ericales,リュウキュウマメガキ,カキノキ科,ツツジ目,4,4,0,4,4,4,3,use gbif name
+リュウキュウマメガキ,,Diospyros japonica Siebold et Zucc.,EXACT,accepted,Diospyros japonica Siebold & Zucc.,Diospyros japonica,Diospyros,Ebenaceae,Ericales,リュウキュウマメガキ,カキノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+カキノキ,,Diospyros kaki Thunb.,EXACT,accepted,Diospyros kaki L.f.,Diospyros kaki,Diospyros,Ebenaceae,Ericales,カキノキ,カキノキ科,ツツジ目,4,4,1,4,4,4,3,not found in GreenList; found in YList; use gbif name
+トキワガキ,,Diospyros morrisiana Hance,EXACT,accepted,Diospyros morrisiana Hance ex Walp.,Diospyros morrisiana,Diospyros,Ebenaceae,Ericales,トキワガキ,カキノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+サラサドウダン,,Enkianthus campanulatus (Miq.) G.Nicholson var. campanulatus,EXACT,accepted,Enkianthus campanulatus var. campanulatus,Enkianthus campanulatus var. campanulatus,Enkianthus,Ericaceae,Ericales,サラサドウダン,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+チチブドウダン,ベニドウダン,Enkianthus cernuus (Siebold et Zucc.) Makino f. rubens (Maxim.) Ohwi,EXACT,accepted,Enkianthus cernuus f. rubens (Maxim.) Ohwi,Enkianthus cernuus f. rubens,Enkianthus,Ericaceae,Ericales,ベニドウダン,ツツジ科,ツツジ目,4,4,0,4,4,4,3,use gbif name
+ベニドウダン,,Enkianthus cernuus (Siebold et Zucc.) Makino f. rubens (Maxim.) Ohwi,EXACT,accepted,Enkianthus cernuus f. rubens (Maxim.) Ohwi,Enkianthus cernuus f. rubens,Enkianthus,Ericaceae,Ericales,ベニドウダン,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+アブラツツジ,,Enkianthus subsessilis (Miq.) Makino,EXACT,accepted,Enkianthus subsessilis Makino.,Enkianthus subsessilis,Enkianthus,Ericaceae,Ericales,アブラツツジ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ネジキ,,Lyonia ovalifolia (Wall.) Drude var. elliptica (Siebold et Zucc.) Hand.-Mazz.,EXACT,accepted,Lyonia ovalifolia var. elliptica (Siebold & Zucc.) Hand.-Mazz.,Lyonia ovalifolia var. elliptica,Lyonia,Ericaceae,Ericales,ネジキ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+アセビ,,Pieris japonica (Thunb.) D.Don ex G.Don subsp. japonica,EXACT,accepted,Pieris japonica var. japonica,Pieris japonica var. japonica,Pieris,Ericaceae,Ericales,アセビ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ハクサンシャクナゲ,,Rhododendron brachycarpum D.Don ex G.Don var. brachycarpum,EXACT,accepted,Rhododendron brachycarpum subsp. brachycarpum,Rhododendron brachycarpum subsp. brachycarpum,Rhododendron,Ericaceae,Ericales,ハクサンシャクナゲ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ミツバツツジ,,Rhododendron dilatatum Miq. var. dilatatum,EXACT,accepted,Rhododendron dilatatum var. dilatatum,Rhododendron dilatatum var. dilatatum,Rhododendron,Ericaceae,Ericales,ミツバツツジ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ツクシシャクナゲ,,Rhododendron japonoheptamerum Kitam. var. japonoheptamerum,EXACT,accepted,Rhododendron japonoheptamerum var. japonoheptamerum,Rhododendron japonoheptamerum var. japonoheptamerum,Rhododendron,Ericaceae,Ericales,ツクシシャクナゲ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ヤマツツジ,,Rhododendron kaempferi Planch. var. kaempferi,EXACT,accepted,Rhododendron kaempferi var. kaempferi,Rhododendron kaempferi var. kaempferi,Rhododendron,Ericaceae,Ericales,ヤマツツジ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+アカヤシオ,,Rhododendron pentaphyllum Maxim. var. nikoense Komatsu,EXACT,accepted,Rhododendron pentaphyllum var. nikoense Komatsu,Rhododendron pentaphyllum var. nikoense,Rhododendron,Ericaceae,Ericales,アカヤシオ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+シロヤシオ,,Rhododendron quinquefolium Bisset et S.Moore,EXACT,accepted,Rhododendron quinquefolium Bisset & S.Moore,Rhododendron quinquefolium,Rhododendron,Ericaceae,Ericales,シロヤシオ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+サクラツツジ,,Rhododendron tashiroi Maxim. var. tashiroi,EXACT,accepted,Rhododendron tashiroi var. tashiroi,Rhododendron tashiroi var. tashiroi,Rhododendron,Ericaceae,Ericales,サクラツツジ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+トウゴクミツバツツジ,,Rhododendron wadanum Makino,EXACT,accepted,Rhododendron wadanum Makino,Rhododendron wadanum,Rhododendron,Ericaceae,Ericales,トウゴクミツバツツジ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+オンツツジ,,Rhododendron weyrichii Maxim. var. weyrichii,HIGHERRANK,accepted,Rhododendron weyrichii Maxim.,Rhododendron weyrichii var. weyrichii,Rhododendron,Ericaceae,Ericales,オンツツジ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use greenlist name
+シャシャンボ,,Vaccinium bracteatum Thunb.,EXACT,accepted,Vaccinium bracteatum Thunb.,Vaccinium bracteatum,Vaccinium,Ericaceae,Ericales,シャシャンボ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ウスノキ,,Vaccinium hirtum Thunb. var. pubescens (Koidz.) T.Yamaz.,EXACT,accepted,Vaccinium hirtum var. pubescens (Koidz.) T.Yamaz.,Vaccinium hirtum var. pubescens,Vaccinium,Ericaceae,Ericales,ウスノキ,ツツジ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ギーマ,,Vaccinium wrightii A.Gray,EXACT,accepted,Vaccinium wrightii A.Gray,Vaccinium wrightii,Vaccinium,Ericaceae,Ericales,ギーマ,ツツジ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+リュウキュウナガエサカキ,,Adinandra ryukyuensis Masam.,EXACT,accepted,Adinandra ryukyuensis Masam.,Adinandra ryukyuensis,Adinandra,Pentaphylacaceae,Ericales,リュウキュウナガエサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+サカキ,,Cleyera japonica Thunb.,EXACT,accepted,Cleyera japonica Thunb.,Cleyera japonica,Cleyera,Pentaphylacaceae,Ericales,サカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ハマヒサカキ,,Eurya emarginata (Thunb.) Makino var. emarginata,HIGHERRANK,accepted,Eurya emarginata Makino,Eurya emarginata var. emarginata,Eurya,Pentaphylacaceae,Ericales,ハマヒサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use greenlist name
+マメヒサカキ,,Eurya emarginata (Thunb.) Makino var. minutissima (Hatus.) Hatus. ex Shimabuku,EXACT,synonym,Eurya emarginata Makino,Eurya emarginata var. minutissima,Eurya,Pentaphylacaceae,Ericales,マメヒサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use greenlist name; ヒサカキはGreenList学名を採用
+ヒサカキ,,Eurya japonica Thunb. var. japonica,EXACT,accepted,Eurya japonica var. japonica,Eurya japonica var. japonica,Eurya,Pentaphylacaceae,Ericales,ヒサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ヒメヒサカキ,,Eurya yakushimensis (Makino) Makino,EXACT,synonym,Eurya japonica var. yakushimensis Makino,Eurya yakushimensis,Eurya,Pentaphylacaceae,Ericales,ヒメヒサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use greenlist name; ヒサカキはGreenList学名を採用
+アマミヒサカキ,,Eurya osimensis Masam.,EXACT,accepted,Eurya osimensis Masam.,Eurya osimensis,Eurya,Pentaphylacaceae,Ericales,アマミヒサカキ,モッコク科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+オオシマヒサカキ,アマミヒサカキ,Eurya osimensis Masam.,EXACT,accepted,Eurya osimensis Masam.,Eurya osimensis,Eurya,Pentaphylacaceae,Ericales,アマミヒサカキ,モッコク科,ツツジ目,4,4,0,5,5,5,3,use gbif name
+モッコク,,Ternstroemia gymnanthera (Wight et Arn.) Bedd.,EXACT,accepted,Ternstroemia gymnanthera Sprague,Ternstroemia gymnanthera,Ternstroemia,Pentaphylacaceae,Ericales,モッコク,モッコク科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+シシアクチ,,Ardisia quinquegona Blume,EXACT,accepted,Ardisia quinquegona Blume,Ardisia quinquegona,Ardisia,Primulaceae,Ericales,シシアクチ,サクラソウ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+シマイズセンリョウ,,Maesa montana A.DC. var. formosana (Mez) T.Yamaz.,EXACT,synonym,Maesa perlarius var. formosana (Mez) Yuen P.Yang,Maesa montana var. formosana,Maesa,Primulaceae,Ericales,シマイズセンリョウ,サクラソウ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name; unresolved
+タイミンタチバナ,,Myrsine seguinii H.Lév.,EXACT,accepted,Myrsine seguinii H.Lév.,Myrsine seguinii,Myrsine,Primulaceae,Ericales,タイミンタチバナ,サクラソウ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+アカテツ,,Planchonella obovata (R.Br.) Pierre var. obovata,HIGHERRANK,accepted,Planchonella obovata Pierre,Planchonella obovata var. obovata,Planchonella,Sapotaceae,Ericales,アカテツ,アカテツ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name
+アサガラ,,Pterostyrax corymbosa Siebold et Zucc.,FUZZY,accepted,Pterostyrax corymbosus Siebold & Zucc.,Pterostyrax corymbosus,Pterostyrax,Styracaceae,Ericales,アサガラ,エゴノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+オオバアサガラ,,Pterostyrax hispida Siebold et Zucc.,FUZZY,accepted,Pterostyrax hispidus Siebold & Zucc.,Pterostyrax hispidus,Pterostyrax,Styracaceae,Ericales,オオバアサガラ,エゴノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+エゴノキ,,Styrax japonicus Siebold et Zucc. var. japonicus,EXACT,synonym,Styrax japonicus Siebold & Zucc.,Styrax japonicus var. japonicus,Styrax,Styracaceae,Ericales,エゴノキ,エゴノキ科,ツツジ目,4,4,1,4,4,4,3,use greenlist name
+ハクウンボク,,Styrax obassia Siebold et Zucc.,EXACT,accepted,Styrax obassia Siebold & Zucc.,Styrax obassia,Styrax,Styracaceae,Ericales,ハクウンボク,エゴノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+コハクウンボク,,Styrax shiraiana Makino,EXACT,accepted,Styrax shiraiana Makino,Styrax shiraiana,Styrax,Styracaceae,Ericales,コハクウンボク,エゴノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+カンザブロウノキ,,Symplocos theophrastifolia Siebold et Zucc.,EXACT,synonym,Symplocos cochinchinensis subsp. laurina (Retz.) Noot.,Symplocos cochinchinensis subsp. laurina,Symplocos,Symplocaceae,Ericales,カンザブロウノキ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+タンナサワフタギ,,Symplocos coreana (H.Lév.) Ohwi,EXACT,accepted,Symplocos coreana (H.Lév.) Ohwi,Symplocos coreana,Symplocos,Symplocaceae,Ericales,タンナサワフタギ,ハイノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ミミズバイ,,Symplocos glauca (Thunb.) Koidz.,EXACT,accepted,Symplocos glauca Koidz.,Symplocos glauca,Symplocos,Symplocaceae,Ericales,ミミズバイ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+クロキ,,Symplocos kuroki Nagam.,EXACT,accepted,Symplocos kuroki Nagam.,Symplocos kuroki,Symplocos,Symplocaceae,Ericales,クロキ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+アマシバ,,Symplocos formosana Brand,EXACT,synonym,Symplocos lancifolia Siebold & Zucc.,Symplocos formosana,Symplocos,Symplocaceae,Ericales,アマシバ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name
+シロバイ,,Symplocos lancifolia Siebold et Zucc.,EXACT,accepted,Symplocos lancifolia Siebold & Zucc.,Symplocos lancifolia,Symplocos,Symplocaceae,Ericales,シロバイ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+ハイノキ,,Symplocos myrtacea Siebold et Zucc. var. myrtacea,EXACT,accepted,Symplocos myrtacea Siebold & Zucc.,Symplocos myrtacea,Symplocos,Symplocaceae,Ericales,ハイノキ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+リュウキュウハイノキ,,Symplocos okinawensis Matsum.,EXACT,accepted,Symplocos okinawensis Matsum.,Symplocos okinawensis,Symplocos,Symplocaceae,Ericales,リュウキュウハイノキ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+サワフタギ,,Symplocos sawafutagi Nagam. var. sawafutagi,EXACT,accepted,Symplocos sawafutagi var. sawafutagi,Symplocos sawafutagi var. sawafutagi,Symplocos,Symplocaceae,Ericales,サワフタギ,ハイノキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ミヤマシロバイ,,Symplocos sonoharae Koidz.,EXACT,accepted,Symplocos sonoharae Koidz.,Symplocos sonoharae,Symplocos,Symplocaceae,Ericales,ミヤマシロバイ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+クロバイ,,Symplocos prunifolia Siebold et Zucc. var. prunifolia,HIGHERRANK,synonym,Symplocos sumuntia Buch.-Ham. ex D.Don,Symplocos prunifolia var. prunifolia,Symplocos,Symplocaceae,Ericales,クロバイ,ハイノキ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name
+ヤブツバキ,,Camellia japonica L.,EXACT,accepted,Camellia japonica L.,Camellia japonica,Camellia,Theaceae,Ericales,ヤブツバキ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+リンゴツバキ,,Camellia japonica L. var. japonica,EXACT,accepted,Camellia japonica var. japonica,Camellia japonica var. japonica,Camellia,Theaceae,Ericales,リンゴツバキ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,not found in GreenList; not found in YList
+ユキツバキ,,Camellia rusticana Honda,EXACT,synonym,Camellia japonica var. rusticana (Honda) T.L.Ming,Camellia rusticana,Camellia,Theaceae,Ericales,ユキツバキ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name; checked The Plant List
+ヒメサザンカ,,Camellia lutchuensis T.Itô,EXACT,accepted,Camellia lutchuensis Ito ex Ito & Matsum.,Camellia lutchuensis,Camellia,Theaceae,Ericales,ヒメサザンカ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+サザンカ,,Camellia sasanqua Thunb.,EXACT,synonym,Camellia oleifera Abel,Camellia sasanqua,Camellia,Theaceae,Ericales,サザンカ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name; checked The Plant List
+ヒサカキサザンカ,,Pyrenaria virgata (Koidz.) H.Keng,EXACT,synonym,Pyrenaria microcarpa (Dunn) H.Keng,Pyrenaria microcarpa,Pyrenaria,Theaceae,Ericales,ヒサカキサザンカ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use gbif name
+イジュ,,Schima wallichii (DC.) Korth. subsp. noronhae (Reinw. ex Blume) Bloemb.,EXACT,synonym,Schima noronhae Reinw. ex Blume,Schima wallichii subsp. noronhae,Schima,Theaceae,Ericales,イジュ,ツバキ科,ツツジ目,4,4,0,5,5,5,3,use greenlist name
+ヒメツバキ,,Schima wallichii (DC.) Korth. subsp. mertensiana (Siebold et Zucc.) Bloemb.,HIGHERRANK,accepted,Schima wallichii (DC.) Korth.,Schima wallichii subsp. mertensiana,Schima,Theaceae,Ericales,ヒメツバキ,ツバキ科,ツツジ目,4,4,1,5,5,5,3,use greenlist name
+ヒメシャラ,,Stewartia monadelpha Siebold et Zucc.,EXACT,accepted,Stewartia monadelpha Siebold & Zucc.,Stewartia monadelpha,Stewartia,Theaceae,Ericales,ヒメシャラ,ツバキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ナツツバキ,,Stewartia pseudocamellia Maxim.,EXACT,accepted,Stewartia pseudocamellia Maxim.,Stewartia pseudocamellia,Stewartia,Theaceae,Ericales,ナツツバキ,ツバキ科,ツツジ目,4,4,1,4,4,4,3,use gbif name
+ネムノキ,,Albizia julibrissin Durazz. var. julibrissin,EXACT,accepted,Albizia julibrissin var. julibrissin,Albizia julibrissin var. julibrissin,Albizia,Fabaceae,Fabales,ネムノキ,マメ科,マメ目,4,4,1,4,4,4,3,use gbif name
+ユクノキ,,Cladrastis sikokiana (Makino) Makino,EXACT,accepted,Cladrastis sikokiana (Makino) Makino,Cladrastis sikokiana,Cladrastis,Fabaceae,Fabales,ユクノキ,マメ科,マメ目,4,4,1,4,4,4,3,use gbif name
+イヌエンジュ,,Maackia amurensis Rupr. et Maxim. subsp. buergeri (Maxim.) Kitam.,EXACT,accepted,Maackia amurensis subsp. buergeri (Maxim.) C.K.Schneid.,Maackia amurensis subsp. buergeri,Maackia,Fabaceae,Fabales,イヌエンジュ,マメ科,マメ目,4,4,1,4,4,4,3,use gbif name
+フジ,,Wisteria floribunda (Willd.) DC.,EXACT,accepted,Wisteria floribunda (Willd.) DC.,Wisteria floribunda,Wisteria,Fabaceae,Fabales,フジ,マメ科,マメ目,4,4,1,4,4,4,3,use gbif name
+ヤシャブシ,,Alnus firma Siebold et Zucc. var. firma,HIGHERRANK,accepted,Alnus firma Siebold & Zucc.,Alnus firma var. firma,Alnus,Betulaceae,Fagales,ヤシャブシ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use greenlist name
+ケヤマハンノキ,,Alnus hirsuta (Spach) Turcz. ex Rupr. var. hirsuta,HIGHERRANK,accepted,Alnus hirsuta (Spach) Rupr.,Alnus hirsuta var. hirsuta,Alnus,Betulaceae,Fagales,ケヤマハンノキ,カバノキ科,ブナ目,4,4,1,4,4,4,3,not found in GreenList; found in YList; use greenlist name
+ハンノキ,,Alnus japonica (Thunb.) Steud.,EXACT,accepted,Alnus japonica (Thunb.) Steud.,Alnus japonica,Alnus,Betulaceae,Fagales,ハンノキ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ウラジロカンバ,ネコシデ,Betula corylifolia Regel et Maxim.,EXACT,accepted,Betula corylifolia Regel & Maxim.,Betula corylifolia,Betula,Betulaceae,Fagales,ネコシデ,カバノキ科,ブナ目,4,4,0,4,4,4,3,use gbif name
+ネコシデ,,Betula corylifolia Regel et Maxim.,EXACT,accepted,Betula corylifolia Regel & Maxim.,Betula corylifolia,Betula,Betulaceae,Fagales,ネコシデ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ヤエガワカンバ,,Betula davurica Pall. var. davurica,FUZZY,accepted,Betula dahurica var. dahurica,Betula dahurica var. dahurica,Betula,Betulaceae,Fagales,ヤエガワカンバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ダケカンバ,,Betula ermanii Cham. var. ermanii,EXACT,accepted,Betula ermanii var. ermanii,Betula ermanii var. ermanii,Betula,Betulaceae,Fagales,ダケカンバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ミズメ,,Betula grossa Siebold et Zucc.,EXACT,accepted,Betula grossa Siebold & Zucc.,Betula grossa,Betula,Betulaceae,Fagales,ミズメ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ウダイカンバ,,Betula maximowicziana Regel,EXACT,accepted,Betula maximowicziana Regel,Betula maximowicziana,Betula,Betulaceae,Fagales,ウダイカンバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+シラカンバ,,Betula platyphylla Sukaczev var. japonica (Miq.) H.Hara,EXACT,synonym,Betula pendula subsp. mandshurica (Regel) Ashburner & McAll.,Betula platyphylla var. japonica,Betula,Betulaceae,Fagales,シラカンバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use greenlist name; unresolved
+オノオレカンバ,,Betula schmidtii Regel var. schmidtii,HIGHERRANK,accepted,Betula schmidtii Regel,Betula schmidtii var. schmidtii,Betula,Betulaceae,Fagales,オノオレカンバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use greenlist name
+サワシバ,,Carpinus cordata Blume var. cordata,EXACT,accepted,Carpinus cordata var. cordata,Carpinus cordata var. cordata,Carpinus,Betulaceae,Fagales,サワシバ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+クマシデ,,Carpinus japonica Blume var. japonica,HIGHERRANK,accepted,Carpinus japonica Blume,Carpinus japonica var. japonica,Carpinus,Betulaceae,Fagales,クマシデ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use greenlist name
+アカシデ,,Carpinus laxiflora (Siebold et Zucc.) Blume,EXACT,accepted,Carpinus laxiflora (Siebold & Zucc.) Blume,Carpinus laxiflora,Carpinus,Betulaceae,Fagales,アカシデ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+イヌシデ,,Carpinus tschonoskii Maxim.,EXACT,accepted,Carpinus tschonoskii Maxim.,Carpinus tschonoskii,Carpinus,Betulaceae,Fagales,イヌシデ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ツノハシバミ,,Corylus sieboldiana Blume var. sieboldiana,EXACT,accepted,Corylus sieboldiana var. sieboldiana,Corylus sieboldiana var. sieboldiana,Corylus,Betulaceae,Fagales,ツノハシバミ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+アサダ,,Ostrya japonica Sarg.,EXACT,accepted,Ostrya japonica Sarg.,Ostrya japonica,Ostrya,Betulaceae,Fagales,アサダ,カバノキ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+クリ,,Castanea crenata Siebold et Zucc.,EXACT,accepted,Castanea crenata Siebold & Zucc.,Castanea crenata,Castanea,Fagaceae,Fagales,クリ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+シイ,,Castanopsis sp.,HIGHERRANK,accepted,Castanopsis (D.Don) Spach,Castanopsis sp.,Castanopsis,Fagaceae,Fagales,シイsp.,ブナ科,ブナ目,4,4,1,5,5,5,3,not found in GreenList; not found in YList
+コジイ,ツブラジイ,Castanopsis cuspidata (Thunb.) Schottky,EXACT,accepted,Castanopsis cuspidata Schottky,Castanopsis cuspidata,Castanopsis,Fagaceae,Fagales,ツブラジイ,ブナ科,ブナ目,4,4,0,5,5,5,3,use gbif name
+ツブラジイ,,Castanopsis cuspidata (Thunb.) Schottky,EXACT,accepted,Castanopsis cuspidata Schottky,Castanopsis cuspidata,Castanopsis,Fagaceae,Fagales,ツブラジイ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+オキナワジイ,,Castanopsis sieboldii (Makino) Hatus. ex T.Yamaz. et Mashiba subsp. lutchuensis (Koidz.) H.Ohba,EXACT,synonym,Castanopsis sieboldii var. lutchuensis (Koidz.) T.Yamaz. & S.Mashiba,Castanopsis sieboldii var. lutchuensis,Castanopsis,Fagaceae,Fagales,オキナワジイ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+イタジイ,スダジイ,Castanopsis sieboldii (Makino) Hatus. ex T.Yamaz. et Mashiba subsp. sieboldii,EXACT,accepted,Castanopsis sieboldii var. sieboldii,Castanopsis sieboldii var. sieboldii,Castanopsis,Fagaceae,Fagales,スダジイ,ブナ科,ブナ目,4,4,0,5,5,5,3,use gbif name
+スダジイ,,Castanopsis sieboldii (Makino) Hatus. ex T.Yamaz. et Mashiba subsp. sieboldii,EXACT,accepted,Castanopsis sieboldii var. sieboldii,Castanopsis sieboldii var. sieboldii,Castanopsis,Fagaceae,Fagales,スダジイ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+ブナ,,Fagus crenata Blume,EXACT,accepted,Fagus crenata Blume,Fagus crenata,Fagus,Fagaceae,Fagales,ブナ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+イヌブナ,,Fagus japonica Maxim.,EXACT,accepted,Fagus japonica Maxim.,Fagus japonica,Fagus,Fagaceae,Fagales,イヌブナ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+マテバシイ,,Lithocarpus edulis (Makino) Nakai,EXACT,accepted,Lithocarpus edulis Nakai,Lithocarpus edulis,Lithocarpus,Fagaceae,Fagales,マテバシイ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+シリブカガシ,,Lithocarpus glaber (Thunb.) Nakai,EXACT,accepted,Lithocarpus glaber (Thunb.) Nakai,Lithocarpus glaber,Lithocarpus,Fagaceae,Fagales,シリブカガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+アカガシ,,Quercus acuta Thunb.,EXACT,accepted,Quercus acuta Thunb.,Quercus acuta,Quercus,Fagaceae,Fagales,アカガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+カシワ,,Quercus dentata Thunb.,EXACT,accepted,Quercus dentata Thunb.,Quercus dentata,Quercus,Fagaceae,Fagales,カシワ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+イチイガシ,,Quercus gilva Blume,EXACT,accepted,Quercus gilva Blume,Quercus gilva,Quercus,Fagaceae,Fagales,イチイガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+アマミアラカシ,,Quercus glauca Thunb. var. amamiana (Hatus.) Hatus. ex H.Ohba,EXACT,synonym,Quercus glauca Thunb.,Quercus glauca,Quercus,Fagaceae,Fagales,アマミアラカシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name; checked in The Plant List
+アラカシ,,Quercus glauca Thunb. var. glauca,EXACT,accepted,Quercus glauca var. glauca,Quercus glauca var. glauca,Quercus,Fagaceae,Fagales,アラカシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+ハナガガシ,,Quercus hondae Makino,EXACT,accepted,Quercus hondae Makino,Quercus hondae,Quercus,Fagaceae,Fagales,ハナガガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+オキナワウラジロガシ,,Quercus miyagii Koidz.,EXACT,accepted,Quercus miyagii Koidz.,Quercus miyagii,Quercus,Fagaceae,Fagales,オキナワウラジロガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+ミズナラ,,Quercus crispula Blume var. crispula,HIGHERRANK,synonym,Quercus mongolica subsp. crispula (Blume) Menitsky,Quercus crispula var. crispula,Quercus,Fagaceae,Fagales,ミズナラ,ブナ科,ブナ目,4,4,1,4,4,4,3,use greenlist name
+シラカシ,,Quercus myrsinifolia Blume,EXACT,accepted,Quercus myrsinifolia Blume,Quercus myrsinifolia,Quercus,Fagaceae,Fagales,シラカシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+ウラジロガシ,,Quercus salicina Blume,EXACT,accepted,Quercus salicina Blume,Quercus salicina,Quercus,Fagaceae,Fagales,ウラジロガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+コナラ,,Quercus serrata Murray,EXACT,accepted,Quercus serrata Murray,Quercus serrata,Quercus,Fagaceae,Fagales,コナラ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ツクバネガシ,,Quercus sessilifolia Blume,EXACT,accepted,Quercus sessilifolia Blume,Quercus sessilifolia,Quercus,Fagaceae,Fagales,ツクバネガシ,ブナ科,ブナ目,4,4,1,5,5,5,3,use gbif name
+アベマキ,,Quercus variabilis Blume,EXACT,accepted,Quercus variabilis Blume,Quercus variabilis,Quercus,Fagaceae,Fagales,アベマキ,ブナ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+オニグルミ,,Juglans mandshurica Maxim. var. sachalinensis (Komatsu) Kitam.,HIGHERRANK,accepted,Juglans mandshurica Maxim.,Juglans mandshurica var. sachalinensis,Juglans,Juglandaceae,Fagales,オニグルミ,クルミ科,ブナ目,4,4,1,4,4,4,3,use greenlist name
+ノグルミ,,Platycarya strobilacea Siebold et Zucc.,EXACT,accepted,Platycarya strobilacea Siebold & Zucc.,Platycarya strobilacea,Platycarya,Juglandaceae,Fagales,ノグルミ,クルミ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+サワグルミ,,Pterocarya rhoifolia Siebold et Zucc.,EXACT,accepted,Pterocarya rhoifolia Siebold & Zucc.,Pterocarya rhoifolia,Pterocarya,Juglandaceae,Fagales,サワグルミ,クルミ科,ブナ目,4,4,1,4,4,4,3,use gbif name
+ヤマモモ,,Myrica rubra Siebold et Zucc.,EXACT,synonym,Morella rubra Lour.,Myrica rubra,Myrica,Myricaceae,Fagales,ヤマモモ,ヤマモモ科,ブナ目,4,4,1,5,5,5,3,use greenlist name; checked in The Plant List
+アオキ,,Aucuba japonica Thunb. var. japonica,EXACT,accepted,Aucuba japonica var. japonica,Aucuba japonica var. japonica,Aucuba,Garryaceae,Garryales,アオキ,ガリア科,ガリア目,4,4,1,5,5,5,3,use gbif name
+ヤロード,,Ochrosia nakaiana (Koidz.) Koidz. ex H.Hara,EXACT,accepted,Ochrosia nakaiana Koidz. ex Hara,Ochrosia nakaiana,Ochrosia,Apocynaceae,Gentianales,ヤロード,キョウチクトウ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+テイカカズラ,,Trachelospermum asiaticum (Siebold et Zucc.) Nakai var. asiaticum,HIGHERRANK,accepted,Trachelospermum asiaticum Nakai,Trachelospermum asiaticum var. asiaticum,Trachelospermum,Apocynaceae,Gentianales,テイカカズラ,キョウチクトウ科,リンドウ目,4,4,1,5,5,5,3,use greenlist name
+オキナワテイカカズラ,,Trachelospermum gracilipes Hook.f. var. liukiuense (Hatus.) Kitam.,EXACT,accepted,Trachelospermum gracilipes Hook.f.,Trachelospermum gracilipes var. liukiuense,Trachelospermum,Apocynaceae,Gentianales,オキナワテイカカズラ,キョウチクトウ科,リンドウ目,4,4,1,5,5,5,3,use greenlist name
+リュウキュウテイカカズラ,オキナワテイカカズラ,Trachelospermum gracilipes Hook.f. var. liukiuense (Hatus.) Kitam.,EXACT,accepted,Trachelospermum gracilipes Hook.f.,Trachelospermum gracilipes var. liukiuense,Trachelospermum,Apocynaceae,Gentianales,オキナワテイカカズラ,キョウチクトウ科,リンドウ目,4,4,0,5,5,5,3,use greenlist name
+タニワタリノキ,,Adina pilulifera (Lam.) Franch. ex Drake,EXACT,accepted,Adina pilulifera Franch. ex Drake,Adina pilulifera,Adina,Rubiaceae,Gentianales,タニワタリノキ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+シマミサオノキ,,Aidia canthioides (Champ. ex Benth.) Masam.,EXACT,accepted,Aidia canthioides (Champ. ex Benth.) Masam.,Aidia canthioides,Aidia,Rubiaceae,Gentianales,シマミサオノキ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+ミサオノキ,,Aidia henryi (E.Pritz.) T.Yamaz.,EXACT,accepted,Aidia henryi (E.Pritz.) T.Yamaz.,Aidia henryi,Aidia,Rubiaceae,Gentianales,ミサオノキ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+シロミミズ,,Diplospora dubia (Lindl.) Masam.,EXACT,accepted,Diplospora dubia (Lindl.) Masam.,Diplospora dubia,Diplospora,Rubiaceae,Gentianales,シロミミズ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+クチナシ,,Gardenia jasminoides Ellis,EXACT,accepted,Gardenia jasminoides Ellis,Gardenia jasminoides,Gardenia,Rubiaceae,Gentianales,クチナシ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+ハナガサノキ,,Morinda umbellata L. subsp. obovata Y.Z.Ruan,EXACT,synonym,Gynochthodes umbellata (L.) Razafim. & B.Bremer,Morinda umbellata subsp. obovata,Morinda,Rubiaceae,Gentianales,ハナガサノキ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+ボチョウジ,,Psychotria asiatica L.,EXACT,accepted,Psychotria asiatica L.,Psychotria asiatica,Psychotria,Rubiaceae,Gentianales,ボチョウジ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+オガサワラボチョウジ,,Psychotria homalosperma A.Gray,EXACT,accepted,Psychotria homalosperma A.Gray,Psychotria homalosperma,Psychotria,Rubiaceae,Gentianales,オガサワラボチョウジ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+アカミズキ,,Wendlandia formosana Cowan,EXACT,accepted,Wendlandia formosana Cowan,Wendlandia formosana,Wendlandia,Rubiaceae,Gentianales,アカミズキ,アカネ科,リンドウ目,4,4,1,5,5,5,3,use gbif name
+ムラサキシキブ,,Callicarpa japonica Thunb. var. japonica,EXACT,accepted,Callicarpa japonica var. japonica,Callicarpa japonica var. japonica,Callicarpa,Lamiaceae,Lamiales,ムラサキシキブ,シソ科,シソ目,4,4,1,4,4,4,3,use gbif name
+ヤブムラサキ,,Callicarpa mollis Siebold et Zucc.,EXACT,accepted,Callicarpa mollis Siebold & Zucc.,Callicarpa mollis,Callicarpa,Lamiaceae,Lamiales,ヤブムラサキ,シソ科,シソ目,4,4,1,4,4,4,3,use gbif name
+オオバシマムラサキ,,Callicarpa subpubescens Hook. et Arn.,EXACT,accepted,Callicarpa subpubescens Hook. & Arn.,Callicarpa subpubescens,Callicarpa,Lamiaceae,Lamiales,オオバシマムラサキ,シソ科,シソ目,4,4,1,5,5,5,3,use gbif name
+アマクサギ,,Clerodendrum trichotomum Thunb. var. fargesii (Dode) Rehder,EXACT,synonym,Clerodendrum trichotomum Thunb.,Clerodendrum trichotomum var. fargesii,Clerodendrum,Lamiaceae,Lamiales,アマクサギ,シソ科,シソ目,4,4,1,4,4,4,3,use greenlist name; checked The Plant List
+クサギ,,Clerodendrum trichotomum Thunb. var. trichotomum,EXACT,synonym,Clerodendrum trichotomum Thunb.,Clerodendrum trichotomum var. trichotomum,Clerodendrum,Lamiaceae,Lamiales,クサギ,シソ科,シソ目,4,4,1,4,4,4,3,use greenlist name; checked The Plant List
+ショウロウクサギ,,Clerodendrum trichotomum Thunb. var. esculentum Makino,EXACT,synonym,Clerodendrum trichotomum Thunb.,Clerodendrum trichotomum var. esculentum,Clerodendrum,Lamiaceae,Lamiales,ショウロウクサギ,シソ科,シソ目,4,4,1,4,4,4,3,use greenlist name; checked The Plant List
+ハマクサギ,,Premna microphylla Turcz.,EXACT,accepted,Premna microphylla Turcz.,Premna microphylla,Premna,Lamiaceae,Lamiales,ハマクサギ,シソ科,シソ目,4,4,1,4,4,4,3,use gbif name
+ミヤマアオダモ,,Fraxinus apertisquamifera H.Hara,EXACT,accepted,Fraxinus apertisquamifera Hara,Fraxinus apertisquamifera,Fraxinus,Oleaceae,Lamiales,ミヤマアオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+アオダモ,,Fraxinus lanuginosa Koidz. f. serrata (Nakai) Murata,EXACT,synonym,Fraxinus lanuginosa Koidz.,Fraxinus lanuginosa f. serrata,Fraxinus,Oleaceae,Lamiales,アオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use greenlist name
+アラゲアオダモ,ケアオダモ,Fraxinus lanuginosa Koidz.,EXACT,accepted,Fraxinus lanuginosa Koidz.,Fraxinus lanuginosa,Fraxinus,Oleaceae,Lamiales,ケアオダモ,モクセイ科,シソ目,4,4,0,4,4,4,3,use gbif name
+ケアオダモ,,Fraxinus lanuginosa Koidz.,EXACT,accepted,Fraxinus lanuginosa Koidz.,Fraxinus lanuginosa,Fraxinus,Oleaceae,Lamiales,ケアオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+コバノトネリコ,アオダモ,Fraxinus lanuginosa Koidz. f. serrata (Nakai) Murata,EXACT,synonym,Fraxinus lanuginosa Koidz.,Fraxinus lanuginosa f. serrata,Fraxinus,Oleaceae,Lamiales,アオダモ,モクセイ科,シソ目,4,4,0,4,4,4,3,use greenlist name
+ヤマトアオダモ,,Fraxinus longicuspis Siebold et Zucc. var. longicuspis,HIGHERRANK,accepted,Fraxinus longicuspis Siebold & Zucc.,Fraxinus longicuspis var. longicuspis,Fraxinus,Oleaceae,Lamiales,ヤマトアオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use greenlist name
+ヤマトアオダモ,,Fraxinus longicuspis Siebold et Zucc. var. longicuspis,HIGHERRANK,accepted,Fraxinus longicuspis Siebold et Zucc.,Fraxinus longicuspis var. longicuspis,Fraxinus,Oleaceae,Lamiales,ヤマトアオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use greenlist name
+ヤチダモ,,Fraxinus mandshurica Rupr.,EXACT,accepted,Fraxinus mandshurica Rupr.,Fraxinus mandshurica,Fraxinus,Oleaceae,Lamiales,ヤチダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+シオジ,,Fraxinus platypoda Oliv.,EXACT,accepted,Fraxinus platypoda Oliv.,Fraxinus platypoda,Fraxinus,Oleaceae,Lamiales,シオジ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+マルバアオダモ,,Fraxinus sieboldiana Blume,EXACT,accepted,Fraxinus sieboldiana Blume,Fraxinus sieboldiana,Fraxinus,Oleaceae,Lamiales,マルバアオダモ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+ネズミモチ,,Ligustrum japonicum Thunb. var. japonicum,HIGHERRANK,accepted,Ligustrum japonicum Thunb.,Ligustrum japonicum var. japonicum,Ligustrum,Oleaceae,Lamiales,ネズミモチ,モクセイ科,シソ目,4,4,1,5,5,5,3,use greenlist name
+オキナワイボタ,,Ligustrum liukiuense Koidz.,EXACT,accepted,Ligustrum liukiuense Koidz.,Ligustrum liukiuense,Ligustrum,Oleaceae,Lamiales,オキナワイボタ,モクセイ科,シソ目,4,4,1,5,5,5,3,use gbif name
+イボタノキ,,Ligustrum obtusifolium Siebold et Zucc. var. obtusifolium,EXACT,accepted,Ligustrum obtusifolium subsp. obtusifolium,Ligustrum obtusifolium subsp. obtusifolium,Ligustrum,Oleaceae,Lamiales,イボタノキ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+オクイボタ,ミヤマイボタ,Ligustrum tschonoskii Decne. var. tschonoskii,HIGHERRANK,accepted,Ligustrum tschonoskii Decne.,Ligustrum tschonoskii var. tschonoskii,Ligustrum,Oleaceae,Lamiales,ミヤマイボタ,モクセイ科,シソ目,4,4,0,4,4,4,3,use greenlist name
+ミヤマイボタ,,Ligustrum tschonoskii Decne. var. tschonoskii,HIGHERRANK,accepted,Ligustrum tschonoskii Decne.,Ligustrum tschonoskii var. tschonoskii,Ligustrum,Oleaceae,Lamiales,ミヤマイボタ,モクセイ科,シソ目,4,4,1,4,4,4,3,use greenlist name
+ヒイラギ,,Osmanthus heterophyllus (G.Don) P.S.Green,EXACT,accepted,Osmanthus heterophyllus (G.Don) P.S.Green,Osmanthus heterophyllus,Osmanthus,Oleaceae,Lamiales,ヒイラギ,モクセイ科,シソ目,4,4,1,5,5,5,3,use gbif name
+リュウキュウモクセイ,,Osmanthus marginatus (Champ. ex Benth.) Hemsl.,EXACT,accepted,Osmanthus marginatus (Champ. ex Benth.) Hemsl.,Osmanthus marginatus,Osmanthus,Oleaceae,Lamiales,リュウキュウモクセイ,モクセイ科,シソ目,4,4,1,5,5,5,3,use gbif name
+ハシドイ,,Syringa reticulata (Blume) H.Hara var. reticulata,EXACT,accepted,Syringa reticulata subsp. reticulata,Syringa reticulata subsp. reticulata,Syringa,Oleaceae,Lamiales,ハシドイ,モクセイ科,シソ目,4,4,1,4,4,4,3,use gbif name
+バリバリノキ,,Actinodaphne acuminata (Blume) Meisn.,EXACT,synonym,Actinodaphne longifolia Nakai,Actinodaphne acuminata,Actinodaphne,Lauraceae,Laurales,バリバリノキ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use greenlist name; checked in The Plant List
+ニッケイ,,Cinnamomum sieboldii Meisn.,EXACT,synonym,Cinnamomum burmannii (Nees & T.Nees) Blume,Cinnamomum sieboldii,Cinnamomum,Lauraceae,Laurales,ニッケイ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use greenlist name; checked in The Plant List
+クスノキ,,Cinnamomum camphora (L.) J.Presl,EXACT,accepted,Cinnamomum camphora (L.) J.Presl,Cinnamomum camphora,Cinnamomum,Lauraceae,Laurales,クスノキ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+シバニッケイ,,Cinnamomum doederleinii Engl. var. doederleinii,EXACT,accepted,Cinnamomum doederleinii var. doederleinii,Cinnamomum doederleinii var. doederleinii,Cinnamomum,Lauraceae,Laurales,シバニッケイ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+ヤブニッケイ,,Cinnamomum yabunikkei H.Ohba,EXACT,accepted,Cinnamomum yabunikkei H.Ohba,Cinnamomum yabunikkei,Cinnamomum,Lauraceae,Laurales,ヤブニッケイ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+カナクギノキ,,Lindera erythrocarpa Makino,EXACT,accepted,Lindera erythrocarpa Makino,Lindera erythrocarpa,Lindera,Lauraceae,Laurales,カナクギノキ,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+ヤマコウバシ,,Lindera glauca (Siebold et Zucc.) Blume,EXACT,accepted,Lindera glauca Blume,Lindera glauca,Lindera,Lauraceae,Laurales,ヤマコウバシ,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+アブラチャン,,Lindera praecox (Siebold et Zucc.) Blume var. praecox,EXACT,accepted,Lindera praecox f. praecox,Lindera praecox f. praecox,Lindera,Lauraceae,Laurales,アブラチャン,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+シロモジ,,Lindera triloba (Siebold et Zucc.) Blume,EXACT,accepted,Lindera triloba Blume,Lindera triloba,Lindera,Lauraceae,Laurales,シロモジ,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+オオバクロモジ,,Lindera umbellata Thunb. var. membranacea (Maxim.) Momiy. ex H.Hara et M.Mizush.,EXACT,accepted,Lindera umbellata var. membranacea (Maxim.) Momiyama,Lindera umbellata var. membranacea,Lindera,Lauraceae,Laurales,オオバクロモジ,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+クロモジ,,Lindera umbellata Thunb. var. umbellata,EXACT,accepted,Lindera umbellata var. umbellata,Lindera umbellata var. umbellata,Lindera,Lauraceae,Laurales,クロモジ,クスノキ科,クスノキ目,4,4,1,4,4,4,3,use gbif name
+カゴノキ,,Litsea coreana H.Lév.,EXACT,accepted,Litsea coreana H.Lév.,Litsea coreana,Litsea,Lauraceae,Laurales,カゴノキ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+アオガシ,ホソバタブ,Machilus japonica Siebold et Zucc.,EXACT,accepted,Machilus japonica Siebold & Zucc.,Machilus japonica,Machilus,Lauraceae,Laurales,ホソバタブ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+ホソバタブ,,Machilus japonica Siebold et Zucc.,EXACT,accepted,Machilus japonica Siebold & Zucc.,Machilus japonica,Machilus,Lauraceae,Laurales,ホソバタブ,クスノキ科,クスノキ目,4,4,0,5,5,5,3,use gbif name
+コブガシ,,Machilus kobu Maxim.,EXACT,accepted,Machilus kobu Maxim.,Machilus kobu,Machilus,Lauraceae,Laurales,コブガシ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+イヌグス,タブノキ,Machilus thunbergii Siebold et Zucc.,EXACT,accepted,Machilus thunbergii Siebold & Zucc.,Machilus thunbergii,Machilus,Lauraceae,Laurales,タブノキ,クスノキ科,クスノキ目,4,4,0,5,5,5,3,use gbif name
+タブノキ,,Machilus thunbergii Siebold et Zucc.,EXACT,accepted,Machilus thunbergii Siebold & Zucc.,Machilus thunbergii,Machilus,Lauraceae,Laurales,タブノキ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+イヌガシ,,Neolitsea aciculata (Blume) Koidz.,EXACT,accepted,Neolitsea aciculata Koidz.,Neolitsea aciculata,Neolitsea,Lauraceae,Laurales,イヌガシ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+シロダモ,,Neolitsea sericea (Blume) Koidz. var. sericea,EXACT,accepted,Neolitsea sericea var. sericea,Neolitsea sericea var. sericea,Neolitsea,Lauraceae,Laurales,シロダモ,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use gbif name
+オガサワラアオグス,,Machilus boninensis Koidz.,EXACT,synonym,Nothaphoebe boninensis Koidz. ex Kamik.,Machilus boninensis,Nothaphoebe,Lauraceae,Laurales,オガサワラアオグス,クスノキ科,クスノキ目,4,4,1,5,5,5,3,use greenlist name; checked in The Plant List
+オガタマノキ,,Magnolia compressa Maxim.,EXACT,accepted,Magnolia compressa Maxim.,Magnolia compressa,Magnolia,Magnoliaceae,Magnoliales,オガタマノキ,モクレン科,モクレン目,4,4,1,5,5,5,3,use gbif name
+キタコブシ,,Magnolia kobus DC. var. borealis Sarg.,EXACT,synonym,Magnolia kobus DC.,Magnolia kobus var. borealis,Magnolia,Magnoliaceae,Magnoliales,キタコブシ,モクレン科,モクレン目,4,4,1,4,4,4,3,use greenlist name; コブシの地域変種で同種とする見方もあるが変種を維持
+コブシ,,Magnolia kobus DC. var. kobus,EXACT,synonym,Magnolia kobus DC.,Magnolia kobus var. kobus,Magnolia,Magnoliaceae,Magnoliales,コブシ,モクレン科,モクレン目,4,4,1,4,4,4,3,use greenlist name
+ホオノキ,,Magnolia obovata Thunb.,EXACT,accepted,Magnolia obovata Thunb.,Magnolia obovata,Magnolia,Magnoliaceae,Magnoliales,ホオノキ,モクレン科,モクレン目,4,4,1,4,4,4,3,use gbif name
+タムシバ,,Magnolia salicifolia (Siebld et Zucc.) Maxim.,EXACT,accepted,Magnolia salicifolia Maxim.,Magnolia salicifolia,Magnolia,Magnoliaceae,Magnoliales,タムシバ,モクレン科,モクレン目,4,4,1,4,4,4,3,use gbif name
+セキモンノキ,,Claoxylon centinarium Koidz.,FUZZY,accepted,Claoxylon centenarium Koidz.,Claoxylon centenarium,Claoxylon,Euphorbiaceae,Malpighiales,セキモンノキ,トウダイグサ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+アカメガシワ,,Mallotus japonicus (L.f.) Müll.Arg.,EXACT,accepted,Mallotus japonicus Müll.Arg.,Mallotus japonicus,Mallotus,Euphorbiaceae,Malpighiales,アカメガシワ,トウダイグサ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+シラキ,,Neoshirakia japonica (Siebold et Zucc.) Esser,EXACT,accepted,Neoshirakia japonica (Siebold & Zucc.) Esser,Neoshirakia japonica,Neoshirakia,Euphorbiaceae,Malpighiales,シラキ,トウダイグサ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+アブラギリ,,Vernicia cordata (Thunb.) Airy Shaw,EXACT,accepted,Vernicia cordata (Thunb.) Airy Shaw,Vernicia cordata,Vernicia,Euphorbiaceae,Malpighiales,アブラギリ,トウダイグサ科,キントラノオ目,4,4,1,4,4,4,3,not found in GreenList; found in YList; use gbif name
+ヤマヒハツ,,Antidesma japonicum Siebold et Zucc.,EXACT,accepted,Antidesma japonicum Siebold & Zucc.,Antidesma japonicum,Antidesma,Phyllanthaceae,Malpighiales,ヤマヒハツ,コミカンソウ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+アカギ,,Bischofia javanica Blume,EXACT,accepted,Bischofia javanica Blume,Bischofia javanica,Bischofia,Phyllanthaceae,Malpighiales,アカギ,コミカンソウ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+カキバカンコノキ,,Phyllanthus gaertneri T. Kuros.,EXACT,synonym,Glochidion zeylanicum (Gaertn.) A.Juss.,Glochidion zeylanicum,Glochidion,Phyllanthaceae,Malpighiales,カキバカンコノキ,コミカンソウ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+カンコノキ,,Phyllanthus sieboldianus T. Kuros.,EXACT,accepted,Phyllanthus sieboldianus T.Kuros.,Phyllanthus sieboldianus,Phyllanthus,Phyllanthaceae,Malpighiales,カンコノキ,コミカンソウ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+ウラジロカンコノキ,,Phyllanthus triandrus (Blanco) Müll. Arg.,EXACT,accepted,Phyllanthus triandrus Müll.Arg.,Phyllanthus triandrus,Phyllanthus,Phyllanthaceae,Malpighiales,ウラジロカンコノキ,コミカンソウ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+ハツバキ,,Drypetes integerrima (Koidz.) Hosok.,EXACT,accepted,Drypetes integerrima (Koidz.) Hosok.,Drypetes integerrima,Drypetes,Putranjivaceae,Malpighiales,ハツバキ,ツゲモドキ科,キントラノオ目,4,4,1,5,5,5,3,use gbif name
+イイギリ,,Idesia polycarpa Maxim.,EXACT,accepted,Idesia polycarpa Maxim.,Idesia polycarpa,Idesia,Salicaceae,Malpighiales,イイギリ,ヤナギ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+エゾヤマナラシ,,Populus tremula L. var. davidiana (Dode) C.K.Schneid.,EXACT,synonym,Populus davidiana Dode,Populus tremula var. davidiana,Populus,Salicaceae,Malpighiales,エゾヤマナラシ,ヤナギ科,キントラノオ目,4,4,0,4,4,4,3,use greenlist name; checked in The Plant List
+チョウセンヤマナラシ,エゾヤマナラシ,Populus tremula L. var. davidiana (Dode) C.K.Schneid.,EXACT,synonym,Populus davidiana Dode,Populus tremula var. davidiana,Populus,Salicaceae,Malpighiales,エゾヤマナラシ,ヤナギ科,キントラノオ目,4,4,1,4,4,4,3,use greenlist name; checked in The Plant List
+バッコヤナギ,,Salix caprea L.,EXACT,accepted,Salix caprea L.,Salix caprea,Salix,Salicaceae,Malpighiales,バッコヤナギ,ヤナギ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+ヤマネコヤナギ,バッコヤナギ,Salix caprea L.,EXACT,accepted,Salix caprea L.,Salix caprea,Salix,Salicaceae,Malpighiales,バッコヤナギ,ヤナギ科,キントラノオ目,4,4,0,4,4,4,3,use gbif name
+ヤナギsp.,,Salix sp.,HIGHERRANK,accepted,Salix L.,Salix sp.,Salix,Salicaceae,Malpighiales,ヤナギ類,ヤナギ科,キントラノオ目,4,4,1,4,4,4,3,not found in GreenList; not found in YList
+オノエヤナギ,,Salix udensis Trautv. et C.A.Mey.,EXACT,accepted,Salix udensis Trautv.,Salix udensis,Salix,Salicaceae,Malpighiales,オノエヤナギ,ヤナギ科,キントラノオ目,4,4,1,4,4,4,3,use gbif name
+ナガバヤナギ,オノエヤナギ,Salix udensis Trautv. et C.A.Mey.,EXACT,accepted,Salix udensis Trautv.,Salix udensis,Salix,Salicaceae,Malpighiales,オノエヤナギ,ヤナギ科,キントラノオ目,4,4,0,4,4,4,3,not found in GreenList; not found in YList
+テリハハマボウ,モンテンボク,Hibiscus glaber (Matsum. ex Hatt.) Matsum. ex Nakai,EXACT,synonym,Talipariti glabrum (Matsum. ex Nakai) Fryxell,Hibiscus glaber,Hibiscus,Malvaceae,Malvales,モンテンボク,アオイ科,アオイ目,4,4,0,5,5,5,3,use greenlist name; contorversial
+モンテンボク,,Hibiscus glaber (Matsum. ex Hatt.) Matsum. ex Nakai,EXACT,synonym,Talipariti glabrum (Matsum. ex Nakai) Fryxell,Hibiscus glaber,Hibiscus,Malvaceae,Malvales,モンテンボク,アオイ科,アオイ目,4,4,1,5,5,5,3,use greenlist name; contorversial
+シナノキ,,Tilia japonica (Miq.) Simonk. var. japonica,HIGHERRANK,accepted,Tilia japonica (Miq.) Simonk.,Tilia japonica var. japonica,Tilia,Malvaceae,Malvales,シナノキ,アオイ科,アオイ目,4,4,1,4,4,4,3,use greenlist name
+オオバボダイジュ,,Tilia maximowicziana Shiras.,EXACT,accepted,Tilia maximowicziana Shiras.,Tilia maximowicziana,Tilia,Malvaceae,Malvales,オオバボダイジュ,アオイ科,アオイ目,4,4,1,4,4,4,3,use gbif name
+モイワボダイジュ,,Tilia maximowicziana Shiras. var. yesoana (Nakai) Tatew.,EXACT,accepted,Tilia maximowicziana var. yesoana (Nakai) Tatew.,Tilia maximowicziana var. yesoana,Tilia,Malvaceae,Malvales,モイワボダイジュ,アオイ科,アオイ目,4,4,1,4,4,4,3,use gbif name
+シマサルスベリ,,Lagerstroemia subcostata Koehne var. subcostata,EXACT,accepted,Lagerstroemia subcostata var. subcostata,Lagerstroemia subcostata var. subcostata,Lagerstroemia,Lythraceae,Myrtales,シマサルスベリ,ミソハギ科,フトモモ目,4,4,1,4,4,4,3,use gbif name
+アデク,,Syzygium buxifolium Hook. et Arn.,EXACT,accepted,Syzygium buxifolium Hook. & Arn.,Syzygium buxifolium,Syzygium,Myrtaceae,Myrtales,アデク,フトモモ科,フトモモ目,4,4,1,5,5,5,3,use gbif name
+アデクモドキ,ヒメフトモモ,Syzygium cleyerifolium (Yatabe) Makino,EXACT,accepted,Syzygium cleyerifolium Makino,Syzygium cleyerifolium,Syzygium,Myrtaceae,Myrtales,ヒメフトモモ,フトモモ科,フトモモ目,4,4,1,5,5,5,3,use gbif name
+ヒメフトモモ,,Syzygium cleyerifolium (Yatabe) Makino,EXACT,accepted,Syzygium cleyerifolium Makino,Syzygium cleyerifolium,Syzygium,Myrtaceae,Myrtales,ヒメフトモモ,フトモモ科,フトモモ目,4,4,1,5,5,5,3,use gbif name
+コバンモチ,,Elaeocarpus japonicus Siebold et Zucc.,EXACT,accepted,Elaeocarpus japonicus Siebold,Elaeocarpus japonicus,Elaeocarpus,Elaeocarpaceae,Oxalidales,コバンモチ,ホルトノキ科,カタバミ目,4,4,1,5,5,5,3,use gbif name
+ホルトノキ,,Elaeocarpus zollingeri K.Koch var. zollingeri,HIGHERRANK,synonym,Elaeocarpus sylvestris Poir.,Elaeocarpus zollingeri var. zollingeri,Elaeocarpus,Elaeocarpaceae,Oxalidales,ホルトノキ,ホルトノキ科,カタバミ目,4,4,1,5,5,5,3,use greenlist name
+シマホルトノキ,,Elaeocarpus photiniifolius Hook. et Arn.,EXACT,synonym,Elaeocarpus sylvestris var. photiniifolius (Hook. & Arn.) Yasuhiro Endo,Elaeocarpus photiniifolius,Elaeocarpus,Elaeocarpaceae,Oxalidales,シマホルトノキ,ホルトノキ科,カタバミ目,4,4,1,5,5,5,3,use greenlist name; checked in The Plant List
+タケ,,Phyllostachys sp.,HIGHERRANK,accepted,Phyllostachys Siebold & Zucc.,Phyllostachys sp.,Phyllostachys,Poaceae,Poales,マダケ類,イネ科,イネ目,4,4,1,4,4,4,3,not found in GreenList; not found in YList
+ヤマモガシ,,Helicia cochinchinensis Lour.,EXACT,accepted,Helicia cochinchinensis Lour.,Helicia cochinchinensis,Helicia,Proteaceae,Proteales,ヤマモガシ,ヤマモガシ科,ヤマモガシ目,4,4,1,5,5,5,3,use gbif name
+アワブキ,,Meliosma myriantha Siebold et Zucc.,EXACT,accepted,Meliosma myriantha Siebold & Zucc.,Meliosma myriantha,Meliosma,Sabiaceae,Proteales,アワブキ,アワブキ科,ヤマモガシ目,4,4,1,4,4,4,3,use gbif name
+ヤマビワ,,Meliosma rigida Siebold et Zucc.,EXACT,accepted,Meliosma rigida Siebold & Zucc.,Meliosma rigida,Meliosma,Sabiaceae,Proteales,ヤマビワ,アワブキ科,ヤマモガシ目,4,4,1,5,5,5,3,use gbif name
+ナンバンアワブキ,,Meliosma squamulata Hance,EXACT,accepted,Meliosma squamulata Hance,Meliosma squamulata,Meliosma,Sabiaceae,Proteales,ナンバンアワブキ,アワブキ科,ヤマモガシ目,4,4,1,5,5,5,3,use gbif name
+フサザクラ,,Euptelea polyandra Siebold et Zucc.,EXACT,accepted,Euptelea polyandra Siebold & Zucc.,Euptelea polyandra,Euptelea,Eupteleaceae,Ranunculales,フサザクラ,フサザクラ科,キンポウゲ目,4,4,1,4,4,4,3,use gbif name
+アケビ,,Akebia quinata (Houtt.) Decne.,EXACT,accepted,Akebia quinata Decne.,Akebia quinata,Akebia,Lardizabalaceae,Ranunculales,アケビ,アケビ科,キンポウゲ目,4,4,1,4,4,4,3,use gbif name
+ミツバアケビ,,Akebia trifoliata (Thunb.) Koidz. subsp. trifoliata,EXACT,accepted,Akebia trifoliata subsp. trifoliata,Akebia trifoliata subsp. trifoliata,Akebia,Lardizabalaceae,Ranunculales,ミツバアケビ,アケビ科,キンポウゲ目,4,4,1,4,4,4,3,use gbif name
+アオツヅラフジ,,Cocculus trilobus (Thunb.) DC.,EXACT,synonym,Cocculus orbiculatus DC.,Cocculus orbiculatus,Cocculus,Menispermaceae,Ranunculales,アオツヅラフジ,ツヅラフジ科,キンポウゲ目,4,4,1,4,4,4,3,use gbif name; checked in The Plant List
+ツヅラフジ,,Sinomenium acutum (Thunb.) Rehder et E.H.Wilson var. acutum,EXACT,accepted,Sinomenium acutum var. acutum,Sinomenium acutum var. acutum,Sinomenium,Menispermaceae,Ranunculales,ツヅラフジ,ツヅラフジ科,キンポウゲ目,4,4,1,4,4,4,3,use gbif name
+ムクノキ,,Aphananthe aspera (Thunb.) Planch.,EXACT,accepted,Aphananthe aspera Planch.,Aphananthe aspera,Aphananthe,Cannabaceae,Rosales,ムクノキ,アサ科,バラ目,4,4,1,4,4,4,3,use gbif name
+エノキ,,Celtis sinensis Pers.,EXACT,accepted,Celtis sinensis Pers.,Celtis sinensis,Celtis,Cannabaceae,Rosales,エノキ,アサ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ウラジロエノキ,,Trema orientalis (L.) Blume,EXACT,accepted,Trema orientalis Blume,Trema orientalis,Trema,Cannabaceae,Rosales,ウラジロエノキ,アサ科,バラ目,4,4,1,5,5,5,3,use gbif name
+ハコネグミ,,Elaeagnus matsunoana Makino,EXACT,accepted,Elaeagnus matsunoana Makino,Elaeagnus matsunoana,Elaeagnus,Elaeagnaceae,Rosales,ハコネグミ,グミ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ヒメコウゾ,,Broussonetia monoica Hance,EXACT,synonym,Broussonetia kazinoki Siebold,Broussonetia kazinoki,Broussonetia,Moraceae,Rosales,ヒメコウゾ,クワ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ホソバムクイヌビワ,,Ficus ampelas Burm.f.,EXACT,accepted,Ficus ampelas Burm.fil.,Ficus ampelas,Ficus,Moraceae,Rosales,ホソバムクイヌビワ,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+アカメイヌビワ,,Ficus benguetensis Merr.,EXACT,accepted,Ficus benguetensis Merr.,Ficus benguetensis,Ficus,Moraceae,Rosales,アカメイヌビワ,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+トキワイヌビワ,,Ficus boninsimae Koidz.,EXACT,accepted,Ficus boninsimae Koidz.,Ficus boninsimae,Ficus,Moraceae,Rosales,トキワイヌビワ,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+イヌビワ,,Ficus erecta Thunb. var. erecta,EXACT,accepted,Ficus erecta var. erecta,Ficus erecta var. erecta,Ficus,Moraceae,Rosales,イヌビワ,クワ科,バラ目,4,4,1,4,4,4,3,use gbif name
+オオヤマイチジク,,Ficus iidaiana Rehder et E.H.Wilson,EXACT,accepted,Ficus iidaiana Rehder & E.H.Wilson,Ficus iidaiana,Ficus,Moraceae,Rosales,オオヤマイチジク,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+オオイタビ,,Ficus pumila L.,EXACT,accepted,Ficus pumila L.,Ficus pumila,Ficus,Moraceae,Rosales,オオイタビ,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+オオバイヌビワ,,Ficus septica Burm.f.,EXACT,accepted,Ficus septica Burm.f.,Ficus septica,Ficus,Moraceae,Rosales,オオバイヌビワ,クワ科,バラ目,4,4,1,5,5,5,3,use gbif name
+シマグワ,ヤマグワ,Morus australis Poir.,EXACT,accepted,Morus australis Poir.,Morus australis,Morus,Moraceae,Rosales,ヤマグワ,クワ科,バラ目,4,4,0,4,4,4,3,use gbif name
+ヤマグワ,,Morus australis Poir.,EXACT,accepted,Morus australis Poir.,Morus australis,Morus,Moraceae,Rosales,ヤマグワ,クワ科,バラ目,4,4,1,4,4,4,3,use gbif name
+クマヤナギ,,Berchemia racemosa Siebold et Zucc. var. racemosa,EXACT,accepted,Berchemia racemosa subsp. racemosa,Berchemia racemosa subsp. racemosa,Berchemia,Rhamnaceae,Rosales,クマヤナギ,クロウメモドキ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ケケンポナシ,,Hovenia trichocarpa Chun et Tsiang var. robusta (Nakai et Y.Kimura) Y.L.Chen et P.K.Chou,EXACT,accepted,Hovenia trichocarpa var. robusta (Nakai & Y.Kimura) Y.L.Chen & P.K.Chou,Hovenia trichocarpa var. robusta,Hovenia,Rhamnaceae,Rosales,ケケンポナシ,クロウメモドキ科,バラ目,4,4,1,4,4,4,3,use gbif name
+クロツバラ,,Rhamnus davurica Pall. var. nipponica Makino,EXACT,accepted,Rhamnus davurica var. nipponica Makino,Rhamnus davurica var. nipponica,Rhamnus,Rhamnaceae,Rosales,クロツバラ,クロウメモドキ科,バラ目,4,4,1,4,4,4,3,use gbif name
+クロウメモドキ,,Rhamnus japonica Maxim. var. decipiens Maxim.,EXACT,accepted,Rhamnus japonica var. decipiens Maxim.,Rhamnus japonica var. decipiens,Rhamnus,Rhamnaceae,Rosales,クロウメモドキ,クロウメモドキ科,バラ目,4,4,1,4,4,4,3,use gbif name
+アズキナシ,,Aria alnifolia (Siebold et Zucc.) Decne.,EXACT,synonym,Sorbus alnifolia (Sieb. & Zucc.) C.Koch,Aria alnifolia,Aria,Rosaceae,Rosales,アズキナシ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name; checked The Plant List; unresolved
+ウラジロノキ,,Aria japonica Decne.,EXACT,synonym,Sorbus japonica (Decne.) Hedl.,Aria japonica,Aria,Rosaceae,Rosales,ウラジロノキ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name; checked The Plant List; unresolved
+オオウラジロノキ,,Malus tschonoskii (Maxim.) C.K.Schneid.,EXACT,synonym,Macromeles tschonoskii Koidz.,Malus tschonoskii,Malus,Rosaceae,Rosales,オオウラジロノキ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name; checked in The Plant List
+ズミ,,Malus toringo (Siebold) Siebold ex de Vriese,EXACT,synonym,Malus sieboldii subsp. sieboldii,Malus toringo,Malus,Rosaceae,Rosales,ズミ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name; checked in The Plant List
+カナメモチ,,Photinia glabra (Thunb.) Maxim.,EXACT,accepted,Photinia glabra (Thunb.) Maxim.,Photinia glabra,Photinia,Rosaceae,Rosales,カナメモチ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+カマツカ,,Pourthiaea villosa (Thunb.) Decne. var. villosa,HIGHERRANK,synonym,Photinia Lindl.,Pourthiaea villosa var. villosa,Photinia,Rosaceae,Rosales,カマツカ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name
+ワタゲカマツカ,カマツカ,Pourthiaea villosa (Thunb.) Decne. var. villosa,HIGHERRANK,synonym,Photinia Lindl.,Pourthiaea villosa var. villosa,Photinia,Rosaceae,Rosales,カマツカ,バラ科,バラ目,4,4,0,4,4,4,3,use greenlist name
+チョウジザクラ,,Prunus apetala (Siebold et Zucc.) Franch. et Sav. var. tetsuyae (H.Ohba),HIGHERRANK,accepted,Prunus apetala (Sieb. & Zucc.) Franch. & Sav.,Prunus apetala var. tetsuyae,Prunus,Rosaceae,Rosales,チョウジザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name
+イヌザクラ,,Prunus buergeriana Miq.,EXACT,accepted,Prunus buergeriana Miq.,Prunus buergeriana,Prunus,Rosaceae,Rosales,イヌザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ウワミズザクラ,,Prunus grayana Maxim.,EXACT,accepted,Prunus grayana Maxim.,Prunus grayana,Prunus,Rosaceae,Rosales,ウワミズザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+キンキマメザクラ,,Prunus incisa Thunb. var. kinkiensis (Koidz.) Ohwi,EXACT,synonym,Prunus incisa f. kinkiensis (Koidz.) M.Hiroe,Prunus incisa var. kinkiensis,Prunus,Rosaceae,Rosales,キンキマメザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name
+フジザクラ,マメザクラ,Prunus incisa Thunb. subsp. incisa,EXACT,accepted,Prunus incisa var. incisa,Prunus incisa var. incisa,Prunus,Rosaceae,Rosales,マメザクラ,バラ科,バラ目,4,4,0,4,4,4,3,use gbif name
+マメザクラ,,Prunus incisa Thunb. subsp. incisa,EXACT,accepted,Prunus incisa var. incisa,Prunus incisa var. incisa,Prunus,Rosaceae,Rosales,マメザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+サクラsp.,,Prunus sp.,HIGHERRANK,accepted,Prunus L.,Prunus sp.,Prunus,Rosaceae,Rosales,サクラ類,バラ科,バラ目,4,4,1,4,4,4,3,not found in GreenList; not found in YList
+カスミザクラ,,Prunus leveilleana Koehne,EXACT,accepted,Prunus leveilleana Koehne,Prunus leveilleana,Prunus,Rosaceae,Rosales,カスミザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ミヤマザクラ,,Prunus maximowiczii Rupr.,EXACT,accepted,Prunus maximowiczii Rupr.,Prunus maximowiczii,Prunus,Rosaceae,Rosales,ミヤマザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+タカネザクラ,,Prunus nipponica Matsum. var. nipponica,EXACT,accepted,Prunus nipponica var. nipponica,Prunus nipponica var. nipponica,Prunus,Rosaceae,Rosales,タカネザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ミネザクラ,タカネザクラ,Prunus nipponica Matsum. var. nipponica,EXACT,accepted,Prunus nipponica var. nipponica,Prunus nipponica var. nipponica,Prunus,Rosaceae,Rosales,タカネザクラ,バラ科,バラ目,4,4,0,4,4,4,3,use gbif name
+エゾヤマザクラ,オオヤマザクラ,Prunus sargentii Rehder var. sargentii,EXACT,synonym,Prunus sargentii Rehder,Prunus sargentii var. sargentii,Prunus,Rosaceae,Rosales,オオヤマザクラ,バラ科,バラ目,4,4,0,4,4,4,3,use greenlist name
+オオヤマザクラ,,Prunus sargentii Rehder var. sargentii,EXACT,synonym,Prunus sargentii Rehder,Prunus sargentii var. sargentii,Prunus,Rosaceae,Rosales,オオヤマザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name
+ヤマザクラ,,Prunus jamasakura Siebold ex Koidz. var. jamasakura,HIGHERRANK,synonym,Prunus serrulata f. spontanea (Maxim.) Chin S.Chang,Prunus jamasakura var. jamasakura,Prunus,Rosaceae,Rosales,ヤマザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use greenlist name
+エドヒガン,,Prunus spachiana (Laval. ex H.Otto) Kitam. f. ascendens (Makino) Kitam.,EXACT,accepted,Prunus spachiana f. ascendens (Makino) Kitam.,Prunus spachiana f. ascendens,Prunus,Rosaceae,Rosales,エドヒガン,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+リンボク,,Prunus spinulosa Siebold et Zucc.,EXACT,accepted,Prunus spinulosa Siebold & Zucc.,Prunus spinulosa,Prunus,Rosaceae,Rosales,リンボク,バラ科,バラ目,4,4,1,5,5,5,3,use gbif name
+シウリザクラ,,Prunus ssiori F.Schmidt,EXACT,accepted,Prunus ssiori F.Schmidt,Prunus ssiori,Prunus,Rosaceae,Rosales,シウリザクラ,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+シャリンバイ,,Rhaphiolepis indica (L.) Lindl. var. umbellata (Thunb.) H.Ohashi,EXACT,accepted,Rhaphiolepis indica var. umbellata (Thunb. ex Murray) H.Ohashi,Rhaphiolepis indica var. umbellata,Rhaphiolepis,Rosaceae,Rosales,シャリンバイ,バラ科,バラ目,4,4,1,5,5,5,3,use gbif name
+ナナカマド,,Sorbus commixta Hedl. var. commixta,EXACT,synonym,Sorbus commixta Hedl.,Sorbus commixta var. commixta,Sorbus,Rosaceae,Rosales,ナナカマド,バラ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ハルニレ,,Ulmus davidiana Planch. var. japonica (Rehder) Nakai,EXACT,accepted,Ulmus davidiana var. japonica (Rehd.) Nakai,Ulmus davidiana var. japonica,Ulmus,Ulmaceae,Rosales,ハルニレ,ニレ科,バラ目,4,4,1,4,4,4,3,use gbif name
+オヒョウ,,Ulmus laciniata (Trautv.) Mayr var. laciniata,EXACT,accepted,Ulmus laciniata var. laciniata,Ulmus laciniata var. laciniata,Ulmus,Ulmaceae,Rosales,オヒョウ,ニレ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ケヤキ,,Zelkova serrata (Thunb.) Makino,EXACT,accepted,Zelkova serrata Makino,Zelkova serrata,Zelkova,Ulmaceae,Rosales,ケヤキ,ニレ科,バラ目,4,4,1,4,4,4,3,use gbif name
+ヌルデ,,Rhus javanica L. var. chinensis (Mill.) T.Yamaz.,EXACT,synonym,Rhus chinensis Mill.,Rhus chinensis,Rhus,Anacardiaceae,Sapindales,ヌルデ,ウルシ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ツタウルシ,,Toxicodendron orientale Greene subsp. orientale,HIGHERRANK,accepted,Toxicodendron orientale Greene,Toxicodendron orientale subsp. orientale,Toxicodendron,Anacardiaceae,Sapindales,ツタウルシ,ウルシ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+ハゼノキ,,Toxicodendron succedaneum (L.) Kuntze,EXACT,accepted,Toxicodendron succedaneum (L.) Kuntze,Toxicodendron succedaneum,Toxicodendron,Anacardiaceae,Sapindales,ハゼノキ,ウルシ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤマハゼ,,Toxicodendron sylvestre (Siebold et Zucc.) Kuntze,EXACT,accepted,Toxicodendron sylvestre Kuntze,Toxicodendron sylvestre,Toxicodendron,Anacardiaceae,Sapindales,ヤマハゼ,ウルシ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤマウルシ,,Toxicodendron trichocarpum (Miq.) Kuntze,EXACT,accepted,Toxicodendron trichocarpum Kuntze,Toxicodendron trichocarpum,Toxicodendron,Anacardiaceae,Sapindales,ヤマウルシ,ウルシ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+センダン,,Melia azedarach L. var. azedarach,EXACT,accepted,Melia azedarach var. azedarach,Melia azedarach var. azedarach,Melia,Meliaceae,Sapindales,センダン,センダン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+オオバシロテツ,,Melicope grisea (Planch.) T.G.Hartley var. grisea,EXACT,accepted,Melicope grisea var. grisea,Melicope grisea var. grisea,Melicope,Rutaceae,Sapindales,オオバシロテツ,ミカン科,ムクロジ目,4,4,1,5,5,5,3,use gbif name
+コクサギ,,Orixa japonica Thunb.,EXACT,accepted,Orixa japonica Thunb.,Orixa japonica,Orixa,Rutaceae,Sapindales,コクサギ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+キハダ,,Phellodendron amurense Rupr. var. amurense,EXACT,accepted,Phellodendron amurense var. amurense,Phellodendron amurense var. amurense,Phellodendron,Rutaceae,Sapindales,キハダ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+モクタチバナ,モンタチバナ,Skimmia japonica Thunb. f. ovata (Carrière) H.Hara,HIGHERRANK,accepted,Skimmia japonica Thunb.,Skimmia japonica f. ovata,Skimmia,Rutaceae,Sapindales,モンタチバナ,ミカン科,ムクロジ目,4,4,1,5,5,5,3,use greenlist name
+ツルシキミ,,Skimmia japonica Thunb. var. intermedia Komatsu f. repens (Nakai) Ohwi,HIGHERRANK,synonym,Skimmia japonica var. intermedia Komatsu,Skimmia japonica var. intermedia f. repens,Skimmia,Rutaceae,Sapindales,ツルシキミ,ミカン科,ムクロジ目,4,4,1,5,5,5,3,use greenlist name; not in The Plant List
+リュウキュウミヤマシキミ,,Skimmia japonica Thunb. var. lutchuensis (Nakai) Hatus. ex T.Yamaz.,EXACT,accepted,Skimmia japonica var. lutchuensis (Nakai) T.Yamaz.,Skimmia japonica var. lutchuensis,Skimmia,Rutaceae,Sapindales,リュウキュウミヤマシキミ,ミカン科,ムクロジ目,4,4,1,5,5,5,3,use gbif name
+ハマセンダン,,Tetradium glabrifolium (Champ. ex Benth.) T.G.Hartley var. glaucum (Miq.) T.Yamaz.,EXACT,synonym,Tetradium glabrifolium (Champ. ex Benth.) T.G.Hartley,Tetradium glabrifolium,Tetradium,Rutaceae,Sapindales,ハマセンダン,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name; checked The Plant List
+アコウザンショウ,,Zanthoxylum ailanthoides Siebold et Zucc. var. inerme Rehder et E.H.Wilson,EXACT,synonym,Zanthoxylum ailanthoides Siebold & Zucc.,Zanthoxylum ailanthoides var. inerme,Zanthoxylum,Rutaceae,Sapindales,アコウザンショウ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; アコウザンショウは小笠原固有の名称、変種を維持
+カラスザンショウ,,Zanthoxylum ailanthoides Siebold et Zucc. var. ailanthoides,EXACT,synonym,Zanthoxylum ailanthoides Siebold & Zucc.,Zanthoxylum ailanthoides var. ailanthoides,Zanthoxylum,Rutaceae,Sapindales,カラスザンショウ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+サンショウ,,Zanthoxylum piperitum (L.) DC.,EXACT,accepted,Zanthoxylum piperitum (L.) DC.,Zanthoxylum piperitum,Zanthoxylum,Rutaceae,Sapindales,サンショウ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤクシマカラスザンショウ,,Zanthoxylum yakumontanum (Sugim.) Nagam.,EXACT,accepted,Zanthoxylum yakumontanum (Sugimoto) Nagam.,Zanthoxylum yakumontanum,Zanthoxylum,Rutaceae,Sapindales,ヤクシマカラスザンショウ,ミカン科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+アサノハカエデ,,Acer argutum Maxim.,EXACT,accepted,Acer argutum Maxim. ex Miq.,Acer argutum,Acer,Sapindaceae,Sapindales,アサノハカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ホソエカエデ,,Acer capillipes Maxim.,EXACT,accepted,Acer capillipes Maxim. ex Miq.,Acer capillipes,Acer,Sapindaceae,Sapindales,ホソエカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+チドリノキ,,Acer carpinifolium Siebold et Zucc.,EXACT,accepted,Acer carpinifolium Siebold & Zucc.,Acer carpinifolium,Acer,Sapindaceae,Sapindales,チドリノキ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤマシバカエデ,チドリノキ,Acer carpinifolium Siebold et Zucc.,EXACT,accepted,Acer carpinifolium Siebold & Zucc.,Acer carpinifolium,Acer,Sapindaceae,Sapindales,チドリノキ,ムクロジ科,ムクロジ目,4,4,0,4,4,4,3,use gbif name
+オガラバナ,,Acer ukurunduense Trautv. et C.A.Mey.,EXACT,synonym,Acer caudatum subsp. ukurunduense (Trautv. & C.A.Mey.) E.Murr.,Acer ukurunduense,Acer,Sapindaceae,Sapindales,オガラバナ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+ミツデカエデ,,Acer cissifolium (Siebold et Zucc.) K.Koch,EXACT,accepted,Acer cissifolium (Sieb. & Zucc.) C.Koch,Acer cissifolium,Acer,Sapindaceae,Sapindales,ミツデカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ウリカエデ,,Acer crataegifolium Siebold et Zucc.,EXACT,accepted,Acer crataegifolium Siebold & Zucc.,Acer crataegifolium,Acer,Sapindaceae,Sapindales,ウリカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+カジカエデ,,Acer diabolicum Blume ex K.Koch,EXACT,accepted,Acer diabolicum Blume ex Koch,Acer diabolicum,Acer,Sapindaceae,Sapindales,カジカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヒトツバカエデ,,Acer distylum Siebold et Zucc.,EXACT,accepted,Acer distylum Siebold & Zucc.,Acer distylum,Acer,Sapindaceae,Sapindales,ヒトツバカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ハウチワカエデ,,Acer japonicum Thunb.,EXACT,accepted,Acer japonicum C.P.Thunberg ex A.Murray,Acer japonicum,Acer,Sapindaceae,Sapindales,ハウチワカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+オオモミジ,,Acer amoenum Carrière var. amoenum,HIGHERRANK,accepted,Acer L.,Acer amoenum var. amoenum,Acer,Sapindaceae,Sapindales,オオモミジ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+シマウリカエデ,,Acer insulare Makino,HIGHERRANK,accepted,Acer L.,Acer insulare,Acer,Sapindaceae,Sapindales,シマウリカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+コミネカエデ,,Acer micranthum Siebold et Zucc.,EXACT,accepted,Acer micranthum Siebold & Zucc.,Acer micranthum,Acer,Sapindaceae,Sapindales,コミネカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+クロビイタヤ,,Acer miyabei Maxim.,EXACT,accepted,Acer miyabei Maxim.,Acer miyabei,Acer,Sapindaceae,Sapindales,クロビイタヤ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤクシマオナガカエデ,,Acer morifolium Koidz.,EXACT,accepted,Acer morifolium Koidz.,Acer morifolium,Acer,Sapindaceae,Sapindales,ヤクシマオナガカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+メグスリノキ,,Acer nikoense Maxim.,EXACT,accepted,Acer nikoense Miq.,Acer nikoense,Acer,Sapindaceae,Sapindales,メグスリノキ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+テツカエデ,,Acer nipponicum H.Hara subsp. nipponicum var. nipponicum,HIGHERRANK,accepted,Acer nipponicum Hara,Acer nipponicum subsp. nipponicum var. nipponicum,Acer,Sapindaceae,Sapindales,テツカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+イロハモミジ,,Acer palmatum Thunb.,EXACT,accepted,Acer palmatum C.P.Thunberg ex A.Murray,Acer palmatum,Acer,Sapindaceae,Sapindales,イロハモミジ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヤマモミジ,,Acer amoenum Carrière var. matsumurae (Koidz.) K.Ogata,EXACT,synonym,Acer palmatum var. amoenum (Carr.) Ohwi,Acer amoenum var. matsumurae ,Acer,Sapindaceae,Sapindales,ヤマモミジ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name
+イタヤカエデ,,Acer pictum Thunb. subsp. dissectum (Wesm.) H.Ohashi f. dissectum (Wesm.) H.Ohashi,HIGHERRANK,synonym,Acer pictum subsp. dissectum (Wesm.) H.Ohashi,Acer pictum subsp. dissectum f. dissectum,Acer,Sapindaceae,Sapindales,イタヤカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+ウラゲエンコウカエデ,,Acer pictum Thunb. subsp. dissectum (Wesm.) H.Ohashi f. connivens (G.Nicholson) H.Ohashi,EXACT,synonym,Acer pictum subsp. dissectum (Wesm.) H.Ohashi,Acer pictum subsp. dissectum f. connivens,Acer,Sapindaceae,Sapindales,ウラゲエンコウカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+エンコウカエデ,イタヤカエデ,Acer pictum Thunb. subsp. dissectum (Wesm.) H.Ohashi f. dissectum (Wesm.) H.Ohashi,HIGHERRANK,synonym,Acer pictum subsp. dissectum (Wesm.) H.Ohashi,Acer pictum subsp. dissectum f. dissectum,Acer,Sapindaceae,Sapindales,イタヤカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+アカイタヤ,,Acer pictum Thunb. subsp. mayrii (Schwer.) H.Ohashi,EXACT,accepted,Acer pictum subsp. mayrii (Schwer.) H.Ohashi,Acer pictum subsp. mayrii,Acer,Sapindaceae,Sapindales,アカイタヤ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ベニイタヤ,アカイタヤ,Acer pictum Thunb. subsp. mayrii (Schwer.) H.Ohashi,EXACT,accepted,Acer pictum subsp. mayrii (Schwer.) H.Ohashi,Acer pictum subsp. mayrii,Acer,Sapindaceae,Sapindales,アカイタヤ,ムクロジ科,ムクロジ目,4,4,0,4,4,4,3,use gbif name
+エゾイタヤ,,Acer pictum Thunb. subsp. mono (Maxim.) H.Ohashi,EXACT,accepted,Acer pictum subsp. mono (Maxim.) H.Ohashi,Acer pictum subsp. mono,Acer,Sapindaceae,Sapindales,エゾイタヤ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+オニイタヤ,,Acer pictum Thunb. subsp. pictum f. ambiguum (Pax) H.Ohashi,EXACT,synonym,Acer pictum subsp. mono (Maxim.) H.Ohashi,Acer pictum subsp. pictum f. ambiguum,Acer,Sapindaceae,Sapindales,オニイタヤ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+イトマキイタヤ,,Acer pictum Thunb. subsp. savatieri (Pax) H.Ohashi,EXACT,accepted,Acer pictum subsp. savatieri (Pax) H.Ohashi,Acer pictum subsp. savatieri,Acer,Sapindaceae,Sapindales,イトマキイタヤ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+モトゲイタヤ,イトマキイタヤ,Acer pictum Thunb. subsp. savatieri (Pax) H.Ohashi,EXACT,accepted,Acer pictum subsp. savatieri (Pax) H.Ohashi,Acer pictum subsp. savatieri,Acer,Sapindaceae,Sapindales,イトマキイタヤ,ムクロジ科,ムクロジ目,4,4,0,4,4,4,3,use gbif name
+ウリハダカエデ,,Acer rufinerve Siebold et Zucc.,EXACT,accepted,Acer rufinerve Siebold & Zucc.,Acer rufinerve,Acer,Sapindaceae,Sapindales,ウリハダカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+オオイタヤメイゲツ,,Acer shirasawanum Koidz.,EXACT,accepted,Acer shirasawanum Koidz.,Acer shirasawanum,Acer,Sapindaceae,Sapindales,オオイタヤメイゲツ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ヒナウチワカエデ,,Acer tenuifolium (Koidz.) Koidz.,EXACT,synonym,Acer shirasawanum var. tenuifolium Koidz.,Acer tenuifolium,Acer,Sapindaceae,Sapindales,ヒナウチワカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use greenlist name; カエデはGreenList学名を採用
+イタヤメイゲツ,コハウチワカエデ,Acer sieboldianum Miq.,EXACT,accepted,Acer sieboldianum Miq.,Acer sieboldianum,Acer,Sapindaceae,Sapindales,コハウチワカエデ,ムクロジ科,ムクロジ目,4,4,0,4,4,4,3,use gbif name
+コハウチワカエデ,,Acer sieboldianum Miq.,EXACT,accepted,Acer sieboldianum Miq.,Acer sieboldianum,Acer,Sapindaceae,Sapindales,コハウチワカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ミネカエデ,,Acer tschonoskii Maxim. var. tschonoskii,EXACT,accepted,Acer tschonoskii var. tschonoskii,Acer tschonoskii var. tschonoskii,Acer,Sapindaceae,Sapindales,ミネカエデ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+トチノキ,,Aesculus turbinata Blume,EXACT,accepted,Aesculus turbinata Blume,Aesculus turbinata,Aesculus,Sapindaceae,Sapindales,トチノキ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ムクロジ,,Sapindus mukorossi Gaertn.,EXACT,accepted,Sapindus mukorossi Gaertn.,Sapindus mukorossi,Sapindus,Sapindaceae,Sapindales,ムクロジ,ムクロジ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+ニガキ,,Picrasma quassioides (D.Don) Benn.,EXACT,accepted,Picrasma quassioides Benn.,Picrasma quassioides,Picrasma,Simaroubaceae,Sapindales,ニガキ,ニガキ科,ムクロジ目,4,4,1,4,4,4,3,use gbif name
+カツラ,,Cercidiphyllum japonicum Siebold et Zucc. ex Hoffm. et Schult.,EXACT,accepted,Cercidiphyllum japonicum Siebold & Zucc.,Cercidiphyllum japonicum,Cercidiphyllum,Cercidiphyllaceae,Saxifragales,カツラ,カツラ科,ユキノシタ目,4,4,1,4,4,4,3,use gbif name
+エゾユズリハ,,Daphniphyllum macropodum Miq. subsp. humile (Maxim. ex Franch. et Sav.) Hurus.,EXACT,synonym,Daphniphyllum macropodum var. humile (Maxim. ex Franch. & Sav.) Rosenthal,Daphniphyllum macropodum var. humile,Daphniphyllum,Daphniphyllaceae,Saxifragales,エゾユズリハ,ユズリハ科,ユキノシタ目,4,4,1,5,5,5,3,use gbif name
+ユズリハ,,Daphniphyllum macropodum Miq. subsp. macropodum,EXACT,accepted,Daphniphyllum macropodum var. macropodum,Daphniphyllum macropodum var. macropodum,Daphniphyllum,Daphniphyllaceae,Saxifragales,ユズリハ,ユズリハ科,ユキノシタ目,4,4,1,5,5,5,3,use gbif name
+ヒメユズリハ,,Daphniphyllum teijsmannii Zoll. ex Kurz var. teijsmannii,EXACT,accepted,Daphniphyllum teijsmannii var. teijsmannii,Daphniphyllum teijsmannii var. teijsmannii,Daphniphyllum,Daphniphyllaceae,Saxifragales,ヒメユズリハ,ユズリハ科,ユキノシタ目,4,4,1,5,5,5,3,use gbif name
+マルバノキ,,Disanthus cercidifolius Maxim.,EXACT,accepted,Disanthus cercidifolius Maxim.,Disanthus cercidifolius,Disanthus,Hamamelidaceae,Saxifragales,マルバノキ,マンサク科,ユキノシタ目,4,4,1,4,4,4,3,use gbif name
+イスノキ,,Distylium racemosum Siebold et Zucc.,EXACT,accepted,Distylium racemosum Siebold & Zucc.,Distylium racemosum,Distylium,Hamamelidaceae,Saxifragales,イスノキ,マンサク科,ユキノシタ目,4,4,1,5,5,5,3,use gbif name
+マルバマンサク,,Hamamelis japonica Siebold et Zucc. var. discolor (Nakai) Sugim. f. obtusata (Makino) H.Ohba,EXACT,synonym,Hamamelis japonica Siebold & Zucc.,Hamamelis japonica var. discolor f. obtusata,Hamamelis,Hamamelidaceae,Saxifragales,マルバマンサク,マンサク科,ユキノシタ目,4,4,1,4,4,4,3,use greenlist name; unresolved
+マンサク,,Hamamelis japonica Siebold et Zucc. var. japonica,HIGHERRANK,accepted,Hamamelis japonica Siebold & Zucc.,Hamamelis japonica var. japonica,Hamamelis,Hamamelidaceae,Saxifragales,マンサク,マンサク科,ユキノシタ目,4,4,1,4,4,4,3,use greenlist name
+ヒイラギズイナ,,Itea oldhamii C.K.Schneid.,EXACT,accepted,Itea oldhamii K.F.R.Schneid.,Itea oldhamii,Itea,Iteaceae,Saxifragales,ヒイラギズイナ,ズイナ科,ユキノシタ目,4,4,1,5,5,5,3,use gbif name
+ヤマグルマ,,Trochodendron aralioides Siebold et Zucc.,EXACT,accepted,Trochodendron aralioides P.F.Siebold & J.G.Zuccarini,Trochodendron aralioides,Trochodendron,Trochodendraceae,Trochodendrales,ヤマグルマ,ヤマグルマ科,ヤマグルマ目,4,4,1,5,5,5,3,use gbif name
+ヤマブドウ,,Vitis coignetiae Pulliat ex Planch.,EXACT,accepted,Vitis coignetiae Pulliat ex Planch.,Vitis coignetiae,Vitis,Vitaceae,Vitales,ヤマブドウ,ブドウ科,ブドウ目,4,4,1,4,4,4,3,use gbif name
+nd,,,,,,,,,,,,,4,4,1,4,4,4,3,

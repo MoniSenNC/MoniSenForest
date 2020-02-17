@@ -1,0 +1,15 @@
+*.py[cod]
+*__pycache__*
+build/
+dist/
+*.egg-info
+.python-version
+
+example_data/
+seed_species_new.csv
+
+~$*
+*~
+.DS_Store
+Thumbs.db
+.netrwhist
