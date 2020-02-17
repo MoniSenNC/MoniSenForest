@@ -35,6 +35,9 @@ def add_recl_dead_error_columns(df):
     gbhyr = df_gbh.columns.values
     yrs = np.array(list((map(lambda x: retrive_year(x, pat_gbh_col), gbhyr))))
     yrs_diff = np.diff(yrs)
+    df_gbh_clean = df_gbh.applymap(
+        lambda x: isvalid(x, "^nd|^cd|^vi|^vn", return_value=True)
+    )
 
     # error
     error1 = np.where(df_gbh.applymap(lambda x: find_pattern(x, "^nd")), 1, 0)
@@ -62,11 +65,8 @@ def add_recl_dead_error_columns(df):
     df_dead.columns = df_gbh.columns.str.replace("gbh", "dl")
 
     # recruit
-    values = df_gbh.applymap(
-        lambda x: isvalid(x, "^nd|^cd|^vi|^vn", return_value=True)
-    ).values
+    values = df_gbh_clean.values
     below_cutoff = np.vectorize(lambda x: np.less(x, 15.7, where=~np.isnan(x)))(values)
-
     recl = np.zeros(values.shape)
 
     # For first census
@@ -97,6 +97,8 @@ def add_recl_dead_error_columns(df):
     df_recl = pd.DataFrame(recl).astype("int64").astype(str)
     df_recl.columns = df_gbh.columns.str.replace("gbh", "rec")
 
+    for c in df_gbh_clean.columns:
+        df[c] = df_gbh_clean[c]
     df = df.join(df_dead)
     df = df.join(df_recl)
     df = df.join(df_error)
