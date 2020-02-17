@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from PySide2.QtCore import QMutex, QMutexLocker, QThread, Signal, Slot
+from PySide2.QtCore import QMutex, QMutexLocker, QThread, Signal, Slot, QDir
 from PySide2.QtWidgets import (QAction, QApplication, QFileDialog, QHBoxLayout,
                                QMainWindow, QMenu, QProgressBar, QPushButton, QTextEdit,
                                QVBoxLayout, QWidget)
@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.setupUI()
         self.pbvalue = 0
         self.path_to_files = []
-        self.dir = Path().home()
+        self.dir = Path("~").expanduser()
 
         self.worker = Worker()
         self.worker.fileStart.connect(self.printProcessing)
@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         path_selected, _ = QFileDialog.getOpenFileNames(
             parent=self,
             caption="Select Files",
-            dir=self.dir.name,
+            dir=str(self.dir),
             filter="Data Files (*.xlsx *.xls *.csv)",
         )
 
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
             for path in path_selected:
                 self.path_to_files.append(path)
                 parentdir = Path(path).parent
-                if parentdir.name != self.dir.name:
+                if str(parentdir) != str(self.dir):
                     self.dir = parentdir
 
         if self.path_to_files:
