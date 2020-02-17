@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as stats
 
-from moni1000f.utils import read_file
+from .utils import read_file
 
 
 @dataclass

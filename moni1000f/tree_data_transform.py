@@ -5,8 +5,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from moni1000f.datacheck import find_pattern, isvalid
-from moni1000f.utils import clean_data_frame, read_file
+from .datacheck import find_pattern, isvalid
+from .utils import clean_data_frame, read_file
 
 
 def fill_after(x, val=1, fill=2):
