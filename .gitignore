@@ -7,6 +7,7 @@ dist/
 
 example_data/
 seed_species_new.csv
+dev/
 
 ~$*
 *~
