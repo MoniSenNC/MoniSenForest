@@ -20,7 +20,7 @@ setup(
     author="Tetsuo I. Kohyama (Moni1000 Network Center)",
     author_email="tetsuo_kohyama@ees.hokudai.ac.jp",
     license="MIT",
-    # url="https://github.com/kohyamat/moni1000f",
+    url="https://github.com/kohyamat/moni1000f",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
