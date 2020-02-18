@@ -75,10 +75,8 @@ def file_to_csv(filepath, outdir=None):
 
     # データの読み込み
     df = read_file(filepath, comment=None, header=None)
-
     # データのクリーニング
     df = clean_data_frame(df)
-
     # csv形式で書き出し
     df.to_csv(outpath, header=False, index=False)
 
@@ -124,7 +122,7 @@ def clean_float(x):
     pat = re.compile(r"(\d*\.\d{14,})")
     m = pat.match(str(x))
     if m:
-        "{:.3f}".format(float(m.group(0))).rstrip("0")
+        return "{:.3f}".format(float(m.group(0))).rstrip("0")
     else:
         return x
 
