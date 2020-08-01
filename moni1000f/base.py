@@ -1,15 +1,88 @@
+import json
 import re
 import unicodedata
 from datetime import datetime as dt
 from pathlib import Path
+from typing import List, Union
 
 import pandas as pd
 import xlrd
 
+# fd = Path(__file__).resolve().parents[0]
+# fd = Path("moni1000f/")
 
-def read_file(filepath: str, *args, **kwargs):
+
+class MS1KDataFrame(pd.DataFrame):
+    """Subclassed pd.DataFrame with additional metadata."""
+
+    _metadata = ["plot_id", "data_type"]
+
+    @property
+    def _constructor(self):
+        return MS1KDataFrame
+
+
+def guess_data_type(df):
+    """Guess data type."""
+    tree_col_req = [
+        "tag_no",
+        "indv_no",
+        "spc_japan",
+        "^gbh[0-9]{2}$",
+        "^s_date[0-9]{2}$",
+    ]
+
+    litter_col_req = [
+        "^trap_id$",
+        "^s_date1$",
+        "^s_date2$",
+        "^wdry_",
+        "^w_",
+    ]
+
+    seed_col_req = [
+        "^trap_id$",
+        "^s_date1$",
+        "^s_date2$",
+        "^w",
+        "^spc$",
+        "^status$",
+        "^form$",
+    ]
+
+    if all([any(df.columns.str.contains(c)) for c in tree_col_req]):
+        data_type = "tree"
+    elif all([any(df.columns.str.contains(c)) for c in litter_col_req]):
+        data_type = "litter"
+    elif all([any(df.columns.str.contains(c)) for c in seed_col_req]):
+        data_type = "seed"
+    else:
+        data_type = "other"
+
+    return data_type
+
+
+def read_data(filepath, *args, **kwargs):
+    """Read the Moni1000 data file and make a DataFrame object."""
+    filepath = Path(filepath)
+
+    df = MS1KDataFrame(read_file(filepath, *args, **kwargs))
+    df.data_type = guess_data_type(df)
+
+    forest_type = ["AT", "EC", "BC", "EB", "DB"]
+    pat_plotid = re.compile("|".join(
+        ["[A-Z]{{2}}-{}[0-9]".format(i) for i in forest_type]))
+    m = pat_plotid.search(filepath.name)
+    if m:
+        df.plot_id = m.group()
+
+    return df
+
+
+def read_file(filepath: Union[str, Path], *args, **kwargs) -> pd.DataFrame:
     """
-    Excel/CSVファイルの読み込んでDataFrameオブジェクトを返す
+    Read Excel/CSV files and return a pd.DataFrame object.
+
     デフォルトでは全て文字列として読み込み、空白セルのみNaN
     として扱う（naやNAは文字列）
 
@@ -38,7 +111,8 @@ def read_file(filepath: str, *args, **kwargs):
     if filepath.suffix in [".xlsx", ".xls"]:
         if "sheet_name" not in kwargs:
             wb = xlrd.open_workbook(filepath)
-            # シート名"Data"を探して読み込む（なければ1枚目のシート）
+            # シート名が与えられていなければ"Data"を探し読み込む
+            # "Data"シートなければ1枚目のシートを読み込む
             try:
                 kwargs["sheet_name"] = wb.sheet_names().index("Data")
             except ValueError:
@@ -50,9 +124,15 @@ def read_file(filepath: str, *args, **kwargs):
         raise RuntimeError("Input file must be the csv or excel format")
 
 
-def file_to_csv(filepath, outdir=None):
+def read_json(filepath):
+    with open(filepath) as f:
+        d = json.load(f)
+    return (d)
+
+
+def file_to_csv(filepath: str, outdir: str = None):
     """
-    Excel/CSVファイルを読み込み、クリーニング後、CSVファイルとして書き出す
+    Excel/CSVファイルを読み込み、クリーニング後、CSVファイルとして書き出す.
 
     Parameters
     ----------
@@ -73,29 +153,27 @@ def file_to_csv(filepath, outdir=None):
     basename = filepath.stem
     outpath = outdir.joinpath(basename + ".csv")
 
-    # データの読み込み
     df = read_file(filepath, comment=None, header=None)
-    # データのクリーニング
     df = clean_data_frame(df)
-    # csv形式で書き出し
     df.to_csv(outpath, header=False, index=False)
 
 
 def clean_data_frame(df, drop_na=True, verbose=False):
-    ndf = df.copy()
-    nrow0, ncol0 = ndf.shape
-    # Excelの浮動小数点計算精度が原因の変な値を置換
-    ndf = ndf.applymap(clean_float)
+    """データのクリーンアップ."""
+    res = df.copy()
+    nrow0, ncol0 = res.shape
+    # Excelの浮動小数点計算精度で長くなっている値を丸める
+    res = res.applymap(clean_float)
     # 日付がdatetime型になっている要素をyyyymmddの文字列に変換
-    ndf = ndf.applymap(datetime_to_yyyymmdd)
+    res = res.applymap(datetime_to_yyyymmdd)
     # 半角文字を全角に変換
-    ndf = ndf.applymap(normalize_chrs)
+    res = res.applymap(normalize_chrs)
     # セル内改行、タブ、垂直タブ、改頁を削除
-    ndf = ndf.replace("\r\n|\n|\r|\t|\x0b|\x0c", "", regex=True)
+    res = res.replace("\r\n|\n|\r|\t|\x0b|\x0c", "", regex=True)
     # 空白行・列を削除
     if drop_na:
-        ndf = ndf.dropna(how="all", axis=1).dropna(how="all", axis=0)
-        nrow1, ncol1 = ndf.shape
+        res = res.dropna(how="all", axis=1).dropna(how="all", axis=0)
+        nrow1, ncol1 = res.shape
         dropped = nrow0 - nrow1, ncol0 - ncol1
 
         if sum(dropped) > 0 and verbose:
@@ -103,15 +181,11 @@ def clean_data_frame(df, drop_na=True, verbose=False):
             msg += "({})".format(", ".join([str(i) for i in dropped]))
             print(msg)
 
-    return ndf
+    return res
 
 
 def normalize_chrs(x):
-    """
-    Unicode文字の標準化
-    半角カナ -> 全角カナ
-    全角数字 -> 半角数字
-    """
+    """Unicode文字の標準化."""
     if isinstance(x, str):
         return unicodedata.normalize("NFKC", x)
     else:
@@ -119,6 +193,7 @@ def normalize_chrs(x):
 
 
 def clean_float(x):
+    """小数点以下が長い場合は丸める."""
     pat = re.compile(r"(\d*\.\d{14,})")
     m = pat.match(str(x))
     if m:
@@ -128,6 +203,7 @@ def clean_float(x):
 
 
 def datetime_to_yyyymmdd(x):
+    """日付がyyyymmddになっていない場合修正."""
     pat_datetime = re.compile(r"(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})")
     m = pat_datetime.match(str(x))
     if m:
