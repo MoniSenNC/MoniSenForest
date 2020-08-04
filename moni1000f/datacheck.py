@@ -1,15 +1,15 @@
-import re
 import json
+import re
 from dataclasses import asdict, dataclass
 from datetime import datetime
-from pathlib import Path
 from itertools import product
+from pathlib import Path
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import scipy.stats as stats
 
-from base import read_data, read_file, Moni1000DataFrame
+from .base import Moni1000DataFrame, read_data, read_file
 
 fd = Path(__file__).resolve().parents[0]
 path_splist_tree_default = fd.joinpath("suppl_data", "tree_species_list.csv")
