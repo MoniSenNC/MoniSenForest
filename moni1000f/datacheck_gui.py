@@ -1,14 +1,14 @@
 import sys
 from pathlib import Path
 
-from PySide2.QtCore import QMutex, QMutexLocker, QThread, Signal, Slot, QDir
+from PySide2.QtCore import QMutex, QMutexLocker, QThread, Signal, Slot
 from PySide2.QtWidgets import (QAction, QApplication, QFileDialog, QHBoxLayout,
-                               QMainWindow, QMenu, QProgressBar, QPushButton, QTextEdit,
-                               QVBoxLayout, QWidget)
+                               QMainWindow, QMenu, QProgressBar, QPushButton,
+                               QTextEdit, QVBoxLayout, QWidget)
 
-from .datacheck import Moni1000Data, save_errors_to_xlsx
+from .base import read_data, file_to_csv
+from .datacheck import check_data_file
 from .tree_data_transform import tree_data_transform
-from .utils import file_to_csv
 
 
 class MainWindow(QMainWindow):
@@ -205,7 +205,7 @@ class Worker(QThread):
 
             if self.mode == "data_check":
                 # データチェック
-                msg = self.data_check(filepath)
+                msg = check_data_file(filepath, return_msg=True)
             else:
                 # CSV変換
                 if Path(filepath).suffix == ".csv":
@@ -221,35 +221,11 @@ class Worker(QThread):
         self.finished.emit()
         self.stop()
 
-    def data_check(self, filepath):
-        filepath = Path(filepath)
-        mdf = Moni1000Data.from_file(filepath)
-        if mdf.data_type == "other":
-            msg = "File is not Moni1000 data"
-            return msg
-
-        errors = mdf.check_data()
-        if errors:
-            if mdf.data_type == "tree":
-                colnames = ["plotid", "tag_no", "エラー対象", "エラー内容"]
-                sortcol = ["tag_no"]
-            else:
-                colnames = ["plotid", "s_date1", "trap_id", "エラー内容"]
-                sortcol = ["s_date1", "trap_id"]
-
-            outfile = filepath.parent.joinpath("確認事項{}.xlsx".format(filepath.stem))
-            save_errors_to_xlsx(errors, outfile, colnames, sortcol)
-            msg = "Output file {} was created.".format(outfile.name)
-        else:
-            msg = "No error detected."
-
-        return msg
-
     def file_convert(self, filepath):
         filepath = Path(filepath)
-        mdf = Moni1000Data.from_file(filepath)
+        df = read_data(filepath)
 
-        if mdf.data_type == "tree":
+        if df.data_type == "tree":
             tree_data_transform(filepath)
             file_to_csv(filepath)
         else:
