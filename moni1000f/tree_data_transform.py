@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from .datacheck import find_pattern, isvalid
-from .utils import clean_data_frame, read_file
+from .base import clean_data_frame, read_file
 
 
 def fill_after(x, val=1, fill=2):

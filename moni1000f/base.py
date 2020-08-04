@@ -1,4 +1,3 @@
-import json
 import re
 import unicodedata
 from datetime import datetime as dt
@@ -8,18 +7,15 @@ from typing import List, Union
 import pandas as pd
 import xlrd
 
-# fd = Path(__file__).resolve().parents[0]
-# fd = Path("moni1000f/")
 
-
-class MS1KDataFrame(pd.DataFrame):
+class Moni1000DataFrame(pd.DataFrame):
     """Subclassed pd.DataFrame with additional metadata."""
 
     _metadata = ["plot_id", "data_type"]
 
     @property
     def _constructor(self):
-        return MS1KDataFrame
+        return Moni1000DataFrame
 
 
 def guess_data_type(df):
@@ -66,7 +62,7 @@ def read_data(filepath, *args, **kwargs):
     """Read the Moni1000 data file and make a DataFrame object."""
     filepath = Path(filepath)
 
-    df = MS1KDataFrame(read_file(filepath, *args, **kwargs))
+    df = Moni1000DataFrame(read_file(filepath, *args, **kwargs))
     df.data_type = guess_data_type(df)
 
     forest_type = ["AT", "EC", "BC", "EB", "DB"]
@@ -122,12 +118,6 @@ def read_file(filepath: Union[str, Path], *args, **kwargs) -> pd.DataFrame:
         return pd.read_csv(filepath, *args, **kwargs)
     else:
         raise RuntimeError("Input file must be the csv or excel format")
-
-
-def read_json(filepath):
-    with open(filepath) as f:
-        d = json.load(f)
-    return (d)
 
 
 def file_to_csv(filepath: str, outdir: str = None):
