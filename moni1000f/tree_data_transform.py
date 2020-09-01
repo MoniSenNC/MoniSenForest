@@ -1,124 +1,149 @@
+import csv
 import re
-from datetime import datetime
 from pathlib import Path
+from typing import Any, Optional
 
 import numpy as np
-import pandas as pd
 
-from .datacheck import find_pattern, isvalid
-from .base import clean_data_frame, read_file
+from moni1000f.base import MonitoringData, clean_data, read_file, split_comments
+from moni1000f.datacheck import find_pattern, isvalid, retrive_year
 
 
-def fill_after(x, val=1, fill=2):
-    x = x.copy()
+def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
+    """
+    Fill the elements after a specific value with a single value.
+
+    Paramters
+    ---------
+    x : numpy ndarray
+        One dimentional array
+    val : any, default 1
+        Value of the break point
+    fill : any, default 2
+        Value to use fill elements after the break point
+    """
+    x = np.array(x).copy()
     i = np.where(x == val)[0]
     if len(i) > 0:
-        x[(i.min() + 1) :] = fill
+        x[(i.min() + 1):] = fill
     return x
 
 
-def retrive_year(x, regex_pattern=r"([0-9]+)"):
-    if regex_pattern:
-        x = re.sub(regex_pattern, r"\1", x)
-    if len(x) == 2:
-        return int(datetime.strptime(x, "%y").strftime("%Y"))
-    elif len(x) == 4:
-        return int(x)
-    else:
-        msg = "Could not retrive the year from the input string {}".format(x)
-        raise RuntimeError(msg)
+def add_state_columns(data: np.ndarray,
+                      comments: Optional[np.ndarray] = None) -> np.ndarray:
+    '''
+    Add columns for error, death, recluitment status.
 
+    毎木データに、エラー、死亡、加入の状態を表す列を追加。
 
-def add_recl_dead_error_columns(df):
+    Parameters
+    ----------
+    data : numpy ndarray
+        Two dimentional array including a header row
+    comments : numpy ndarray, optional
+        Array of comment lines. Number of columns should be same as data
+    '''
+    d = MonitoringData(data)
     pat_gbh_col = "^gbh([0-9]{2})$"
-    df_gbh = df.filter(regex=pat_gbh_col).copy()
-    gbhyr = df_gbh.columns.values
-    yrs = np.array(list((map(lambda x: retrive_year(x, pat_gbh_col), gbhyr))))
+    gbh_data = d.select_cols(regex=pat_gbh_col, add_header=True)
+    values = gbh_data[1:]
+    colnames = gbh_data[0]
+    yrs = np.array(list(map(retrive_year, colnames)))
     yrs_diff = np.diff(yrs)
-    df_gbh_clean = df_gbh.applymap(
-        lambda x: isvalid(x, "^nd|^cd|^vi|^vn", return_value=True)
-    )
+    values_c = np.vectorize(lambda x: isvalid(x, "^nd|^cd|^vi|^vn", return_value=True))(
+        values.copy())
 
-    # error
-    error1 = np.where(df_gbh.applymap(lambda x: find_pattern(x, "^nd")), 1, 0)
-    error2 = np.where(df_gbh.applymap(lambda x: find_pattern(x, "^cd|^vi|^vn")), 2, 0)
-    error = error1 + error2
-    df_error = pd.DataFrame(error).astype("int64").astype(str)
-    df_error.columns = df_gbh.columns.str.replace("gbh", "error")
+    # Error
+    error1 = np.where(np.vectorize(lambda x: find_pattern(x, "^nd"))(values), 1, 0)
+    error2 = np.where(
+        np.vectorize(lambda x: find_pattern(x, "^cd|^vi|^vn"))(values), 2, 0)
+    error = (error1 + error2).astype(np.int64)
 
-    # dead
+    # Dead
     pat_dxx = re.compile(r"(?<![nd])d(?![d])\s?([0-9]+[.]?[0-9]*)")
-    match_dxx = df_gbh.applymap(lambda x: find_pattern(x, pat_dxx)).values
+    match_dxx = np.vectorize(lambda x: find_pattern(x, pat_dxx))(values)
     for i, j in zip(*np.where(match_dxx)):
         if j > 0 and match_dxx[i, j - 1]:
-            df_gbh.iloc[i, j] = "na"
+            values[i, j] = "na"
         else:
-            df_gbh.iloc[i, j] = "d"
+            values[i, j] = "d"
 
     dead1 = np.where(
-        df_gbh.applymap(lambda x: find_pattern(x, "^(?<![nd])d(?![d])")), 1, 0
-    )
-    dead2 = np.where(df_gbh.applymap(lambda x: find_pattern(x, "^dd")), 2, 0)
-    dead = dead1 + dead2
+        np.vectorize(lambda x: find_pattern(x, "^(?<![nd])d(?![d])"))(values), 1, 0)
+    dead2 = np.where(np.vectorize(lambda x: find_pattern(x, "^dd"))(values), 2, 0)
+    dead = (dead1 + dead2).astype(np.int64)
     dead = np.apply_along_axis(lambda x: fill_after(x, 1, 2), 1, dead)
-    df_dead = pd.DataFrame(dead).astype("int64").astype(str)
-    df_dead.columns = df_gbh.columns.str.replace("gbh", "dl")
 
-    # recruit
-    values = df_gbh_clean.values
-    below_cutoff = np.vectorize(lambda x: np.less(x, 15.7, where=~np.isnan(x)))(values)
-    recl = np.zeros(values.shape)
+    # Recruit
+    below_cutoff = np.vectorize(lambda x: np.less(x, 15.7, where=~np.isnan(x)))(
+        values_c)
+    recl = np.zeros(values_c.shape)
 
-    # For first census
-    not_recl_at_first = below_cutoff[:, 0] | np.isnan(values[:, 0]) | (dead[:, 0] == 1)
-    recl[:, 0][not_recl_at_first & (error[:, 0] == 0)] = -1
+    # for first census
+    not_recl_init = below_cutoff[:, 0] | np.isnan(values_c[:, 0]) | (dead[:, 0] == 1)
+    recl[:, 0][not_recl_init & (error[:, 0] == 0)] = -1
 
-    change_state = np.apply_along_axis(np.diff, 1, np.isnan(values) | below_cutoff)
+    change_state = np.apply_along_axis(np.diff, 1, np.isnan(values_c) | below_cutoff)
 
     for i, j in zip(*np.where(change_state)):
-        if np.isnan(values[i, j + 1]):
+        if np.isnan(values_c[i, j + 1]):
             continue
-        elif values[i, j] > values[i, j + 1]:
+        elif values_c[i, j] > values_c[i, j + 1]:
             continue
-        elif len(np.where(recl[i, : (j + 1)] == 1)[0]) == 0:
+        elif len(np.where(recl[i, :(j + 1)] == 1)[0]) == 0:
             if (error[i, j] == 0) & (error[i, j + 1] == 0):
-                if values[i, j + 1] < (15.7 + 3.8 + yrs_diff[j] * 2.5):
+                if values_c[i, j + 1] < (15.7 + 3.8 + yrs_diff[j] * 2.5):
                     recl[i, j + 1] = 1
-                    recl[i, : (j + 1)] = -1
-                elif not np.isnan(values[i, j]):
+                    recl[i, :(j + 1)] = -1
+                elif not np.isnan(values_c[i, j]):
                     recl[i, j + 1] = 1
-                    recl[i, : (j + 1)] = -1
-                elif len(np.where(recl[i, : (j + 1)] == -1)[0]) > 0:
+                    recl[i, :(j + 1)] = -1
+                elif len(np.where(recl[i, :(j + 1)] == -1)[0]) > 0:
                     recl[i, :j] = -1
             elif error[i, j] == 1:
-                if len(np.where(recl[i, : (j + 1)] == -1)[0]) > 0:
-                    recl[i, : np.where(error[i, : (j + 1)] == 1)[0][0]] = -1
+                if len(np.where(recl[i, :(j + 1)] == -1)[0]) > 0:
+                    recl[i, :np.where(error[i, :(j + 1)] == 1)[0][0]] = -1
 
-    df_recl = pd.DataFrame(recl).astype("int64").astype(str)
-    df_recl.columns = df_gbh.columns.str.replace("gbh", "rec")
+    recl = recl.astype(np.int64)
 
-    for c in df_gbh_clean.columns:
-        df[c] = df_gbh_clean[c]
-    df = df.join(df_dead)
-    df = df.join(df_recl)
-    df = df.join(df_error)
+    error_colnames = [i.replace("gbh", "error") for i in colnames]
+    dead_colnames = [i.replace("gbh", "dl") for i in colnames]
+    recl_colnames = [i.replace("gbh", "rec") for i in colnames]
+    error = np.vstack((error_colnames, error))
+    dead = np.vstack((dead_colnames, dead))
+    recl = np.vstack((recl_colnames, recl))
 
-    return df
+    for j, c in enumerate(colnames):
+        d.values[:, d.columns.tolist().index(c)] = values_c[:, j]
+
+    data_new = np.hstack((d.data, error, dead, recl))
+
+    if isinstance(comments, np.ndarray):
+        spacer = np.full((comments.shape[0], data_new.shape[1] - comments.shape[1]), "")
+        comments_new = np.hstack((comments, spacer))
+        data_new = np.vstack((comments_new, data_new))
+
+    return data_new
 
 
-def tree_data_transform(filepath, outdir=None):
+def tree_data_transform(filepath: str,
+                        outdir: Optional[str] = None,
+                        cleaning: bool = True):
     """
-    毎木調査データ（モニ1000形式）に新規加入、死亡、エラー列を加え、CSVで保存
+    Add columns for error, death, recluitment status to a tree data, and write to
+    a csv file.
+
+    毎木調査データ（モニ1000形式）に新規加入、死亡、エラー列を加え、CSVで保存。
 
     Parameters
     ----------
     filepath : str
-        The path to the excel or csv file
-
+        Path to a tree data file
     outdir : str, default None
         Output directory
+    cleaning: bool, default True
+        If clean up the data
     """
-
     filepath = Path(filepath)
     if outdir:
         outdir = Path(outdir)
@@ -129,26 +154,13 @@ def tree_data_transform(filepath, outdir=None):
     basename = filepath.stem
     outpath = outdir.joinpath(basename + ".transf.csv")
 
-    df0 = read_file(filepath, comment=None, header=None)
-    df0 = clean_data_frame(df0, drop_na=False)
-    comment_row = df0.iloc[:, 0].fillna("").str.contains("^#")
+    data = read_file(filepath)
+    data, comments = split_comments(data)
+    data_new = add_state_columns(data, comments)
 
-    # データに新規加入、死亡、エラー列を加える
-    data = df0[~comment_row]
-    col_names = data.iloc[0].values
-    data = data.iloc[1:, :]
-    data.columns = col_names
-    data = data.reset_index(drop=True)
-    data = add_recl_dead_error_columns(data)
-
-    # メタデータ
-    meta_data = df0[comment_row]
-    n_col0 = meta_data.shape[1]
-    n_col1 = data.shape[1] - meta_data.shape[1]
-    spacer = np.full((meta_data.shape[0], n_col1), fill_value=np.nan)
-    spacer = pd.DataFrame(spacer, columns=range(n_col0, n_col0 + n_col1))
-    meta_data = meta_data.join(spacer)
-
-    # データをCSVに書き出し
-    meta_data.to_csv(outpath, header=False, index=False)
-    data.to_csv(outpath, mode="a", index=False)
+    if cleaning:
+        data = clean_data(data_new)
+    with open(outpath, "w") as f:
+        writer = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for row in data_new:
+            writer.writerow(row)
