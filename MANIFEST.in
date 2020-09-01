@@ -1,5 +1,4 @@
 include LICENSE
 include requirements.txt
 include setup.cfg
-include moni1000f/suppl_data/*.csv
-include moni1000f/except_list/*.csv
+include moni1000f/suppl_data/*.json
