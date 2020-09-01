@@ -205,13 +205,14 @@ def read_file(filepath: str) -> np.ndarray:
     """
     suffix = Path(filepath).suffix
     if suffix == ".xlsx":
-        with load_workbook(filepath, read_only=True) as wb:
-            if "Data" in wb.sheetnames:
-                ws = wb["Data"]
-            else:
-                ws = wb[wb.sheetnames[0]]
-            data = np.array([[str(j) if j is not None else "" for j in i]
-                            for i in ws.values])
+        wb = load_workbook(filepath, read_only=True)
+        if "Data" in wb.sheetnames:
+            ws = wb["Data"]
+        else:
+            ws = wb[wb.sheetnames[0]]
+        data = np.array([[str(j) if j is not None else "" for j in i]
+                         for i in ws.values])
+        wb.close()
     elif suffix == ".csv":
         with open(filepath) as f:
             reader = csv.reader(f)
