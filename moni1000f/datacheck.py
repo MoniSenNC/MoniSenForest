@@ -860,7 +860,7 @@ def save_errors_to_xlsx(errors: List[ErrDat],
     errors_a = np.array([astuple(e) for e in errors])
     errors_a = sort_array(errors_a)
 
-    wb = Workbook()
+    wb = Workbook(write_only=True)
     ws = wb.active
     ws.title = "確認事項{}".format(datetime.now().strftime("%y%m%d"))
 
@@ -880,6 +880,7 @@ def save_errors_to_xlsx(errors: List[ErrDat],
             ws.cell(start_row + i, 1 + j).font = Font(name="Arial")
 
     wb.save(dest_filepath)
+    wb.close()
 
 
 def check_data(d: Optional[MonitoringData] = None,
