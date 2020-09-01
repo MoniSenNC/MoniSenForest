@@ -3,12 +3,13 @@ from pathlib import Path
 
 from PySide2.QtCore import QMutex, QMutexLocker, QThread, Signal, Slot
 from PySide2.QtWidgets import (QAction, QApplication, QFileDialog, QHBoxLayout,
-                               QMainWindow, QMenu, QProgressBar, QPushButton,
-                               QTextEdit, QVBoxLayout, QWidget)
+                               QMainWindow, QMenu, QProgressBar, QPushButton, QTextEdit,
+                               QVBoxLayout, QWidget)
 
-from .base import read_data, file_to_csv
-from .datacheck import check_data_file
-from .tree_data_transform import tree_data_transform
+from moni1000f.base import read_data, file_to_csv
+from moni1000f.datacheck import check_data
+from moni1000f.datacheck import check_data, save_errors_to_xlsx
+from moni1000f.tree_data_transform import tree_data_transform
 
 
 class MainWindow(QMainWindow):
@@ -99,7 +100,7 @@ class MainWindow(QMainWindow):
             parent=self,
             caption="Select Files",
             dir=str(self.dir),
-            filter="Data Files (*.xlsx *.xls *.csv)",
+            filter="Data Files (*.xlsx *.csv)",
         )
 
         if self.path_to_files:
@@ -180,6 +181,9 @@ class Worker(QThread):
     fileStart = Signal(str)
     fileFinish = Signal(str)
 
+    __fd = Path(__file__).resolve().parents[0]
+    __path_except_default = __fd.joinpath("suppl_data", "except_list.xlsx")
+
     def __init__(self):
         QThread.__init__(self)
         self.stopped = False
@@ -205,7 +209,26 @@ class Worker(QThread):
 
             if self.mode == "data_check":
                 # データチェック
-                msg = check_data_file(filepath, return_msg=True)
+                d = read_data(filepath)
+                if d.data_type in ["tree", "litter", "seed"]:
+                    if self.__path_except_default.exists():
+                        path_except = self.__path_except_default
+                    else:
+                        path_except = ""
+                    errors = check_data(d, path_except=path_except)
+                    if errors:
+                        dest = Path(filepath).parent.joinpath("確認事項{}.xlsx".format(
+                            Path(filepath).stem))
+                        if d.data_type == "tree":
+                            header = ["plotid", "tag_no", "エラー対象", "エラー内容"]
+                        else:
+                            header = ["plotid", "s_date1", "trap_id", "エラー内容"]
+                        save_errors_to_xlsx(errors, dest, header)
+                        msg = "{} created.".format(dest.name)
+                    else:
+                        msg = "No errors detected."
+                else:
+                    msg = "Unable to identify the datatype. skipped."
             else:
                 # CSV変換
                 if Path(filepath).suffix == ".csv":
@@ -223,9 +246,9 @@ class Worker(QThread):
 
     def file_convert(self, filepath):
         filepath = Path(filepath)
-        df = read_data(filepath)
+        d = read_data(filepath)
 
-        if df.data_type == "tree":
+        if d.data_type == "tree":
             tree_data_transform(filepath)
             file_to_csv(filepath)
         else:
