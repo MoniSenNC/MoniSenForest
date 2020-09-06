@@ -4,6 +4,7 @@ import signal
 import threading
 import time
 import tkinter as tk
+import re
 from logging.handlers import QueueHandler
 from pathlib import Path
 from tkinter import N, S, E, W, filedialog, ttk
@@ -264,7 +265,7 @@ class FileConvertWorker(threading.Thread):
             logger.warning("No data files selected")
             return
 
-        # logger.debug("Start exporting ...")
+        r = re.compile(r"^(.*)_\([0-9]+\)$")
         while not self._stop_event.is_set() and self.filepaths:
             filepath = Path(self.filepaths.pop(0)).expanduser()
             logger.debug("Exporting {} as csv ...".format(filepath.name))
@@ -277,6 +278,19 @@ class FileConvertWorker(threading.Thread):
 
             basename = filepath.stem
             outpath = outdir.joinpath(basename + ".csv")
+            if outpath.exists():
+                m = r.match(outpath.stem)
+                if m:
+                    stem = m.group(1)
+                else:
+                    stem = outpath.stem
+                i = 1
+                while True:
+                    outname = "{}_({}).csv".format(stem, i)
+                    outpath = outdir.joinpath(outname)
+                    if not outpath.exists():
+                        break
+                    i += 1
 
             data = read_file(filepath)
             data_to_csv(data, outpath, **self.params)
