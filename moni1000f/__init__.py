@@ -1,3 +1,3 @@
-from moni1000f.base import read_file, read_data, file_to_csv
+from moni1000f.base import read_data
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"

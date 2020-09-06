@@ -4,7 +4,7 @@ from dataclasses import astuple, dataclass
 from datetime import datetime
 from itertools import product
 from pathlib import Path
-from typing import Union, List, Optional
+from typing import List, Optional, Union
 
 import numpy as np
 from openpyxl import Workbook
@@ -860,7 +860,8 @@ def save_errors_to_xlsx(errors: List[ErrDat],
     errors_a = np.array([astuple(e) for e in errors])
     errors_a = sort_array(errors_a)
 
-    wb = Workbook(write_only=True)
+    wb = Workbook()
+    # ws = wb.create_sheet("確認事項{}".format(datetime.now().strftime("%y%m%d")))
     ws = wb.active
     ws.title = "確認事項{}".format(datetime.now().strftime("%y%m%d"))
 

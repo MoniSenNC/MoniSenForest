@@ -3,7 +3,7 @@ import re
 import unicodedata
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 from openpyxl import load_workbook
@@ -11,34 +11,47 @@ from openpyxl import load_workbook
 
 class MonitoringData(object):
     """
-    Data class for working with ecosystem monitoring data, paticularly in the
-    data format of the Monitoring Sites 1000 projects.
+    Data class for working with ecosystem monitoring data.
+
+    Originally designed for the data of the Monitoring Sites 1000 projects,
+    but it can be used to handle similar data. Like the Pandas DataFrame object,
+    the MonitoringData object contains the 'columns' and 'values' attributes.
+    The original two-dimensional array is contained as 'data'.
 
     Parameters
     ----------
-    data: numpy ndarray
-        Two-dimensional numpy ndarray of the data
-    plot_id: str, optional
-        Plot ID
-    metadata: dict, optional
-        Metadata for the input data
-    header: bool, default True
+    data : numpy ndarray
+        Two-dimensional numpy ndarray with the dtype of unicode string ('U')
+    header : bool, default True
         If the input data includes a header line
+    plot_id : str, optional
+        Plot ID
+    data_type : str, optional
+        Data type. It will be guessed from header names if no given
+    comments : numpy ndarray, optional
+        Two-dimensional numpy ndarray of comment lines (rows) of data
+    metadata : dict, optional
+        Metadata for the input data
 
     Attributes
     ----------
-    data: numpy ndarray
-        Data
-    values: numpy ndarray
+    data : numpy ndarray
+        Original Data.
+    values : numpy ndarray
         Data values
-    columns: list
+    columns : list
         List of column names
-    plot_id: str
+    plot_id : str
         Plot ID
-    data_type: str
-        Data type guessed from the header line: tree, litter, seed, other
-    metadata: dict
+    data_type : str
+        Data type. Typical values are: tree, litter, seed or other
+    comments : numpy ndarray
+        Comment lines
+    data_with_comments : numpy ndarray
+        Data with comment lines
+    metadata : dict
         Metadata
+
     """
     def __init__(self,
                  data: np.ndarray = np.array([]),
@@ -46,6 +59,7 @@ class MonitoringData(object):
                  plot_id: str = "",
                  data_type: str = "",
                  metadata: Dict[str, str] = {},
+                 comments: Optional[np.ndarray] = None,
                  *args,
                  **kwargs):
 
@@ -60,6 +74,7 @@ class MonitoringData(object):
         else:
             self.data_type = self.__guess_data_type()
         self.metadata = metadata
+        self.comments = comments
 
     @property
     def values(self):
@@ -74,6 +89,10 @@ class MonitoringData(object):
             return self.data[0]
         else:
             return np.array([])
+
+    @property
+    def data_with_comments(self):
+        return join_comments(self.data, self.comments)
 
     def __repr__(self):
         s1 = "data_shape={}".format(self.values.shape)
@@ -91,15 +110,25 @@ class MonitoringData(object):
             data_s = np.vstack((self.columns, self.values[key]))
         elif isinstance(key, tuple) and all([isinstance(i, slice) for i in key]):
             data_s = np.vstack((self.columns[key[1]], self.values[key]))
+        elif isinstance(key, tuple) and isinstance(key[1], slice):
+            data_s = np.vstack((self.columns[key[1]], self.values[key]))
+        elif isinstance(key, tuple) and isinstance(key[0], slice):
+            data_s = np.append(self.columns[key[1]], self.values[key])
         elif isinstance(key, int):
             data_s = np.vstack((self.columns, self.values[key]))
+        elif isinstance(key, np.ndarray) and key.dtype == "bool":
+            if len(key.shape) == 1:
+                data_s = np.vstack((self.columns, self.values[key]))
+            else:
+                return self.values[key]
         else:
-            pass
+            return self.values[key]
         return self.__getitem_return(data_s,
                                      header=self.header,
                                      plot_id=self.plot_id,
                                      data_type=self.data_type,
-                                     metadata=self.metadata)
+                                     metadata=self.metadata,
+                                     comments=self.comments)
 
     @classmethod
     def __getitem_return(cls, data, **kwargs):
@@ -149,17 +178,18 @@ class MonitoringData(object):
                     regex: Union[str, None] = None,
                     add_header: bool = False) -> np.ndarray:
         """
-        Select a data columns.
+        Select data columns.
 
         Paramters
         ---------
-        col: str, list, optional
+        col : str, list, optional
             Column name(s) to select
-        regex: str
+        regex : str
             Regular expression pattern. Columns will be selected if the column names
             matches with the regular expression pattern
-        add_header: bool, default False
+        add_header : bool, default False
             Add a header row to an output array
+
         """
         start = 1 if (self.header and not add_header) else 0
 
@@ -191,6 +221,40 @@ class MonitoringData(object):
 
         return selected
 
+    def to_csv(self,
+               outpath: str,
+               keep_comments: bool = True,
+               cleaning: bool = True,
+               encoding: str = "utf-8",
+               na_rep: str = ""):
+        """
+        Export data as a csv file.
+
+        Parameters
+        ----------
+        outpath : str
+            Path to the output file
+        keep_comments : bool, default True
+            If include the comment lines
+        cleaning : bool, default True
+            If clean up the data
+        encoding : str, default "utf-8"
+            Text encoding
+        na_rep : str, default ""
+            Replacement characters for NaN
+
+        """
+        if keep_comments:
+            data = self.data_with_comments
+        else:
+            data = self.data
+
+        data_to_csv(data,
+                    outpath=outpath,
+                    cleaning=cleaning,
+                    encoding=encoding,
+                    na_rep=na_rep)
+
 
 def read_file(filepath: str) -> np.ndarray:
     """
@@ -200,10 +264,12 @@ def read_file(filepath: str) -> np.ndarray:
 
     Parameters
     ----------
-    filepath: str
+    filepath : str
         path to the data file
+
     """
-    suffix = Path(filepath).suffix
+    filepath = Path(filepath).expanduser()
+    suffix = filepath.suffix
     if suffix == ".xlsx":
         wb = load_workbook(filepath, read_only=True)
         if "Data" in wb.sheetnames:
@@ -214,7 +280,7 @@ def read_file(filepath: str) -> np.ndarray:
                          for i in ws.values])
         wb.close()
     elif suffix == ".csv":
-        with open(filepath) as f:
+        with filepath.open() as f:
             reader = csv.reader(f)
             data = np.array([i for i in reader])
     else:
@@ -223,24 +289,81 @@ def read_file(filepath: str) -> np.ndarray:
         raise RuntimeError(msg)
 
     # remove blank rows/columns
-    is_blank = np.where(data == "", True, False)
-    data = data[:, ~is_blank.all(axis=0)]
-    data = data[~is_blank.all(axis=1), :]
+    data = mat_strip(data, strip="")
 
     return data
 
 
+def mat_strip(mat: np.ndarray, strip: Any = "") -> Optional[np.ndarray]:
+    """
+    Strip rows and columns from a tow-dimentional array.
+
+    Parameters
+    ----------
+    mat : numpy ndarray
+        Two-dimentional array
+    strip : Any, default ""
+        If all elements have this value, remove the rows/columns from the edges.
+
+    """
+    match = np.vectorize(lambda x: True if x == strip else False)(mat)
+    if not match.any():
+        return mat
+    elif match.all():
+        return np.array([], mat.dtype)
+
+    x = match.all(axis=0).tolist()
+    y = match.all(axis=1).tolist()
+
+    def strip_index(z: List[bool], right: bool = False):
+        z = z.copy()
+        pop_i = -1 if right else 1
+        i = 0
+        while True:
+            if not z.pop(pop_i):
+                break
+            i += 1
+        return i
+
+    mat = mat[:, slice(strip_index(x), len(x) - strip_index(x, True))]
+    mat = mat[slice(strip_index(y), len(y) - strip_index(y, True)), :]
+
+    return mat
+
+
 def split_comments(data: np.ndarray,
-                   comment: str = "#") -> Tuple[np.ndarray, np.ndarray]:
+                   comment_chr: str = "#") -> Tuple[np.ndarray, np.ndarray]:
     """Split comment lines (rows) from data array."""
-    if comment:
-        com_rows = np.vectorize(lambda x: str(x).startswith(comment))(data[:, 0])
+    if comment_chr:
+        com_rows = np.vectorize(lambda x: str(x).startswith(comment_chr))(data[:, 0])
         comments = data[com_rows]
         data = data[~com_rows]
     else:
-        comments = np.array([], dtype=data.dtype)
+        comments = np.ndarray(shape=(0, data.shape[1]), dtype=data.dtype)
+
+    if comments.size > 0:
+        comments = mat_strip(comments, strip="")
 
     return data, comments
+
+
+def join_comments(data: np.ndarray, comments: np.ndarray) -> np.ndarray:
+    """Join comment lines to data array."""
+    if comments.size == 0:
+        return data
+
+    if (comments.shape[1] - data.shape[1]) < 0:
+        spacer = np.full((comments.shape[0], data.shape[1] - comments.shape[1]), "")
+        comments_new = np.hstack((comments, spacer))
+        data_new = np.vstack((comments_new, data))
+    elif (comments.shape[1] - data.shape[1]) > 0:
+        spacer = np.full((data.shape[0], comments.shape[1] - data.shape[1]), "")
+        data_new = np.hstack((data, spacer))
+        data_new = np.vstack((comments, data_new))
+    else:
+        data_new = np.vstack((comments, data))
+
+    return data_new
 
 
 def get_metadata(comments: np.ndarray) -> Dict[str, str]:
@@ -262,10 +385,11 @@ def get_plotid(filepath: str) -> str:
     """
     Get the plot id from a file name.
 
-    Parameter
-    ---------
-    filepath: str
+    Parameters
+    ----------
+    filepath : str
         path of a data file
+
     """
     filepath = Path(filepath)
     ftype = ["AT", "EC", "BC", "EB", "DB"]
@@ -276,7 +400,14 @@ def get_plotid(filepath: str) -> str:
         return ""
 
 
-def read_data(filepath: str, comment: str = "#", header: bool = True) -> MonitoringData:
+def read_data(
+    filepath: str,
+    comment_chr: str = "#",
+    header: bool = True,
+    plot_id: Optional[str] = None,
+    data_type: Optional[str] = None,
+    metadata: Optional[Dict[str, str]] = None,
+) -> MonitoringData:
     """
     Read a data file and return a MonitoringData object.
 
@@ -284,26 +415,40 @@ def read_data(filepath: str, comment: str = "#", header: bool = True) -> Monitor
     ----------
     filepath: str
         Path to the data file. Supported formats are: .csv, .xlsx, .xlsm, .xltx, .xltm
-    comment: str, default "#"
-        Character to detect commented lines. If found at the beginning of  a line, the
-        line will be parsed as commented lines and split from remaing data
+    comment_chr: str, default "#"
+        Character to detect commented lines. If found at the beginning of a line, the
+        line will be parsed as commented lines and split from remaininig lines
     header: bool, default True
         If the parsed data includes a header line
+    plot_id : str, optional
+        Plot ID
+    data_type : str, optional
+        Data type. It will be guessed from header names if no given
+    metadata : dict, optional
+        Metadata for the input data
+
     """
     data = read_file(filepath)
-    data, comments = split_comments(data, comment)
+    data, comments = split_comments(data, comment_chr)
 
-    if len(comments) > 0:
-        metadata = get_metadata(comments)
-    else:
-        metadata = {}
+    if not metadata:
+        if len(comments) > 0:
+            metadata = get_metadata(comments)
+        else:
+            metadata = {}
 
-    if "PLOT ID" in metadata:
-        plot_id = metadata["PLOT ID"]
-    else:
-        plot_id = get_plotid(filepath)
+    if not plot_id:
+        if "PLOT ID" in metadata:
+            plot_id = metadata["PLOT ID"]
+        else:
+            plot_id = get_plotid(filepath)
 
-    return MonitoringData(data, plot_id=plot_id, metadata=metadata, header=header)
+    return MonitoringData(data,
+                          plot_id=plot_id,
+                          data_type=data_type,
+                          metadata=metadata,
+                          header=header,
+                          comments=comments)
 
 
 def clean_data(data: np.ndarray) -> np.ndarray:
@@ -316,6 +461,7 @@ def clean_data(data: np.ndarray) -> np.ndarray:
     ----------
     data: numpy ndarray
         Two dimentional array with the dtype of string('<U')
+
     """
     # 不要な空白を削除
     data = np.vectorize(lambda x: x.strip())(data)
@@ -331,17 +477,30 @@ def clean_data(data: np.ndarray) -> np.ndarray:
     return data
 
 
-def clean_float(x: Union[str, float, int]) -> str:
+def clean_float(x: str, precision: str = "single") -> str:
     """
-    Floating-point rounding.
+    Floating-point rounding for a numerical string.
 
-    小数点以下が長い場合は丸める。
+    文字列が数値で、小数点以下が長い場合は丸める。
+
+    Parameters
+    ----------
+    x : str
+        Any string
+    precision : str, default 'single'
+        Precision for floating-point: 'single' or 'double'
+
     """
     try:
         int(x)
     except ValueError:
         try:
-            return str(float(x))
+            if precision == "single":
+                return str(np.float32(x))
+            elif precision == "double":
+                return str(np.float64(x))
+            else:
+                raise ValueError("Valid presision values are: single, double")
         except ValueError:
             return str(x)
     else:
@@ -353,45 +512,48 @@ def datetime_to_yyyymmdd(s: str) -> str:
     Convert a datetime string to a string in the yyyymmdd format.
 
     日付がyyyymmddになっていない場合修正。
+
     """
     pat_datetime = re.compile(r"(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})")
     m = pat_datetime.match(str(s))
     if m:
         dt = datetime.strptime(m.group(), "%Y-%m-%d %H:%M:%S")
-        s = datetime.strftime(dt, "%Y%m%d")
-    return s
+        yyyymmdd = datetime.strftime(dt, "%Y%m%d")
+        return yyyymmdd
+    else:
+        return s
 
 
-def file_to_csv(filepath: str, outdir: str = None, cleaning: bool = True):
+def data_to_csv(data: np.ndarray,
+                outpath: str,
+                cleaning: bool = True,
+                encoding: str = "utf-8",
+                na_rep: str = ""):
     """
-    Clean data of a tabular input file and export as a csv file.
+    Export a two-dementional numpy array as a csv file after cleaning.
 
-    Excel/CSVファイルを読み込み、クリーニング後、CSVファイルとして書き出す。
+    2次元配列データをクリーニング後、CSVファイルとして書き出す。
 
     Parameters
     ----------
-    filepath : str
-        Path to the data file
-    outdir : str, default None
-        Output directory
-    cleaning: bool, default True
+    data : numpy array
+        Two dimentional numpy array
+    outpath : str
+        Path to the output file
+    cleaning : bool, default True
         If clean up the data
+    encoding : str, default "utf-8"
+        Text encoding
+    na_rep : str, default ""
+        Replacement characters for NaN
+
     """
-    filepath = Path(filepath)
-
-    if outdir:
-        outdir = Path(outdir)
-        outdir.mkdir(parents=True, exist_ok=True)
-    else:
-        outdir = filepath.parent
-
-    basename = filepath.stem
-    outpath = outdir.joinpath(basename + ".csv")
-
-    data = read_file(filepath)
     if cleaning:
         data = clean_data(data)
-    with open(outpath, "w") as f:
+
+    data = np.where(data == "nan", na_rep, data)
+
+    with open(outpath, "w", encoding=encoding) as f:
         writer = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in data:
             writer.writerow(row)

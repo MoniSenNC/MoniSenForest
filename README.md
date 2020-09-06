@@ -1,7 +1,7 @@
 moni1000f
-----------
+---------
 
-moni1000f is a simple tool for handling and checking the tree census and litter fall data of the Monitoring Sites 1000 projects.
+moni1000f is a tool for handling and checking the tree census and litter fall data of the Monitoring Sites 1000 projects (also called "MoniSen" or "Moni1000").
 
 ### Installation
 
@@ -10,6 +10,6 @@ moni1000f is a simple tool for handling and checking the tree census and litter 
     python setup.py install
 
 
-### Run Qt application for data checking
+### Run MoniSenForest application
 
-    moni1000utils
+    MoniSenForest

@@ -35,5 +35,5 @@ setup(
     include_package_data=True,
     python_requires=">=3.6",
     install_requires=requirements,
-    entry_points={"console_scripts": ["moni1000utils = moni1000f.app_qt:main"]},
+    entry_points={"console_scripts": ["MoniSenForest = moni1000f.app:main"]},
 )
