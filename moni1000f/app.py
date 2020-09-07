@@ -1,13 +1,13 @@
 import logging
 import queue
+import re
 import signal
 import threading
 import time
 import tkinter as tk
-import re
 from logging.handlers import QueueHandler
 from pathlib import Path
-from tkinter import N, S, E, W, filedialog, ttk
+from tkinter import E, N, S, W, filedialog, ttk
 from tkinter.scrolledtext import ScrolledText
 from typing import Optional
 
