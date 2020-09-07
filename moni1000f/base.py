@@ -271,7 +271,7 @@ def read_file(filepath: str) -> np.ndarray:
     filepath = Path(filepath).expanduser()
     suffix = filepath.suffix
     if suffix == ".xlsx":
-        wb = load_workbook(filepath, read_only=True)
+        wb = load_workbook(filepath, read_only=True, data_only=True)
         if "Data" in wb.sheetnames:
             ws = wb["Data"]
         else:
