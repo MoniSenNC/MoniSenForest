@@ -4,7 +4,7 @@ from typing import Any
 
 import numpy as np
 
-from moni1000f.base import MonitoringData, read_data
+from moni1000f.base import MonitoringData
 from moni1000f.datacheck import find_pattern, isvalid, retrive_year
 
 
@@ -12,14 +12,15 @@ def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
     """
     Fill the elements after a specific value with a single value.
 
-    Paramters
-    ---------
+    Parameters
+    ----------
     x : numpy ndarray
         One dimentional array
     val : any, default 1
         Value of the break point
     fill : any, default 2
         Value to use fill elements after the break point
+
     """
     x = np.array(x).copy()
     i = np.where(x == val)[0]
@@ -29,7 +30,7 @@ def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
 
 
 def add_state_columns(d: MonitoringData) -> MonitoringData:
-    '''
+    """
     Add columns for error, death, recruitment status.
 
     毎木データに、エラー、死亡、加入の状態を表す列を追加。
@@ -38,7 +39,8 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
     ----------
     d : MonitoringData
         MonitoringData object of tree gbh data
-    '''
+
+    """
     d = copy.deepcopy(d)
     pat_gbh_col = "^gbh([0-9]{2})$"
     gbh_data = d.select_cols(regex=pat_gbh_col, add_header=True)
