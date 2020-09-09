@@ -56,8 +56,8 @@ class MonitoringData(object):
     def __init__(self,
                  data: np.ndarray = np.array([]),
                  header: bool = True,
-                 plot_id: str = "",
-                 data_type: str = "",
+                 plot_id: Optional[str] = None,
+                 data_type: Optional[str] = None,
                  metadata: Dict[str, str] = {},
                  comments: Optional[np.ndarray] = None,
                  *args,
@@ -256,7 +256,7 @@ class MonitoringData(object):
                     na_rep=na_rep)
 
 
-def read_file(filepath: str) -> np.ndarray:
+def read_file(filepath: Union[str, Path]) -> np.ndarray:
     """
     Read a data file (.csv or .xlsx) and return a np.ndarray object.
 
@@ -264,8 +264,8 @@ def read_file(filepath: str) -> np.ndarray:
 
     Parameters
     ----------
-    filepath : str
-        path to the data file
+    filepath : str or pathlibs Path object
+        Path to the data file
 
     """
     filepath = Path(filepath).expanduser()
@@ -381,23 +381,21 @@ def get_metadata(comments: np.ndarray) -> Dict[str, str]:
     return metadata
 
 
-def get_plotid(filepath: str) -> str:
+def get_plotid(filepath: Union[str, Path]) -> str:
     """
     Get the plot id from a file name.
 
     Parameters
     ----------
-    filepath : str
-        path of a data file
+    filepath : str or pathlibs Path object
+        Path to the data file
 
     """
     filepath = Path(filepath)
     ftype = ["AT", "EC", "BC", "EB", "DB"]
     r = re.compile("|".join(["[A-Z]{{2}}-{}[0-9]".format(i) for i in ftype]))
-    try:
-        return r.search(filepath.name).group()
-    except AttributeError:
-        return ""
+    m = r.search(filepath.name)
+    return m.group() if m else ""
 
 
 def read_data(

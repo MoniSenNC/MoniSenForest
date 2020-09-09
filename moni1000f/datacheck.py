@@ -43,13 +43,13 @@ class CheckDataCommon(MonitoringData):
 
         if self.data_type in ["tree", "seed"]:
             if not path_spdict:
-                path_spdict = self.__path_spdict_default
+                path_spdict = str(self.__path_spdict_default)
             with open(path_spdict) as f:
                 self.dict_sp = json.load(f)
 
         if self.data_type == "tree":
             if not path_xy:
-                path_xy = self.__path_xy_default
+                path_xy = str(self.__path_xy_default)
             with open(path_xy) as f:
                 dict_xy = json.load(f)
             if self.plot_id in dict_xy:
@@ -57,7 +57,7 @@ class CheckDataCommon(MonitoringData):
 
         if self.data_type in ["litter", "seed"]:
             if not path_trap:
-                path_trap = self.__path_trap_default
+                path_trap = str(self.__path_trap_default)
             with open(path_trap) as f:
                 dict_trap = json.load(f)
             self.trap_list = dict_trap[self.plot_id]["trap_id"]
@@ -79,8 +79,7 @@ class CheckDataCommon(MonitoringData):
             raise TypeError("The data is not in the format of Moni-sen data")
 
         self.meas = self.select_cols(regex=pat_meas_col)
-        self.col_meas = np.array(
-            [x for x in self.columns if re.match(pat_meas_col, x)])
+        self.col_meas = np.array([x for x in self.columns if re.match(pat_meas_col, x)])
         self.meas_orig = self.meas.copy()
         self.rec_id = self.select_cols(pat_rec_id)
         self.pat_except = re.compile(pat_except)
@@ -99,12 +98,10 @@ class CheckDataCommon(MonitoringData):
 
         調査日に不正な入力値
         """
-        date_cols = list(
-            filter(lambda x: re.match("^s_date", x), self.columns))
+        date_cols = list(filter(lambda x: re.match("^s_date", x), self.columns))
         date = self.select_cols(regex="^s_date")
         date_orig = date.copy()
-        date = np.vectorize(lambda x: re.sub(
-            "^NA$|^na$|^nd|^$", "11111111", x))(date)
+        date = np.vectorize(lambda x: re.sub("^NA$|^na$|^nd|^$", "11111111", x))(date)
         valid = np.vectorize(lambda x: isdate(x))(date)
         msg = "{}に不正な入力値 ({})"
         errors = [
@@ -129,13 +126,11 @@ class CheckDataCommon(MonitoringData):
         if sp_not_in_list:
             for sp in sp_not_in_list:
                 if self.data_type == "tree":
-                    tag = self.rec_id[np.where(
-                        self.select_cols("spc_japan") == sp)]
+                    tag = self.rec_id[np.where(self.select_cols("spc_japan") == sp)]
                     rec_id1 = "; ".join(tag)
                 else:
                     rec_id1 = ""
-                errors.append(
-                    ErrDat(self.plot_id, rec_id1, "", msg.format(sp)))
+                errors.append(ErrDat(self.plot_id, rec_id1, "", msg.format(sp)))
         return errors
 
     def check_synonym(self):
@@ -149,8 +144,7 @@ class CheckDataCommon(MonitoringData):
             return errors
         splist_obs = np.unique(self.select_cols(regex="^spc$|^spc_japan$"))
         sp_in_list = np.array([sp for sp in splist_obs if sp in self.dict_sp])
-        name_std = np.array([self.dict_sp[sp]["name_jp_std"]
-                             for sp in sp_in_list])
+        name_std = np.array([self.dict_sp[sp]["name_jp_std"] for sp in sp_in_list])
         uniq, cnt = np.unique(name_std, return_counts=True)
         dups = uniq[np.where(cnt > 1)]
         for sp in dups:
@@ -170,15 +164,13 @@ class CheckDataCommon(MonitoringData):
             return errors
         splist_obs = np.unique(self.select_cols(regex="^spc$|^spc_japan$"))
         sp_in_list = np.array([sp for sp in splist_obs if sp in self.dict_sp])
-        name_std = np.array([self.dict_sp[sp]["name_jp_std"]
-                             for sp in sp_in_list])
+        name_std = np.array([self.dict_sp[sp]["name_jp_std"] for sp in sp_in_list])
         for sp, spstd in zip(sp_in_list, name_std):
             if sp != spstd:
                 if spstd and not spstd.endswith(("科", "属", "節", "類")):
                     msg = "{}は非標準和名（{}の別名）".format(sp, spstd)
                     if self.data_type == "tree":
-                        tag = self.rec_id[np.where(
-                            self.select_cols("spc_japan") == sp)]
+                        tag = self.rec_id[np.where(self.select_cols("spc_japan") == sp)]
                         rec_id1 = "; ".join(tag)
                     else:
                         rec_id1 = ""
@@ -193,10 +185,9 @@ class CheckDataCommon(MonitoringData):
         """
         msg = "測定値データ列に空白セルあり"
         errors = [
-            ErrDat(
-                self.plot_id, self.rec_id[i], self.col_meas[j]
-                if self.data_type == "tree" else self.trap_id[i], msg)
-            for i, j in zip(*np.where(self.meas == ""))
+            ErrDat(self.plot_id, self.rec_id[i],
+                   self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
+                   msg) for i, j in zip(*np.where(self.meas == ""))
         ]
         return errors
 
@@ -209,10 +200,9 @@ class CheckDataCommon(MonitoringData):
         valid = np.vectorize(lambda x: isvalid(x, self.pat_except))(self.meas)
         msg = "{}が無効な入力値 ({})"
         errors = [
-            ErrDat(
-                self.plot_id, self.rec_id[i], self.col_meas[j]
-                if self.data_type == "tree" else self.trap_id[i],
-                msg.format(self.col_meas[j], self.meas_orig[i, j]))
+            ErrDat(self.plot_id, self.rec_id[i],
+                   self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
+                   msg.format(self.col_meas[j], self.meas_orig[i, j]))
             for i, j in zip(*np.where(~valid))
         ]
         return errors
@@ -233,15 +223,13 @@ class CheckDataCommon(MonitoringData):
 
         測定値が正の値かどうかのチェック
         """
-        meas_c = np.vectorize(lambda x: isvalid(
-            x, return_value=True))(self.meas)
+        meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         meas_c[np.isnan(meas_c)] = 0
 
         msg = "{}の測定値がマイナス ({})"
 
         errors = [
-            ErrDat(self.plot_id,
-                   self.rec_id[i],
+            ErrDat(self.plot_id, self.rec_id[i],
                    self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
                    msg.format(self.col_meas[j], meas_c[i, j]))
             for i, j in zip(*np.where(meas_c < 0))
@@ -255,7 +243,6 @@ class CheckDataTree(CheckDataCommon):
 
     毎木データのチェック
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -274,7 +261,7 @@ class CheckDataTree(CheckDataCommon):
 
     def check_indv_null(self):
         """
-        Checking for blank or na in individual numbers.
+        Check for blank or na in individual numbers.
 
         indv_noが空白またはna
         """
@@ -419,8 +406,7 @@ class CheckDataTree(CheckDataCommon):
         成長量が基準より大きいあるいは小さい
         """
         # NOTE: 前回の値にcd, vn, viが付く場合はスキップ
-        meas_c = np.vectorize(lambda x: isvalid(
-            x, return_value=True))(self.meas)
+        meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         pat_vc = re.compile("^vi|^vn|^cd")
         match_vc = np.vectorize(lambda x: find_pattern(x, pat_vc))(self.meas)
 
@@ -430,8 +416,7 @@ class CheckDataTree(CheckDataCommon):
             if len(index_notnull) == 0:
                 continue
             gbhdiff = np.diff(row[index_notnull])
-            yrdiff = np.diff(np.vectorize(retrive_year)
-                             (self.col_meas[index_notnull]))
+            yrdiff = np.diff(np.vectorize(retrive_year)(self.col_meas[index_notnull]))
 
             excess = gbhdiff > yrdiff * 2.5 + 3.8
             minus = gbhdiff < -3.1
@@ -457,22 +442,19 @@ class CheckDataTree(CheckDataCommon):
 
         新規加入個体（naの次のgbhが数値）のサイズが基準より大きい
         """
-        meas_c = np.vectorize(lambda x: isvalid(
-            x, return_value=True))(self.meas)
+        meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         notnull = ~np.isnan(meas_c)
         pat_na = re.compile(r"^na$|^NA$")
         match_na = np.vectorize(lambda x: find_pattern(x, pat_na))(self.meas)
         msg = "新規加入個体だが、加入時のgbhが基準より大きいのため前回計測忘れの疑い"
         errors = []
         for i, j in zip(*np.where(match_na[:, :-1] & notnull[:, 1:])):
-            yrdiff = np.diff(np.vectorize(retrive_year)
-                             (self.col_meas[[j, j + 1]]))[0]
+            yrdiff = np.diff(np.vectorize(retrive_year)(self.col_meas[[j, j + 1]]))[0]
             if meas_c[i, j + 1] >= (15 + yrdiff * 2.5 + 3.8):
                 target = "{}={}; {}={}".format(self.col_meas[j], self.meas_orig[i, j],
                                                self.col_meas[j + 1],
                                                self.meas_orig[i, j + 1])
-                errors.append(
-                    ErrDat(self.plot_id, self.rec_id[i], target, msg))
+                errors.append(ErrDat(self.plot_id, self.rec_id[i], target, msg))
         return errors
 
     def check_values_nd(self):
@@ -482,10 +464,8 @@ class CheckDataTree(CheckDataCommon):
         ndだが前後の測定値と比較して成長量の基準に収まっている
         """
         pat_ndxx = re.compile(r"^nd\s?([0-9]+[.]?[0-9]*)")
-        match_ndxx = np.vectorize(
-            lambda x: find_pattern(x, pat_ndxx))(self.meas)
-        meas_c = np.vectorize(lambda x: isvalid(
-            x, "^nd", return_value=True))(self.meas)
+        match_ndxx = np.vectorize(lambda x: find_pattern(x, pat_ndxx))(self.meas)
+        meas_c = np.vectorize(lambda x: isvalid(x, "^nd", return_value=True))(self.meas)
 
         errors = []
         for i, row in enumerate(meas_c):
@@ -530,7 +510,7 @@ class CheckDataTree(CheckDataCommon):
         self.replace_dxx_in_gbh()
         errors.extend(self.check_missing())
         errors.extend(self.check_values_after_d())
-        errors.extend(self.check_anomaly())
+        errors.extend(self.find_anomaly())
         errors.extend(self.check_values_recruits())
         errors.extend(self.check_values_nd())
         if throughly:
@@ -544,7 +524,6 @@ class CheckDataLitter(CheckDataCommon):
 
     リターデータのチェック
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
@@ -560,8 +539,7 @@ class CheckDataLitter(CheckDataCommon):
         errors = []
         for period_s, n_trap in zip(*np.unique(self.period, return_counts=True)):
             s_date1_s, s_date2_s = period_s.split("-")
-            trap_s = self.select_cols(
-                "trap_id")[np.where(self.period == period_s)[0]]
+            trap_s = self.select_cols("trap_id")[np.where(self.period == period_s)[0]]
             trap_dup = find_duplicates(trap_s)
             if trap_dup.size > 0:
                 msg = "同じ設置・回収日の組み合わせでトラップの重複あり"
@@ -582,8 +560,7 @@ class CheckDataLitter(CheckDataCommon):
         設置期間が長い/短い
         """
         errors = []
-        s_date1_s, s_date2_s = zip(*[p.split("-")
-                                     for p in np.unique(self.period)])
+        s_date1_s, s_date2_s = zip(*[p.split("-") for p in np.unique(self.period)])
         s_date1_s = np.array(s_date1_s)
         s_date2_s = np.array(s_date2_s)
         s_date1_s_dt = np.array(list(map(as_datetime, s_date1_s)))
@@ -611,8 +588,7 @@ class CheckDataLitter(CheckDataCommon):
         # 設置期間が短い
         short_d = delta_days < 11
         msg = "設置期間が10日以下"
-        errors.extend([ErrDat(self.plot_id, d1, "", msg)
-                       for d1 in s_date1_s[short_d]])
+        errors.extend([ErrDat(self.plot_id, d1, "", msg) for d1 in s_date1_s[short_d]])
 
         return errors
 
@@ -622,8 +598,7 @@ class CheckDataLitter(CheckDataCommon):
 
         設置期間がトラップによって異なる
         """
-        s_date1_s, s_date2_s = zip(*[p.split("-")
-                                     for p in np.unique(self.period)])
+        s_date1_s, s_date2_s = zip(*[p.split("-") for p in np.unique(self.period)])
         s_date1_s = np.array(s_date1_s)
         s_date2_s = np.array(s_date2_s)
         msg = "設置期間がトラップによって異なる"
@@ -641,10 +616,8 @@ class CheckDataLitter(CheckDataCommon):
         """
         errors = []
         for trap in np.unique(self.trap_id):
-            s_date1_s = self.select_cols(
-                "s_date1")[self.trap_id == trap]
-            s_date2_s = self.select_cols(
-                "s_date2")[self.trap_id == trap]
+            s_date1_s = self.select_cols("s_date1")[self.trap_id == trap]
+            s_date2_s = self.select_cols("s_date2")[self.trap_id == trap]
             s_date1_s_dt = np.array(list(map(as_datetime, s_date1_s)))
             s_date2_s_dt = np.array(list(map(as_datetime, s_date2_s)))
 
@@ -657,15 +630,14 @@ class CheckDataLitter(CheckDataCommon):
 
             msg = "前回の回収日から{}日間の中断期間"
             errors.extend([
-                ErrDat(self.plot_id, s_date1_s[i + 1],
-                       trap, msg.format(delta_days[i]))
+                ErrDat(self.plot_id, s_date1_s[i + 1], trap, msg.format(delta_days[i]))
                 for i in np.where(interrupted & within_year)[0]
             ])
         return errors
 
     def find_anomaly(self):
         """
-        Find anomaly in litter weigtht measurements
+        Find anomaly in litter weigtht measurements.
 
         重量データの異常値の検出
         """
@@ -674,8 +646,7 @@ class CheckDataLitter(CheckDataCommon):
         # 数値以外の文字列はnanに置換
         # 0が多い月はそれ以外の値が外れ値になるので、0も除外
         # 絶乾重量（wdry）のみ
-        wdry_cols = [i for i, x in enumerate(
-            self.col_meas) if re.search("wdry_", x)]
+        wdry_cols = [i for i, x in enumerate(self.col_meas) if re.search("wdry_", x)]
         meas_wdry = self.meas[:, wdry_cols]
         meas_wdry[meas_wdry == "0"] = np.nan
         meas_c = np.vectorize(lambda x: isvalid(x, "^NA$|^na$|^-$", return_value=True))(
@@ -734,7 +705,6 @@ class CheckDataSeed(CheckDataCommon):
 
     種子データのチェック
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
@@ -791,7 +761,7 @@ def isvalid(s: str, pat_except="", return_value=False):
         return np.nan if return_value else False
 
 
-def find_pattern(s: str, pat: str):
+def find_pattern(s: str, pat: Union[str, re.Pattern]):
     """Find a pattern in the given string and return a Boolean value."""
     if isinstance(pat, str):
         pat = re.compile(pat)
@@ -884,18 +854,17 @@ def retrive_year(x: str) -> int:
     """
     r = re.compile(r"[0-9]+")
     errmsg = "Can not retrive a year from {!r}".format(x)
-    try:
-        match = r.search(x).group()
-    except AttributeError:
-        raise RuntimeError(errmsg)
-    else:
-        if len(match) == 2:
+    match = r.search(x)
+    if match:
+        if len(match.group()) == 2:
             form = "%y"
-        elif len(match) == 4:
+        elif len(match.group()) == 4:
             form = "%Y"
         else:
             raise RuntimeError(errmsg)
-        return int(datetime.strptime(match, form).strftime("%Y"))
+        return int(datetime.strptime(match.group(), form).strftime("%Y"))
+    else:
+        raise RuntimeError(errmsg)
 
 
 def calc_delta_days(d1, d2):
@@ -1069,13 +1038,13 @@ def check_data(d: Optional[MonitoringData] = None,
     elif not d:
         raise RuntimeError("'d' or 'filepath' is needed")
 
+    cd: Union[CheckDataTree, CheckDataLitter, CheckDataSeed]
     if d.data_type == 'tree':
         cd = CheckDataTree(**vars(d), path_spdict=path_spdict, path_xy=path_xy)
     elif d.data_type == 'litter':
         cd = CheckDataLitter(**vars(d), path_trap=path_trap)
     elif d.data_type == 'seed':
-        cd = CheckDataSeed(
-            **vars(d), path_spdict=path_spdict, path_trap=path_trap)
+        cd = CheckDataSeed(**vars(d), path_spdict=path_spdict, path_trap=path_trap)
     else:
         raise TypeError("'data_type' does not defined")
 
