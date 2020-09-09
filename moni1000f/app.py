@@ -41,7 +41,7 @@ class MainWindow(ttk.Panedwindow):
         self.master.bind('<Control-q>', self.quit)
         signal.signal(signal.SIGINT, self.quit)
 
-    def quit(self):
+    def quit(self, *args):
         if self.worker1 and self.worker1.is_alive():
             self.worker1.stop()
         if self.worker2 and self.worker2.is_alive():
