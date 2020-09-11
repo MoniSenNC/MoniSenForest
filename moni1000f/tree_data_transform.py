@@ -25,7 +25,7 @@ def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
     x = np.array(x).copy()
     i = np.where(x == val)[0]
     if len(i) > 0:
-        x[(i.min() + 1):] = fill
+        x[(i.min() + 1) :] = fill
     return x
 
 
@@ -49,12 +49,14 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
     yrs = np.array(list(map(retrive_year, colnames)))
     yrs_diff = np.diff(yrs)
     values_c = np.vectorize(lambda x: isvalid(x, "^nd|^cd|^vi|^vn", return_value=True))(
-        values.copy())
+        values.copy()
+    )
 
     # Error
     error1 = np.where(np.vectorize(lambda x: find_pattern(x, "^nd"))(values), 1, 0)
     error2 = np.where(
-        np.vectorize(lambda x: find_pattern(x, "^cd|^vi|^vn"))(values), 2, 0)
+        np.vectorize(lambda x: find_pattern(x, "^cd|^vi|^vn"))(values), 2, 0
+    )
     error = (error1 + error2).astype(np.int64)
 
     # Dead
@@ -67,14 +69,16 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
             values[i, j] = "d"
 
     dead1 = np.where(
-        np.vectorize(lambda x: find_pattern(x, "^(?<![nd])d(?![d])"))(values), 1, 0)
+        np.vectorize(lambda x: find_pattern(x, "^(?<![nd])d(?![d])"))(values), 1, 0
+    )
     dead2 = np.where(np.vectorize(lambda x: find_pattern(x, "^dd"))(values), 2, 0)
     dead = (dead1 + dead2).astype(np.int64)
     dead = np.apply_along_axis(lambda x: fill_after(x, 1, 2), 1, dead)
 
     # Recruit
     below_cutoff = np.vectorize(lambda x: np.less(x, 15.7, where=~np.isnan(x)))(
-        values_c)
+        values_c
+    )
     recr = np.zeros(values_c.shape)
 
     # for first census
@@ -88,19 +92,19 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
             continue
         elif values_c[i, j] > values_c[i, j + 1]:
             continue
-        elif len(np.where(recr[i, :(j + 1)] == 1)[0]) == 0:
+        elif len(np.where(recr[i, : (j + 1)] == 1)[0]) == 0:
             if (error[i, j] == 0) & (error[i, j + 1] == 0):
                 if values_c[i, j + 1] < (15.7 + 3.8 + yrs_diff[j] * 2.5):
                     recr[i, j + 1] = 1
-                    recr[i, :(j + 1)] = -1
+                    recr[i, : (j + 1)] = -1
                 elif not np.isnan(values_c[i, j]):
                     recr[i, j + 1] = 1
-                    recr[i, :(j + 1)] = -1
-                elif len(np.where(recr[i, :(j + 1)] == -1)[0]) > 0:
+                    recr[i, : (j + 1)] = -1
+                elif len(np.where(recr[i, : (j + 1)] == -1)[0]) > 0:
                     recr[i, :j] = -1
             elif error[i, j] == 1:
-                if len(np.where(recr[i, :(j + 1)] == -1)[0]) > 0:
-                    recr[i, :np.where(error[i, :(j + 1)] == 1)[0][0]] = -1
+                if len(np.where(recr[i, : (j + 1)] == -1)[0]) > 0:
+                    recr[i, : np.where(error[i, : (j + 1)] == 1)[0][0]] = -1
 
     recr = recr.astype(np.int64)
 
