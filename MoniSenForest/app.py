@@ -14,9 +14,9 @@ from typing import Optional
 
 import numpy as np
 
-from moni1000f.base import read_data
-from moni1000f.datacheck import check_data, save_errors_to_xlsx
-from moni1000f.tree_data_transform import add_state_columns
+from MoniSenForest.base import read_data
+from MoniSenForest.datacheck import check_data, save_errors_to_xlsx
+from MoniSenForest.tree_data_transform import add_state_columns
 
 logger = logging.getLogger(__name__)
 
@@ -565,22 +565,34 @@ class FileExportWorker(threading.Thread):
                 d = add_state_columns(d)
 
             if d.data_type in ["tree", "seed"] and self.add_sciname:
-                spname = np.array(
-                    [
-                        dict_sp[i]["species"] if i in dict_sp else ""
-                        for i in d.select_cols(regex="^spc_japan$|^spc$")
-                    ]
-                )
-                d.data = np.vstack((d.data.T, np.append(["species"], spname))).T
+                sciname = []
+                not_found = []
+                for i in d.select_cols(regex="^spc_japan$|^spc$"):
+                    if i in dict_sp:
+                        sciname.append(dict_sp[i]["species"])
+                    else:
+                        sciname.append("")
+                        not_found.append(i)
+                if not_found:
+                    for i in not_found:
+                        msg = "{} not found in the species dictionary".format(i)
+                        logger.warning(msg)
+                d.data = np.vstack((d.data.T, np.append(["species"], sciname))).T
 
             if d.data_type in ["tree", "seed"] and self.add_class:
                 cols = ["genus", "family", "order", "family_jp", "order_jp"]
-                classification = np.array(
-                    [
-                        [dict_sp[i][j] for j in cols] if i in dict_sp else ""
-                        for i in d.select_cols("spc_japan")
-                    ]
-                )
+                classification = []
+                not_found = []
+                for i in d.select_cols(regex="^spc_japan$|^spc$"):
+                    if i in dict_sp:
+                        classification.append([dict_sp[i][j] for j in cols])
+                    else:
+                        classification.append([""] * 5)
+                        not_found.append(i)
+                if not_found:
+                    for i in not_found:
+                        msg = "{} not found in the species dictionary".format(i)
+                        logger.warning(msg)
                 d.data = np.hstack((d.data, np.vstack((cols, classification))))
 
             d.to_csv(outpath, **self.params)

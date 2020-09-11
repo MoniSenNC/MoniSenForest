@@ -1,4 +1,4 @@
 include LICENSE
 include requirements.txt
 include setup.cfg
-include moni1000f/suppl_data/*.json
+include MoniSenForest/suppl_data/*.json

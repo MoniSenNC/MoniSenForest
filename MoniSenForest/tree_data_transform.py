@@ -4,8 +4,8 @@ from typing import Any
 
 import numpy as np
 
-from moni1000f.base import MonitoringData
-from moni1000f.datacheck import find_pattern, isvalid, retrive_year
+from MoniSenForest.base import MonitoringData
+from MoniSenForest.datacheck import find_pattern, isvalid, retrive_year
 
 
 def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
