@@ -10,6 +10,6 @@ MoniSenForest is a tool for handling the tree census data and litterd fall data 
     python setup.py install
 
 
-### Run MoniSenForest application
+### Run GUI application
 
-    MoniSenForest
+    monisenforest
