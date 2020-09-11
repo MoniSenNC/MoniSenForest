@@ -84,9 +84,7 @@ class CheckDataCommon(MonitoringData):
         self.meas = self.select_cols(regex=pat_meas_col)
         self.col_meas = np.array([x for x in self.columns if re.match(pat_meas_col, x)])
         na_cols = (self.meas == "NA").all(axis=0)
-        na_rows = (self.meas == "NA").all(axis=1)
         self.meas = self.meas[:, ~na_cols]
-        self.meas = self.meas[~na_rows, :]
         self.col_meas = self.col_meas[~na_cols]
         self.meas_orig = self.meas.copy()
         self.rec_id = self.select_cols(pat_rec_id)
