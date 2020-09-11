@@ -27,17 +27,20 @@ class CheckDataCommon(MonitoringData):
 
     共通のチェック項目
     """
+
     __fd = Path(__file__).resolve().parents[0]
     __path_spdict_default = __fd.joinpath("suppl_data", "species_dict.json")
     __path_xy_default = __fd.joinpath("suppl_data", "grid_xy.json")
     __path_trap_default = __fd.joinpath("suppl_data", "trap_list.json")
 
-    def __init__(self,
-                 path_spdict: str = "",
-                 path_xy: str = "",
-                 path_trap: str = "",
-                 *args,
-                 **kwargs):
+    def __init__(
+        self,
+        path_spdict: str = "",
+        path_xy: str = "",
+        path_trap: str = "",
+        *args,
+        **kwargs
+    ):
         super().__init__(*args, **kwargs)
         self.__prepare()
 
@@ -80,6 +83,11 @@ class CheckDataCommon(MonitoringData):
 
         self.meas = self.select_cols(regex=pat_meas_col)
         self.col_meas = np.array([x for x in self.columns if re.match(pat_meas_col, x)])
+        na_cols = (self.meas == "NA").all(axis=0)
+        na_rows = (self.meas == "NA").all(axis=1)
+        self.meas = self.meas[:, ~na_cols]
+        self.meas = self.meas[~na_rows, :]
+        self.col_meas = self.col_meas[~na_cols]
         self.meas_orig = self.meas.copy()
         self.rec_id = self.select_cols(pat_rec_id)
         self.pat_except = re.compile(pat_except)
@@ -105,8 +113,12 @@ class CheckDataCommon(MonitoringData):
         valid = np.vectorize(lambda x: isdate(x))(date)
         msg = "{}に不正な入力値 ({})"
         errors = [
-            ErrDat(self.plot_id, self.rec_id[i], "",
-                   msg.format(date_cols[j], date_orig[i, j]))
+            ErrDat(
+                self.plot_id,
+                self.rec_id[i],
+                "",
+                msg.format(date_cols[j], date_orig[i, j]),
+            )
             for i, j in zip(*np.where(~valid))
         ]
         return errors
@@ -185,9 +197,13 @@ class CheckDataCommon(MonitoringData):
         """
         msg = "測定値データ列に空白セルあり"
         errors = [
-            ErrDat(self.plot_id, self.rec_id[i],
-                   self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
-                   msg) for i, j in zip(*np.where(self.meas == ""))
+            ErrDat(
+                self.plot_id,
+                self.rec_id[i],
+                self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
+                msg,
+            )
+            for i, j in zip(*np.where(self.meas == ""))
         ]
         return errors
 
@@ -200,9 +216,12 @@ class CheckDataCommon(MonitoringData):
         valid = np.vectorize(lambda x: isvalid(x, self.pat_except))(self.meas)
         msg = "{}が無効な入力値 ({})"
         errors = [
-            ErrDat(self.plot_id, self.rec_id[i],
-                   self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
-                   msg.format(self.col_meas[j], self.meas_orig[i, j]))
+            ErrDat(
+                self.plot_id,
+                self.rec_id[i],
+                self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
+                msg.format(self.col_meas[j], self.meas_orig[i, j]),
+            )
             for i, j in zip(*np.where(~valid))
         ]
         return errors
@@ -229,9 +248,12 @@ class CheckDataCommon(MonitoringData):
         msg = "{}の測定値がマイナス ({})"
 
         errors = [
-            ErrDat(self.plot_id, self.rec_id[i],
-                   self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
-                   msg.format(self.col_meas[j], meas_c[i, j]))
+            ErrDat(
+                self.plot_id,
+                self.rec_id[i],
+                self.col_meas[j] if self.data_type == "tree" else self.trap_id[i],
+                msg.format(self.col_meas[j], meas_c[i, j]),
+            )
             for i, j in zip(*np.where(meas_c < 0))
         ]
         return errors
@@ -243,6 +265,7 @@ class CheckDataTree(CheckDataCommon):
 
     毎木データのチェック
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -289,8 +312,10 @@ class CheckDataTree(CheckDataCommon):
             s = np.where(indv_no == i)
             if len(np.unique(sp[s])) > 1 and i:
                 errors.append(
-                    ErrDat(self.plot_id, "; ".join(self.rec_id[s]), "/".join(sp[s]),
-                           msg))
+                    ErrDat(
+                        self.plot_id, "; ".join(self.rec_id[s]), "/".join(sp[s]), msg
+                    )
+                )
         return errors
 
     def check_mesh_xy(self):
@@ -371,12 +396,14 @@ class CheckDataTree(CheckDataCommon):
         pat_na = re.compile(r"^na$|^NA$")
         match_na = np.vectorize(lambda x: find_pattern(x, pat_na))(self.meas)
         alive = np.vectorize(lambda x: isalive(x, pat_except=self.pat_except))(
-            self.meas)
+            self.meas
+        )
 
         msg = "前年まで生存。枯死？"
         errors = [
             ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j], msg)
-            for i, j in zip(*np.where(match_na)) if j > 0 and alive[i, j - 1]
+            for i, j in zip(*np.where(match_na))
+            if j > 0 and alive[i, j - 1]
         ]
         return errors
 
@@ -424,16 +451,22 @@ class CheckDataTree(CheckDataCommon):
             index_minus = index_notnull[1:][minus]
 
             msg = "成長量が基準値より大きい。測定ミス？"
-            errors.extend([
-                ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j], msg)
-                for j in index_excess if not match_vc[i, j - 1]
-            ])
+            errors.extend(
+                [
+                    ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j], msg)
+                    for j in index_excess
+                    if not match_vc[i, j - 1]
+                ]
+            )
 
             msg = "成長量が基準値より小さい。測定ミス？"
-            errors.extend([
-                ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j], msg)
-                for j in index_minus if not match_vc[i, j - 1]
-            ])
+            errors.extend(
+                [
+                    ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j], msg)
+                    for j in index_minus
+                    if not match_vc[i, j - 1]
+                ]
+            )
         return errors
 
     def check_values_recruits(self):
@@ -451,9 +484,12 @@ class CheckDataTree(CheckDataCommon):
         for i, j in zip(*np.where(match_na[:, :-1] & notnull[:, 1:])):
             yrdiff = np.diff(np.vectorize(retrive_year)(self.col_meas[[j, j + 1]]))[0]
             if meas_c[i, j + 1] >= (15 + yrdiff * 2.5 + 3.8):
-                target = "{}={}; {}={}".format(self.col_meas[j], self.meas_orig[i, j],
-                                               self.col_meas[j + 1],
-                                               self.meas_orig[i, j + 1])
+                target = "{}={}; {}={}".format(
+                    self.col_meas[j],
+                    self.meas_orig[i, j],
+                    self.col_meas[j + 1],
+                    self.meas_orig[i, j + 1],
+                )
                 errors.append(ErrDat(self.plot_id, self.rec_id[i], target, msg))
         return errors
 
@@ -475,7 +511,8 @@ class CheckDataTree(CheckDataCommon):
                     continue
                 gbhdiff = np.diff(row[index_notnull])
                 yrdiff = np.diff(
-                    np.vectorize(retrive_year)(self.col_meas[index_notnull]))
+                    np.vectorize(retrive_year)(self.col_meas[index_notnull])
+                )
                 in_range = (gbhdiff <= yrdiff * 2.5 + 3.8) & (gbhdiff >= -3.1)
                 index_notnull[1:][in_range]
                 msg = "誤って「nd: 測定間違い」となっている可能性あり"
@@ -483,10 +520,12 @@ class CheckDataTree(CheckDataCommon):
                     j = index_notnull[jj + 1]
                     # 最初か最後の調査時のndはスキップ
                     if (j < (len(self.col_meas) - 1)) and (jj < (len(in_range) - 1)):
-                        if all(in_range[jj:(jj + 2)]):
+                        if all(in_range[jj : (jj + 2)]):
                             errors.append(
-                                ErrDat(self.plot_id, self.rec_id[i], self.col_meas[j],
-                                       msg))
+                                ErrDat(
+                                    self.plot_id, self.rec_id[i], self.col_meas[j], msg
+                                )
+                            )
         return errors
 
     def check_all(self, throughly=False):
@@ -524,10 +563,12 @@ class CheckDataLitter(CheckDataCommon):
 
     リターデータのチェック
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
-            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])])
+            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])]
+        )
 
     def check_trap_date_combinations(self):
         """
@@ -570,20 +611,30 @@ class CheckDataLitter(CheckDataCommon):
         long_d = delta_days > 45
         # 越冬設置は除外
         overwinter_site = [
-            "UR-BC1", "AS-DB1", "AS-DB2", "TM-DB1", "OY-DB1", "KY-DB1", "OT-EC1",
-            "OG-DB1"
+            "UR-BC1",
+            "AS-DB1",
+            "AS-DB2",
+            "TM-DB1",
+            "OY-DB1",
+            "KY-DB1",
+            "OT-EC1",
+            "OG-DB1",
         ]
         within_year = np.array(
-            [i.year == j.year for i, j in zip(s_date1_s_dt, s_date2_s_dt)])
+            [i.year == j.year for i, j in zip(s_date1_s_dt, s_date2_s_dt)]
+        )
         msg = "設置期間が46日以上"
         if self.plot_id in overwinter_site:
-            errors.extend([
-                ErrDat(self.plot_id, d1, "", msg)
-                for d1 in s_date1_s[long_d & within_year]
-            ])
+            errors.extend(
+                [
+                    ErrDat(self.plot_id, d1, "", msg)
+                    for d1 in s_date1_s[long_d & within_year]
+                ]
+            )
         else:
             errors.extend(
-                [ErrDat(self.plot_id, d1, "", msg) for d1 in s_date1_s[long_d]])
+                [ErrDat(self.plot_id, d1, "", msg) for d1 in s_date1_s[long_d]]
+            )
 
         # 設置期間が短い
         short_d = delta_days < 11
@@ -603,7 +654,8 @@ class CheckDataLitter(CheckDataCommon):
         s_date2_s = np.array(s_date2_s)
         msg = "設置期間がトラップによって異なる"
         errors = [
-            ErrDat(self.plot_id, d1, "", msg) for d1 in np.unique(s_date1_s)
+            ErrDat(self.plot_id, d1, "", msg)
+            for d1 in np.unique(s_date1_s)
             if len(s_date2_s[s_date1_s == d1]) > 1
         ]
         return errors
@@ -621,18 +673,24 @@ class CheckDataLitter(CheckDataCommon):
             s_date1_s_dt = np.array(list(map(as_datetime, s_date1_s)))
             s_date2_s_dt = np.array(list(map(as_datetime, s_date2_s)))
 
-            delta_days = np.vectorize(calc_delta_days)(s_date2_s_dt[:-1],
-                                                       s_date1_s_dt[1:])
+            delta_days = np.vectorize(calc_delta_days)(
+                s_date2_s_dt[:-1], s_date1_s_dt[1:]
+            )
 
             interrupted = (delta_days != 0) & (delta_days < 45)
             within_year = np.array(
-                [i.year == j.year for i, j in zip(s_date2_s_dt[:-1], s_date1_s_dt[1:])])
+                [i.year == j.year for i, j in zip(s_date2_s_dt[:-1], s_date1_s_dt[1:])]
+            )
 
             msg = "前回の回収日から{}日間の中断期間"
-            errors.extend([
-                ErrDat(self.plot_id, s_date1_s[i + 1], trap, msg.format(delta_days[i]))
-                for i in np.where(interrupted & within_year)[0]
-            ])
+            errors.extend(
+                [
+                    ErrDat(
+                        self.plot_id, s_date1_s[i + 1], trap, msg.format(delta_days[i])
+                    )
+                    for i in np.where(interrupted & within_year)[0]
+                ]
+            )
         return errors
 
     def find_anomaly(self):
@@ -650,7 +708,8 @@ class CheckDataLitter(CheckDataCommon):
         meas_wdry = self.meas[:, wdry_cols]
         meas_wdry[meas_wdry == "0"] = np.nan
         meas_c = np.vectorize(lambda x: isvalid(x, "^NA$|^na$|^-$", return_value=True))(
-            meas_wdry)
+            meas_wdry
+        )
         # with np.errstate(inkvalid="ignore"):
         #     meas_c[meas_c < 0] = np.nan
         meas_c[meas_c < 0] = np.nan
@@ -667,11 +726,17 @@ class CheckDataLitter(CheckDataCommon):
                     continue
                 # outlier = smirnov_grubbs(np.log(vals), alpha=0.01)
                 outlier = find_anomaly_tukey(np.log(vals), k=3)
-                errors.extend([
-                    ErrDat(self.plot_id, d1, trap_id_s[i],
-                           msg.format(self.col_meas[wdry_cols[j]]))
-                    for i in np.where(outlier)[0]
-                ])
+                errors.extend(
+                    [
+                        ErrDat(
+                            self.plot_id,
+                            d1,
+                            trap_id_s[i],
+                            msg.format(self.col_meas[wdry_cols[j]]),
+                        )
+                        for i in np.where(outlier)[0]
+                    ]
+                )
         return errors
 
     def check_all(self, throughly=False):
@@ -705,10 +770,12 @@ class CheckDataSeed(CheckDataCommon):
 
     種子データのチェック
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
-            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])])
+            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])]
+        )
 
     def check_trap(self):
         """
@@ -723,10 +790,12 @@ class CheckDataSeed(CheckDataCommon):
         trap_not_in_list = [i for i in trap_uniq if i not in self.trap_list]
         for trap in trap_not_in_list:
             msg = "リストにないtrap_id ({})".format(trap)
-            errors.extend([
-                ErrDat(self.plot_id, self.rec_id[i], trap, msg)
-                for i in np.where(self.trap_id == trap)[0]
-            ])
+            errors.extend(
+                [
+                    ErrDat(self.plot_id, self.rec_id[i], trap, msg)
+                    for i in np.where(self.trap_id == trap)[0]
+                ]
+            )
         return errors
 
     def check_all(self, throughly=False):
@@ -926,9 +995,10 @@ def find_anomaly_tukey(x, k=3.0):
 
 def argsort_n(x: np.ndarray) -> List[int]:
     """Return the indices that would sort an array in a natural sort order."""
+
     def key(string):
         return [
-            int(s) if s.isdigit() else s.lower() for s in re.split('([0-9]+)', string)
+            int(s) if s.isdigit() else s.lower() for s in re.split("([0-9]+)", string)
         ]
 
     return sorted(range(len(x)), key=lambda i: key(str(x[i])))
@@ -962,9 +1032,9 @@ def sort_array(x: np.ndarray, sort_col: Union[int, List[int]] = []) -> np.ndarra
         return x
 
 
-def save_errors_to_xlsx(errors: List[ErrDat],
-                        dest_filepath: str,
-                        header: Optional[List[str]] = None):
+def save_errors_to_xlsx(
+    errors: List[ErrDat], dest_filepath: str, header: Optional[List[str]] = None
+):
     """
     Save the error list in a xlsx file.
 
@@ -1005,13 +1075,15 @@ def save_errors_to_xlsx(errors: List[ErrDat],
     wb.close()
 
 
-def check_data(d: Optional[MonitoringData] = None,
-               filepath: Optional[str] = None,
-               path_spdict: Optional[str] = None,
-               path_xy: Optional[str] = None,
-               path_trap: Optional[str] = None,
-               path_except: Optional[str] = None,
-               throughly: bool = False):
+def check_data(
+    d: Optional[MonitoringData] = None,
+    filepath: Optional[str] = None,
+    path_spdict: Optional[str] = None,
+    path_xy: Optional[str] = None,
+    path_trap: Optional[str] = None,
+    path_ignore: Optional[str] = None,
+    throughly: bool = False,
+):
     """
     Check errors in Moni-Sen data.
 
@@ -1022,13 +1094,13 @@ def check_data(d: Optional[MonitoringData] = None,
     filepath : str, optional
         Path to the data file
     path_spdict : str
-        path of the file of the Japanese species name dictionary
+        Path to the file of the Japanese species name dictionary
     path_xy : str
-        path of the file of xy coordinates of 10 x 10 m grids in the plot
+        Path to the file of xy coordinates of 10 x 10 m grids in the plot
     path_trap : str
-        path of the file of trap list
-    path_except : str
-        path of the file of exception lists for error checking
+        Path to the file of a trap list
+    path_ignore : str
+        Path to file of an ignore list for data checking
     throughly : bool, default False
         If True, all checking tasks are executed.
 
@@ -1039,20 +1111,20 @@ def check_data(d: Optional[MonitoringData] = None,
         raise RuntimeError("'d' or 'filepath' is needed")
 
     cd: Union[CheckDataTree, CheckDataLitter, CheckDataSeed]
-    if d.data_type == 'tree':
+    if d.data_type == "tree":
         cd = CheckDataTree(**vars(d), path_spdict=path_spdict, path_xy=path_xy)
-    elif d.data_type == 'litter':
+    elif d.data_type == "litter":
         cd = CheckDataLitter(**vars(d), path_trap=path_trap)
-    elif d.data_type == 'seed':
+    elif d.data_type == "seed":
         cd = CheckDataSeed(**vars(d), path_spdict=path_spdict, path_trap=path_trap)
     else:
         raise TypeError("'data_type' does not defined")
 
     errors = cd.check_all(throughly=throughly)
 
-    if path_except and errors:
-        # 例外リストにあるエラー項目を除外
-        errors_ex = [ErrDat(*i) for i in read_file(path_except)[1:, :4]]
-        errors = [e for e in errors if e not in errors_ex]
+    if path_ignore and errors:
+        # 無視リストにあるエラー項目を除外
+        ignore = [ErrDat(*i) for i in read_file(path_ignore)[:, :4]]
+        errors = [x for x in errors if x not in ignore]
 
     return errors
