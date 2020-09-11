@@ -53,15 +53,18 @@ class MonitoringData(object):
         Metadata
 
     """
-    def __init__(self,
-                 data: np.ndarray = np.array([]),
-                 header: bool = True,
-                 plot_id: Optional[str] = None,
-                 data_type: Optional[str] = None,
-                 metadata: Dict[str, str] = {},
-                 comments: Optional[np.ndarray] = None,
-                 *args,
-                 **kwargs):
+
+    def __init__(
+        self,
+        data: np.ndarray = np.array([]),
+        header: bool = True,
+        plot_id: Optional[str] = None,
+        data_type: Optional[str] = None,
+        metadata: Dict[str, str] = {},
+        comments: Optional[np.ndarray] = None,
+        *args,
+        **kwargs
+    ):
 
         self.data = data
         self.plot_id = plot_id
@@ -123,12 +126,14 @@ class MonitoringData(object):
                 return self.values[key]
         else:
             return self.values[key]
-        return self.__getitem_return(data_s,
-                                     header=self.header,
-                                     plot_id=self.plot_id,
-                                     data_type=self.data_type,
-                                     metadata=self.metadata,
-                                     comments=self.comments)
+        return self.__getitem_return(
+            data_s,
+            header=self.header,
+            plot_id=self.plot_id,
+            data_type=self.data_type,
+            metadata=self.metadata,
+            comments=self.comments,
+        )
 
     @classmethod
     def __getitem_return(cls, data, **kwargs):
@@ -173,10 +178,12 @@ class MonitoringData(object):
 
         return data_type
 
-    def select_cols(self,
-                    col: Union[str, List[str], None] = None,
-                    regex: Union[str, None] = None,
-                    add_header: bool = False) -> np.ndarray:
+    def select_cols(
+        self,
+        col: Union[str, List[str], None] = None,
+        regex: Union[str, None] = None,
+        add_header: bool = False,
+    ) -> np.ndarray:
         """
         Select data columns.
 
@@ -221,12 +228,14 @@ class MonitoringData(object):
 
         return selected
 
-    def to_csv(self,
-               outpath: str,
-               keep_comments: bool = True,
-               cleaning: bool = True,
-               encoding: str = "utf-8",
-               na_rep: str = ""):
+    def to_csv(
+        self,
+        outpath: str,
+        keep_comments: bool = True,
+        cleaning: bool = True,
+        encoding: str = "utf-8",
+        na_rep: str = "",
+    ):
         """
         Export data as a csv file.
 
@@ -249,14 +258,12 @@ class MonitoringData(object):
         else:
             data = self.data
 
-        data_to_csv(data,
-                    outpath=outpath,
-                    cleaning=cleaning,
-                    encoding=encoding,
-                    na_rep=na_rep)
+        data_to_csv(
+            data, outpath=outpath, cleaning=cleaning, encoding=encoding, na_rep=na_rep
+        )
 
 
-def read_file(filepath: Union[str, Path]) -> np.ndarray:
+def read_file(filepath: Union[str, Path], encoding: Optional[str] = None) -> np.ndarray:
     """
     Read a data file (.csv or .xlsx) and return a np.ndarray object.
 
@@ -266,6 +273,8 @@ def read_file(filepath: Union[str, Path]) -> np.ndarray:
     ----------
     filepath : str or pathlibs Path object
         Path to the data file
+    encoding : str, optional
+        Text encoding
 
     """
     filepath = Path(filepath).expanduser()
@@ -276,16 +285,19 @@ def read_file(filepath: Union[str, Path]) -> np.ndarray:
             ws = wb["Data"]
         else:
             ws = wb[wb.sheetnames[0]]
-        data = np.array([[str(j) if j is not None else "" for j in i]
-                         for i in ws.values])
+        data = np.array(
+            [[str(j) if j is not None else "" for j in i] for i in ws.values]
+        )
         wb.close()
     elif suffix == ".csv":
-        with filepath.open() as f:
+        with filepath.open(encoding=encoding) as f:
             reader = csv.reader(f)
             data = np.array([i for i in reader])
     else:
-        msg = ("{} file is not supported. Supported formats are: "
-               ".csv, .xlsx, .xlsm, .xltx, .xltm").format(suffix)
+        msg = (
+            "{} file is not supported. Supported formats are: "
+            ".csv, .xlsx, .xlsm, .xltx, .xltm"
+        ).format(suffix)
         raise RuntimeError(msg)
 
     # remove blank rows/columns
@@ -331,8 +343,9 @@ def mat_strip(mat: np.ndarray, strip: Any = "") -> Optional[np.ndarray]:
     return mat
 
 
-def split_comments(data: np.ndarray,
-                   comment_chr: str = "#") -> Tuple[np.ndarray, np.ndarray]:
+def split_comments(
+    data: np.ndarray, comment_chr: str = "#"
+) -> Tuple[np.ndarray, np.ndarray]:
     """Split comment lines (rows) from data array."""
     if comment_chr:
         com_rows = np.vectorize(lambda x: str(x).startswith(comment_chr))(data[:, 0])
@@ -369,8 +382,15 @@ def join_comments(data: np.ndarray, comments: np.ndarray) -> np.ndarray:
 def get_metadata(comments: np.ndarray) -> Dict[str, str]:
     """Get metadata from comment lines."""
     keys = [
-        'DATA CREATED', 'DATA CREATER', 'DATA TITLE', 'SITE NAME', 'PLOT NAME',
-        'PLOT ID', 'PLOT SIZE', 'NO. OF TRAPS', 'TRAP SIZE'
+        "DATA CREATED",
+        "DATA CREATER",
+        "DATA TITLE",
+        "SITE NAME",
+        "PLOT NAME",
+        "PLOT ID",
+        "PLOT SIZE",
+        "NO. OF TRAPS",
+        "TRAP SIZE",
     ]
     metadata = {}
     for key in keys:
@@ -402,6 +422,7 @@ def read_data(
     filepath: str,
     comment_chr: str = "#",
     header: bool = True,
+    encoding: Optional[str] = None,
     plot_id: Optional[str] = None,
     data_type: Optional[str] = None,
     metadata: Optional[Dict[str, str]] = None,
@@ -418,6 +439,8 @@ def read_data(
         line will be parsed as commented lines and split from remaininig lines
     header: bool, default True
         If the parsed data includes a header line
+    encoding : str, optional
+        Text encoding
     plot_id : str, optional
         Plot ID
     data_type : str, optional
@@ -426,7 +449,7 @@ def read_data(
         Metadata for the input data
 
     """
-    data = read_file(filepath)
+    data = read_file(filepath, encoding=encoding)
     data, comments = split_comments(data, comment_chr)
 
     if not metadata:
@@ -441,12 +464,14 @@ def read_data(
         else:
             plot_id = get_plotid(filepath)
 
-    return MonitoringData(data,
-                          plot_id=plot_id,
-                          data_type=data_type,
-                          metadata=metadata,
-                          header=header,
-                          comments=comments)
+    return MonitoringData(
+        data,
+        plot_id=plot_id,
+        data_type=data_type,
+        metadata=metadata,
+        header=header,
+        comments=comments,
+    )
 
 
 def clean_data(data: np.ndarray) -> np.ndarray:
@@ -466,7 +491,7 @@ def clean_data(data: np.ndarray) -> np.ndarray:
     # unicode文字列の標準化（全角英数字->半角英数字, 半角カナ->全角カナ, etc.）
     data = np.vectorize(lambda x: unicodedata.normalize("NFKC", x))(data)
     # float型で小数点以下が長くなっている値を丸める
-    data = np.vectorize(clean_float)(data)
+    data = np.vectorize(lambda x: clean_float(str(x)))(data)
     # datetime型の文字列をyyyymmdd形式の文字列に変換
     data = np.vectorize(datetime_to_yyyymmdd)(data)
     # セル内改行・タブ・垂直タブ・改頁を削除
@@ -489,6 +514,8 @@ def clean_float(x: str, precision: str = "single") -> str:
         Precision for floating-point: 'single' or 'double'
 
     """
+    if x == 'nan':
+        return x
     try:
         int(x)
     except ValueError:
@@ -522,11 +549,13 @@ def datetime_to_yyyymmdd(s: str) -> str:
         return s
 
 
-def data_to_csv(data: np.ndarray,
-                outpath: str,
-                cleaning: bool = True,
-                encoding: str = "utf-8",
-                na_rep: str = ""):
+def data_to_csv(
+    data: np.ndarray,
+    outpath: str,
+    cleaning: bool = True,
+    encoding: str = "utf-8",
+    na_rep: str = "",
+):
     """
     Export a two-dementional numpy array as a csv file after cleaning.
 
