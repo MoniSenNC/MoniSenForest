@@ -310,14 +310,12 @@ class SettingFrame(ttk.LabelFrame):
 
         self.lab23 = ttk.Label(self.tab2, text="Text encoding:")
         self.wg23 = ttk.Frame(self.tab2)
-        self.wg23_rb1 = ttk.Radiobutton(self.wg23,
-                                        text="UTF-8",
-                                        value="utf-8",
-                                        variable=self.parent.enc_out)
-        self.wg23_rb2 = ttk.Radiobutton(self.wg23,
-                                        text="Shift-JIS",
-                                        value="shift-jis",
-                                        variable=self.parent.enc_out)
+        self.wg23_rb1 = ttk.Radiobutton(
+            self.wg23, text="UTF-8", value="utf-8", variable=self.parent.enc_out
+        )
+        self.wg23_rb2 = ttk.Radiobutton(
+            self.wg23, text="Shift-JIS", value="shift-jis", variable=self.parent.enc_out
+        )
         self.lab23.grid(column=0, row=2, sticky=(E, W), padx=5, pady=5)
         self.wg23.grid(column=1, row=2, sticky=(E, W), padx=5, pady=5)
         self.wg23_rb1.grid(column=0, row=0, sticky=(E, W), padx=5, pady=2)
@@ -325,9 +323,9 @@ class SettingFrame(ttk.LabelFrame):
 
         self.lab24 = ttk.Label(self.tab2, text="Other options:")
         self.wg24 = ttk.Frame(self.tab2)
-        self.wg24_cb1 = ttk.Checkbutton(self.wg24,
-                                        text="Keep comment lines",
-                                        variable=self.parent.keep_comments)
+        self.wg24_cb1 = ttk.Checkbutton(
+            self.wg24, text="Keep comment lines", variable=self.parent.keep_comments
+        )
         self.wg24_cb2 = ttk.Checkbutton(
             self.wg24,
             text="Data cleaning (remove whitespaces, etc.)",
@@ -345,8 +343,10 @@ class SettingFrame(ttk.LabelFrame):
         )
         self.wg24_cb5 = ttk.Checkbutton(
             self.wg24,
-            text=("Remove special characters and add error, death, recruit columns "
-                  "(GBH data)"),
+            text=(
+                "Remove special characters and add error, death, recruit columns "
+                "(GBH data)"
+            ),
             variable=self.parent.add_status,
         )
         self.lab24.grid(column=0, row=3, sticky=(N, E, W), padx=5, pady=5)
@@ -388,8 +388,7 @@ class SettingFrame(ttk.LabelFrame):
         else:
             initialdir = self.parent.outdir.get()
         selected = filedialog.askdirectory(
-            initialdir=initialdir,
-            title="Select Output Directory",
+            initialdir=initialdir, title="Select Output Directory",
         )
         self.parent.outdir.set(selected)
 
@@ -411,11 +410,13 @@ class SettingFrame(ttk.LabelFrame):
 
 
 class DataCheckWorker(threading.Thread):
-    def __init__(self,
-                 filepaths=None,
-                 outdir: Optional[str] = None,
-                 enc_in: str = "utf-8",
-                 **kwargs):
+    def __init__(
+        self,
+        filepaths=None,
+        outdir: Optional[str] = None,
+        enc_in: str = "utf-8",
+        **kwargs
+    ):
         super().__init__()
         self._stop_event = threading.Event()
         self.filepaths = filepaths.copy()
@@ -437,7 +438,8 @@ class DataCheckWorker(threading.Thread):
                 d = read_data(filepath, encoding=self.enc_in)
             except UnicodeDecodeError:
                 msg = "Can not decode {}. Make sure the file is encoded in UTF-8 (without BOM).".format(
-                    filepath.name)
+                    filepath.name
+                )
                 logger.warning(msg)
                 continue
 
@@ -506,15 +508,18 @@ class FileExportWorker(threading.Thread):
         Text encoding for exporting
 
     """
-    def __init__(self,
-                 filepaths=None,
-                 outdir: Optional[str] = None,
-                 suffix: Optional[str] = None,
-                 enc_in: str = "utf-8",
-                 add_sciname: bool = False,
-                 add_class: bool = False,
-                 add_status: bool = False,
-                 **kwargs):
+
+    def __init__(
+        self,
+        filepaths=None,
+        outdir: Optional[str] = None,
+        suffix: Optional[str] = None,
+        enc_in: str = "utf-8",
+        add_sciname: bool = False,
+        add_class: bool = False,
+        add_status: bool = False,
+        **kwargs
+    ):
         super().__init__()
         self._stop_event = threading.Event()
         self.filepaths = filepaths.copy()
@@ -567,7 +572,8 @@ class FileExportWorker(threading.Thread):
                 d = read_data(filepath, encoding=self.enc_in)
             except UnicodeDecodeError:
                 msg = "Can not decode {}. Make sure the file is encoded in UTF-8 (without BOM).".format(
-                    filepath.name)
+                    filepath.name
+                )
                 logger.warning(msg)
                 continue
 
