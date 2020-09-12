@@ -212,7 +212,7 @@ class LoggerFrame(ttk.LabelFrame):
         self.scrolled_text = ScrolledText(self, state="disabled", height=12)
         self.scrolled_text.grid(row=0, column=0, sticky=(N, S, E, W))
         self.scrolled_text.configure(font="TkFixedFont")
-        self.scrolled_text.tag_config("INFO", foreground="black")
+        # self.scrolled_text.tag_config("INFO", foreground="black")
         self.scrolled_text.tag_config("DEBUG", foreground="gray")
         self.scrolled_text.tag_config("WARNING", foreground="orange")
         self.scrolled_text.tag_config("ERROR", foreground="red")
