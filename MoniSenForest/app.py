@@ -328,7 +328,7 @@ class SettingFrame(ttk.LabelFrame):
         )
         self.wg24_cb2 = ttk.Checkbutton(
             self.wg24,
-            text="Data cleaning (remove whitespaces, etc.)",
+            text="Data cleaning (remove whitespaces, unicode normalization, etc.)",
             variable=self.parent.clean,
         )
         self.wg24_cb3 = ttk.Checkbutton(

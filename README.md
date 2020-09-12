@@ -11,7 +11,7 @@ MoniSenForest is a tool for handling the tree census data and litterfall data of
 
     git clone https://github.com/kohyamat/MoniSenForest
     cd MoniSenForest
-    python setup.py install
+    python3 setup.py install
 
 Alternatively, you can install the package using pip.
     
@@ -29,4 +29,4 @@ Alternatively, you can install the package using pip.
 
 3. [モニタリングサイト1000 森林・草原調査 コアサイト設定・毎木調査マニュアル](http://www.biodic.go.jp/moni1000/manual/tree.pdf) (Manual for plot establishment and measurement - *in Japanese*)
 
-4. [モニタリングサイト1000 森林・草原調査 落葉落枝・落下種子調査マニュアル](http://www.biodic.go.jp/moni1000/manual/litter_ver3.pdf) (Manual for sampling, sorting and measurement of literfall - *in Japanese*)
+4. [モニタリングサイト1000 森林・草原調査 落葉落枝・落下種子調査マニュアル](http://www.biodic.go.jp/moni1000/manual/litter_ver3.pdf) (Manual for sampling, sorting and measurement of litterfall - *in Japanese*)
