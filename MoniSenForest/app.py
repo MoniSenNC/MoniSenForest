@@ -160,6 +160,7 @@ class CommandFrame(ttk.Labelframe):
             self.filepaths,
             outdir=self.parent.outdir.get(),
             suffix=self.parent.suffix.get(),
+            comment_chr=self.parent.comment_chr.get(),
             enc_in=self.parent.enc_in.get(),
             add_sciname=self.parent.add_sciname.get(),
             add_class=self.parent.add_class.get(),
@@ -181,6 +182,7 @@ class CommandFrame(ttk.Labelframe):
         self.parent.worker2 = DataCheckWorker(
             self.filepaths,
             outdir=self.parent.outdir.get(),
+            comment_chr=self.parent.comment_chr.get(),
             enc_in=self.parent.enc_in.get(),
             path_ignore=self.parent.path_ignore.get(),
         )
@@ -388,7 +390,8 @@ class SettingFrame(ttk.LabelFrame):
         else:
             initialdir = self.parent.outdir.get()
         selected = filedialog.askdirectory(
-            initialdir=initialdir, title="Select Output Directory",
+            initialdir=initialdir,
+            title="Select Output Directory",
         )
         self.parent.outdir.set(selected)
 
@@ -415,6 +418,7 @@ class DataCheckWorker(threading.Thread):
         filepaths=None,
         outdir: Optional[str] = None,
         enc_in: str = "utf-8",
+        comment_chr: str = "#",
         **kwargs
     ):
         super().__init__()
@@ -422,6 +426,7 @@ class DataCheckWorker(threading.Thread):
         self.filepaths = filepaths.copy()
         self.outdir = outdir
         self.enc_in = enc_in
+        self.comment_chr = comment_chr
         self.params = kwargs
 
     def run(self):
@@ -435,11 +440,14 @@ class DataCheckWorker(threading.Thread):
             logger.debug("Checking {} ...".format(filepath.name))
 
             try:
-                d = read_data(filepath, encoding=self.enc_in)
-            except UnicodeDecodeError:
-                msg = "Can not decode {}. Make sure the file is encoded in UTF-8 (without BOM).".format(
-                    filepath.name
+                d = read_data(
+                    filepath, comment_chr=self.comment_chr, encoding=self.enc_in
                 )
+            except UnicodeDecodeError:
+                msg = (
+                    "Can not decode {}. Make sure the file is encoded in UTF-8 "
+                    " (without BOM)."
+                ).format(filepath.name)
                 logger.warning(msg)
                 continue
 
@@ -514,6 +522,7 @@ class FileExportWorker(threading.Thread):
         filepaths=None,
         outdir: Optional[str] = None,
         suffix: Optional[str] = None,
+        comment_chr: str = "#",
         enc_in: str = "utf-8",
         add_sciname: bool = False,
         add_class: bool = False,
@@ -525,6 +534,7 @@ class FileExportWorker(threading.Thread):
         self.filepaths = filepaths.copy()
         self.outdir = outdir
         self.suffix = suffix
+        self.comment_chr = comment_chr
         self.enc_in = enc_in
         self.add_sciname = add_sciname
         self.add_class = add_class
@@ -569,11 +579,14 @@ class FileExportWorker(threading.Thread):
                     i += 1
 
             try:
-                d = read_data(filepath, encoding=self.enc_in)
-            except UnicodeDecodeError:
-                msg = "Can not decode {}. Make sure the file is encoded in UTF-8 (without BOM).".format(
-                    filepath.name
+                d = read_data(
+                    filepath, comment_chr=self.comment_chr, encoding=self.enc_in
                 )
+            except UnicodeDecodeError:
+                msg = (
+                    "Can not decode {}. Make sure the file is encoded in UTF-8 "
+                    " (without BOM)."
+                ).format(filepath.name)
                 logger.warning(msg)
                 continue
 
