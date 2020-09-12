@@ -647,7 +647,7 @@ def main():
     root = tk.Tk()
 
     # a fix for running on OSX - to center the title text vertically
-    if root.tk.call("tk", "windowingsystem") == "aqua":
+    if root.tk.call("tk", "windowingsystem") == "aqua" and tk.TkVersion < 8.6:
         s = ttk.Style()
         s.configure("TNotebook.Tab", padding=(12, 8, 12, 0))
 
