@@ -1,5 +1,4 @@
 import copy
-import re
 from typing import Any
 
 import numpy as np
@@ -60,7 +59,7 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
     error = (error1 + error2).astype(np.int64)
 
     # Dead
-    pat_dxx = re.compile(r"(?<![nd])d(?![d])\s?([0-9]+[.]?[0-9]*)")
+    pat_dxx = r"(?<![nd])d(?![d])\s?([0-9]+[.]?[0-9]*)"
     match_dxx = np.vectorize(lambda x: find_pattern(x, pat_dxx))(values)
     for i, j in zip(*np.where(match_dxx)):
         if j > 0 and match_dxx[i, j - 1]:

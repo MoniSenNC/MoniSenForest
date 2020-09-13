@@ -88,7 +88,7 @@ class CheckDataCommon(MonitoringData):
         self.col_meas = self.col_meas[~na_cols]
         self.meas_orig = self.meas.copy()
         self.rec_id = self.select_cols(pat_rec_id)
-        self.pat_except = re.compile(pat_except)
+        self.pat_except = pat_except
 
         if self.data_type in ["litter", "seed"]:
             self.trap_id = self.select_cols("trap_id")
@@ -376,7 +376,7 @@ class CheckDataTree(CheckDataCommon):
 
         枯死個体のgbhが'dxx.xx'と入力されている場合は'd'に変換
         """
-        pat_dxx = re.compile(r"(?<![nd])d(?![d])\s?([0-9]+[.]?[0-9]*)")
+        pat_dxx = r"(?<![nd])d(?![d])\s?([0-9]+[.]?[0-9]*)"
         match_dxx = np.vectorize(lambda x: find_pattern(x, pat_dxx))(self.meas)
         for i, j in zip(*np.where(match_dxx)):
             if j > 0 and match_dxx[i, j - 1]:
@@ -391,7 +391,7 @@ class CheckDataTree(CheckDataCommon):
 
         前年まで生存していた個体がnaになっている
         """
-        pat_na = re.compile(r"^na$|^NA$")
+        pat_na = r"^na$|^NA$"
         match_na = np.vectorize(lambda x: find_pattern(x, pat_na))(self.meas)
         alive = np.vectorize(lambda x: isalive(x, pat_except=self.pat_except))(
             self.meas
@@ -411,8 +411,8 @@ class CheckDataTree(CheckDataCommon):
 
         dの次の値がnaあるいはddになっていない
         """
-        pat_d = re.compile(r"^d$")
-        pat_dd = re.compile(r"^dd$|^na$|^NA$")
+        pat_d = r"^d$"
+        pat_dd = r"^dd$|^na$|^NA$"
         match_d = np.vectorize(lambda x: find_pattern(x, pat_d))(self.meas)
         match_dd = np.vectorize(lambda x: find_pattern(x, pat_dd))(self.meas)
 
@@ -432,7 +432,7 @@ class CheckDataTree(CheckDataCommon):
         """
         # NOTE: 前回の値にcd, vn, viが付く場合はスキップ
         meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
-        pat_vc = re.compile("^vi|^vn|^cd")
+        pat_vc = r"^vi|^vn|^cd"
         match_vc = np.vectorize(lambda x: find_pattern(x, pat_vc))(self.meas)
 
         errors = []
@@ -475,7 +475,7 @@ class CheckDataTree(CheckDataCommon):
         """
         meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         notnull = ~np.isnan(meas_c)
-        pat_na = re.compile(r"^na$|^NA$")
+        pat_na = r"^na$|^NA$"
         match_na = np.vectorize(lambda x: find_pattern(x, pat_na))(self.meas)
         msg = "新規加入個体だが、加入時のgbhが基準より大きいのため前回計測忘れの疑い"
         errors = []
@@ -497,7 +497,7 @@ class CheckDataTree(CheckDataCommon):
 
         ndだが前後の測定値と比較して成長量の基準に収まっている
         """
-        pat_ndxx = re.compile(r"^nd\s?([0-9]+[.]?[0-9]*)")
+        pat_ndxx = r"^nd\s?([0-9]+[.]?[0-9]*)"
         match_ndxx = np.vectorize(lambda x: find_pattern(x, pat_ndxx))(self.meas)
         meas_c = np.vectorize(lambda x: isvalid(x, "^nd", return_value=True))(self.meas)
 
@@ -818,21 +818,20 @@ class CheckDataSeed(CheckDataCommon):
 
 def isvalid(s: str, pat_except="", return_value=False):
     """Check if the value is a numeric or one of the exceptions."""
-    if isinstance(pat_except, str):
-        pat_except = re.compile(pat_except)
+    r = re.compile(pat_except)
     try:
-        s = pat_except.sub("", str(s))
+        s = r.sub("", str(s))
         f = float(np.nan if s == "" else s)
         return f if return_value else True
     except ValueError:
         return np.nan if return_value else False
 
 
-def find_pattern(s: str, pat: Union[str, re.Pattern]):
+def find_pattern(s: str, pat: str):
     """Find a pattern in the given string and return a Boolean value."""
-    if isinstance(pat, str):
-        pat = re.compile(pat)
-    if pat.match(str(s)):
+    # if isinstance(pat, str):
+    r = re.compile(pattern=pat)
+    if r.match(str(s)):
         return True
     else:
         return False

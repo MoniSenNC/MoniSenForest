@@ -1,3 +1,0 @@
-dataclasses;python_version=='3.6'
-numpy>=1.18.1
-openpyxl
