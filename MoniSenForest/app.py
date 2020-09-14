@@ -271,10 +271,13 @@ class SettingFrame(ttk.LabelFrame):
         self.lab11 = ttk.Label(self.tab1, text="Comment character: ")
         self.wg11 = ttk.Frame(self.tab1)
         self.wg11_entry = ttk.Entry(self.wg11, textvariable=self.parent.comment_chr)
+        self.wg11_lab = ttk.Label(self.wg11, text="(optional)")
         self.lab11.grid(column=0, row=0, sticky=(E, W), padx=5, pady=5)
         self.wg11.grid(column=1, row=0, sticky=(E, W), padx=5, pady=5)
         self.wg11_entry.grid(column=0, row=0, sticky=(E, W), padx=5, pady=2)
+        self.wg11_lab.grid(column=1, row=0, sticky=(E, W), padx=5, pady=2)
 
+        # DEPRECATED: Text enconding option for data import
         # self.lab12 = ttk.Label(self.tab1, text="Text encoding (csv):")
         # self.wg12 = ttk.Frame(self.tab1)
         # self.wg12_rb1 = ttk.Radiobutton(
@@ -450,6 +453,10 @@ class DataCheckWorker(threading.Thread):
                 ).format(filepath.name)
                 logger.warning(msg)
                 continue
+            except RuntimeError as e:
+                msg = ("Can not read {}. {}").format(filepath.name, str(e))
+                logger.warning(msg)
+                continue
 
             try:
                 errors = check_data(d, **self.params)
@@ -482,7 +489,7 @@ class DataCheckWorker(threading.Thread):
             msg = "Data checking process has been stopped."
             logger.warning(msg)
         else:
-            logger.debug("Data checking finished.")
+            logger.debug("Data checking job finished.")
 
     def stop(self):
         self._stop_event.set()
@@ -542,8 +549,6 @@ class FileExportWorker(threading.Thread):
         self.params = kwargs
 
     def run(self):
-        global dict_sp
-
         if not self.filepaths:
             logger.warning("No data files selected")
             return
@@ -584,48 +589,23 @@ class FileExportWorker(threading.Thread):
                 )
             except UnicodeDecodeError:
                 msg = (
-                    "Can not decode {}. Make sure the file is encoded in UTF-8 "
+                    "Can not decode {}. Make sure the file is encoded in UTF-8"
                     " (without BOM)."
                 ).format(filepath.name)
+                logger.warning(msg)
+                continue
+            except RuntimeError as e:
+                msg = ("Can not read {}. {}").format(filepath.name, str(e))
                 logger.warning(msg)
                 continue
 
             if d.data_type == "tree" and self.add_status:
                 d = add_state_columns(d)
 
-            if d.data_type in ["tree", "seed"] and self.add_sciname:
-                sciname = []
-                not_found = []
-                for i in d.select_cols(regex="^spc_japan$|^spc$"):
-                    if i in dict_sp:
-                        sciname.append(dict_sp[i]["species"])
-                    else:
-                        sciname.append("")
-                        not_found.append(i)
-                if not_found:
-                    for i in not_found:
-                        msg = "{} not found in the species dictionary".format(i)
-                        logger.warning(msg)
-                d.data = np.vstack((d.data.T, np.append(["species"], sciname))).T
-
-            if d.data_type in ["tree", "seed"] and self.add_class:
-                cols = ["genus", "family", "order", "family_jp", "order_jp"]
-                classification = []
-                not_found = []
-                for i in d.select_cols(regex="^spc_japan$|^spc$"):
-                    if i in dict_sp:
-                        classification.append([dict_sp[i][j] for j in cols])
-                    else:
-                        classification.append([""] * 5)
-                        not_found.append(i)
-                if not_found:
-                    for i in not_found:
-                        msg = "{} not found in the species dictionary".format(i)
-                        logger.warning(msg)
-                d.data = np.hstack((d.data, np.vstack((cols, classification))))
+            if d.data_type in ["tree", "seed"] and (self.add_sciname or self.add_class):
+                d = self.add_classification(d)
 
             d.to_csv(outpath, **self.params)
-
             logger.info("{} is created.".format(outpath.name))
             time.sleep(0.1)
 
@@ -633,7 +613,35 @@ class FileExportWorker(threading.Thread):
             msg = "Data exporting process has been stopped by the user."
             logger.warning(msg)
         else:
-            logger.debug("Data exporting finished.")
+            logger.debug("Data exporting job finished.")
+
+    def add_classification(self, d):
+        global dict_sp
+
+        class_cols = ["genus", "family", "order", "family_jp", "order_jp"]
+        if self.add_sciname and self.add_class:
+            cols = ["species"] + class_cols
+        elif self.add_sciname:
+            cols = ["species"]
+        else:
+            cols = class_cols
+        add_cols = []
+        not_found = []
+        for i in d.select_cols(regex="^spc_japan$|^spc$"):
+            if i in dict_sp:
+                add_cols.append([dict_sp[i][j] for j in cols])
+            else:
+                add_cols.append([""] * len(cols))
+                if i not in not_found:
+                    not_found.append(i)
+
+        if not_found:
+            for i in not_found:
+                msg = "{} not found in the species dictionary".format(i)
+                logger.warning(msg)
+
+        d.data = np.hstack((d.data, np.vstack((cols, add_cols))))
+        return d
 
     def stop(self):
         self._stop_event.set()
@@ -658,11 +666,14 @@ class QueueCheckWorker(threading.Thread):
 def main():
     logging.basicConfig(level=logging.DEBUG)
     root = tk.Tk()
+    style = ttk.Style()
+    style.configure("TButton", relief="flat")
 
-    # a fix for running on OSX - to center the title text vertically
+    # Fix for running on macOS with Tk version < 8.6
     if root.tk.call("tk", "windowingsystem") == "aqua" and tk.TkVersion < 8.6:
-        s = ttk.Style()
-        s.configure("TNotebook.Tab", padding=(12, 8, 12, 0))
+        # centering the title text vertically
+        style.configure("TNotebook.Tab", padding=(12, 8, 12, 0))
+
 
     app = MainWindow(master=root)
     app.master.mainloop()
