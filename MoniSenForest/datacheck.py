@@ -57,6 +57,8 @@ class CheckDataCommon(MonitoringData):
                 dict_xy = json.load(f)
             if self.plot_id in dict_xy:
                 self.xy_combn = list(product(*dict_xy[self.plot_id].values()))
+            else:
+                self.xy_combn = []
 
         if self.data_type in ["litter", "seed"]:
             if not path_trap:
