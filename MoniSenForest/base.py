@@ -514,7 +514,7 @@ def clean_float(x: str, precision: str = "single") -> str:
         Precision for floating-point: 'single' or 'double'
 
     """
-    if x == 'nan':
+    if x == "nan":
         return x
     try:
         int(x)
@@ -583,4 +583,9 @@ def data_to_csv(
     with open(outpath, "w", encoding=encoding) as f:
         writer = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in data:
-            writer.writerow(row)
+            if encoding == "utf-8":
+                writer.writerow(row)
+            else:
+                writer.writerow(
+                    [i.encode(encoding, "replace").decode(encoding) for i in row]
+                )
