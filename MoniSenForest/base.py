@@ -78,6 +78,8 @@ class MonitoringData(object):
             self.data_type = self.__guess_data_type()
         self.metadata = metadata
         self.comments = comments
+        if len(self.columns) > 0:
+            self.__force_colname_unique()
 
     @property
     def values(self):
@@ -177,6 +179,15 @@ class MonitoringData(object):
             data_type = "other"
 
         return data_type
+
+    def __force_colname_unique(self):
+        for i in range(len(self.columns)):
+            n = 1
+            cn = self.columns[i]
+            while cn in self.columns[:i]:
+                cn = "{}.{}".format(self.columns[i], n)
+                n += 1
+            self.columns[i] = cn
 
     def select_cols(
         self,
