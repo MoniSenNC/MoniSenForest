@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="MoniSenForest",
-    version="0.1.0",
+    version="0.2.0",
     packages=find_packages(),
     install_requires=["dataclasses;python_version=='3.6'", "numpy>=1.18.1", "openpyxl"],
     python_requires=">=3.6",
