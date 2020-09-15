@@ -8,6 +8,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 from openpyxl import load_workbook
 
+from MoniSenForest.logger import get_logger
+
+logger = get_logger(__name__)
+
 
 class MonitoringData(object):
     """
@@ -184,10 +188,16 @@ class MonitoringData(object):
         for i in range(len(self.columns)):
             n = 1
             cn = self.columns[i]
+            dup = False
             while cn in self.columns[:i]:
+                dup = True
+                cn_orig = cn
                 cn = "{}.{}".format(self.columns[i], n)
                 n += 1
             self.columns[i] = cn
+            if dup:
+                msg = "Fix redundant column name: '{}' -> '{}'"
+                logger.warning(msg.format(cn_orig, cn))
 
     def select_cols(
         self,
@@ -597,6 +607,7 @@ def data_to_csv(
             if encoding == "utf-8":
                 writer.writerow(row)
             else:
+                [i.encode(encoding).decode(encoding) for i in row]
                 writer.writerow(
                     [i.encode(encoding, "replace").decode(encoding) for i in row]
                 )

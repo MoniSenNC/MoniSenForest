@@ -11,6 +11,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
 from MoniSenForest.base import MonitoringData, read_data, read_file
+from MoniSenForest.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -749,7 +752,7 @@ class CheckDataLitter(CheckDataCommon):
         errors.extend(self.check_invalid_date())
         # 日付に不正な入力値がある場合はここで終了
         if errors:
-            print("日付に不正な入力値")
+            logger.warning("日付に不正な入力値があるためデータチェックを終了")
             return errors
         errors.extend(self.check_trap_date_combinations())
         errors.extend(self.check_installation_period1())

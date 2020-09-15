@@ -1,12 +1,11 @@
 import json
 import logging
-import queue
 import re
 import signal
 import threading
 import time
 import tkinter as tk
-from logging.handlers import QueueHandler
+from logging.handlers import QueueListener
 from pathlib import Path
 from tkinter import E, N, S, W, filedialog, ttk
 from tkinter.scrolledtext import ScrolledText
@@ -16,9 +15,10 @@ import numpy as np
 
 from MoniSenForest.base import read_data
 from MoniSenForest.datacheck import check_data, save_errors_to_xlsx
+from MoniSenForest.logger import get_logger, log_queue
 from MoniSenForest.tree_data_transform import add_state_columns
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 logger.propagate = False
 
 fd = Path(__file__).resolve().parents[0]
@@ -65,15 +65,20 @@ class MainWindow(ttk.Frame):
         self.pane2.add(self.frame2, weight=1)
         self.pane2.add(self.frame3, weight=1)
 
+        self.th_active_init = threading.active_count() + 1
         self.worker1 = None
         self.worker2 = None
-        self.worker3 = QueueCheckWorker(self)
+        myhandler = MyHandler(self)
+        fmt = logging.Formatter("%(asctime)s - %(message)s", "%Y-%m-%d %H:%M:%S")
+        myhandler.setFormatter(fmt)
+        self.worker3 = QueueListener(log_queue, myhandler)
         self.worker3.start()
-        self.th_active_init = threading.active_count()
 
         self.master.protocol("WM_DELETE_WINDOW", self.quit)
         self.master.bind("<Control-q>", self.quit)
         signal.signal(signal.SIGINT, self.quit)
+
+        logger.info("Welcome to the MoniSenForest Application!")
 
     def quit(self, *args):
         if self.worker1 and self.worker1.is_alive():
@@ -207,8 +212,7 @@ class LoggerFrame(ttk.LabelFrame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.create_widgets()
-        self.create_logginghandler()
-        logger.info("Welcome to the MoniSenForest Application!")
+        # self.create_logginghandler()
 
     def create_widgets(self):
         self.scrolled_text = ScrolledText(self, state="disabled", height=12)
@@ -220,26 +224,9 @@ class LoggerFrame(ttk.LabelFrame):
         self.scrolled_text.tag_config("ERROR", foreground="red")
         self.scrolled_text.tag_config("CRITICAL", foreground="red", underline=1)
 
-    def create_logginghandler(self):
-        self.log_queue = queue.Queue()
-        self.queue_handler = QueueHandler(self.log_queue)
-        formatter = logging.Formatter("%(asctime)s - %(message)s", "%Y-%m-%d %H:%M:%S")
-        self.queue_handler.setFormatter(formatter)
-        logger.addHandler(self.queue_handler)
-
-    def check_queue(self):
-        while True:
-            try:
-                record = self.log_queue.get(block=False)
-            except queue.Empty:
-                break
-            else:
-                self.print_log(record)
-
-    def print_log(self, record):
-        msg = record.getMessage()
+    def print_log(self, msg, level):
         self.scrolled_text.configure(state="normal")
-        self.scrolled_text.insert(tk.END, msg + "\n", record.levelname)
+        self.scrolled_text.insert(tk.END, msg + "\n", level)
         self.scrolled_text.configure(state="disabled")
         self.scrolled_text.yview(tk.END)
 
@@ -663,8 +650,22 @@ class QueueCheckWorker(threading.Thread):
         self._stop_event.set()
 
 
+class MyHandler(logging.Handler):
+    def __init__(self, parent: MainWindow):
+        super().__init__()
+        self.parent = parent
+
+    def emit(self, record):
+        # self.parent.frame2.check_queue()
+        msg = self.format(record)
+        self.parent.frame2.print_log(msg, record.levelname)
+        self.parent.frame1.btn4_state_set()
+
+
 def main():
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger(__package__).setLevel(logging.DEBUG)
+
     root = tk.Tk()
     style = ttk.Style()
     if root.tk.call("tk", "windowingsystem") == "x11":
