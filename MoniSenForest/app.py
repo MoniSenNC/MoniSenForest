@@ -667,13 +667,14 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
     root = tk.Tk()
     style = ttk.Style()
-    style.configure("TButton", relief="flat")
-
-    # Fix for running on macOS with Tk version < 8.6
-    if root.tk.call("tk", "windowingsystem") == "aqua" and tk.TkVersion < 8.6:
-        # centering the title text vertically
+    if root.tk.call("tk", "windowingsystem") == "x11":
+        style.theme_use("clam")
+        # Fix for running on Linux with a dark color theme
+        root.option_add("*TkFDialog*foreground", "black")
+        root.option_add("*TkChooseDir*foreground", "black")
+    elif root.tk.call("tk", "windowingsystem") == "aqua" and tk.TkVersion < 8.6:
+        # Fix for running on macOS with Tk version < 8.6
         style.configure("TNotebook.Tab", padding=(12, 8, 12, 0))
-
 
     app = MainWindow(master=root)
     app.master.mainloop()
