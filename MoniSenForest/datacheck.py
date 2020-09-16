@@ -68,7 +68,10 @@ class CheckDataCommon(MonitoringData):
                 path_trap = str(self.__path_trap_default)
             with open(path_trap) as f:
                 dict_trap = json.load(f)
-            self.trap_list = dict_trap[self.plot_id]["trap_id"]
+            if self.plot_id in dict_trap:
+                self.trap_list = dict_trap[self.plot_id]
+            else:
+                self.trap_list = {}
 
     def __prepare(self):
         if self.data_type == "tree":
@@ -581,6 +584,7 @@ class CheckDataLitter(CheckDataCommon):
         """
         # 同じ時期でも数日に分けて回収した場合などもあり、必ずしもエラーではない
         errors = []
+        trap_in_use = [k for k, v in self.trap_list.items() if v['use']]
         for period_s, n_trap in zip(*np.unique(self.period, return_counts=True)):
             s_date1_s, s_date2_s = period_s.split("-")
             trap_s = self.select_cols("trap_id")[np.where(self.period == period_s)[0]]
@@ -590,9 +594,9 @@ class CheckDataLitter(CheckDataCommon):
                 msg += " ({})".format("; ".join(trap_dup))
                 errors.append(ErrDat(self.plot_id, s_date1_s, "", msg))
 
-            if n_trap < len(self.trap_list):
+            if n_trap < len(trap_in_use):
                 msg = "同じ設置・回収日の組み合わせでトラップの欠落あり"
-                trap_lack = [x for x in self.trap_list if x not in trap_s]
+                trap_lack = [x for x in trap_in_use if x not in trap_s]
                 msg += " ({})".format(";".join(trap_lack))
                 errors.append(ErrDat(self.plot_id, s_date1_s, "", msg))
         return errors
