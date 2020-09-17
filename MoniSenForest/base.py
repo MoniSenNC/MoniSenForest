@@ -185,19 +185,19 @@ class MonitoringData(object):
         return data_type
 
     def __force_colname_unique(self):
+        dup = False
         for i in range(len(self.columns)):
             n = 1
             cn = self.columns[i]
-            dup = False
             while cn in self.columns[:i]:
                 dup = True
                 cn_orig = cn
                 cn = "{}.{}".format(self.columns[i], n)
                 n += 1
             self.columns[i] = cn
-            if dup:
-                msg = "Fix redundant column name: '{}' -> '{}'"
-                logger.warning(msg.format(cn_orig, cn))
+        if dup:
+            msg = "Column name duplication detected."
+            logger.warning(msg.format(cn_orig, cn))
 
     def select_cols(
         self,
@@ -376,6 +376,7 @@ def split_comments(
         comments = np.ndarray(shape=(0, data.shape[1]), dtype=data.dtype)
 
     if comments.size > 0:
+        data = mat_strip(data, strip="")
         comments = mat_strip(comments, strip="")
 
     return data, comments
@@ -603,11 +604,24 @@ def data_to_csv(
 
     with open(outpath, "w", encoding=encoding) as f:
         writer = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for row in data:
-            if encoding == "utf-8":
+        if encoding == "utf-8":
+            for row in data:
                 writer.writerow(row)
-            else:
-                [i.encode(encoding).decode(encoding) for i in row]
-                writer.writerow(
-                    [i.encode(encoding, "replace").decode(encoding) for i in row]
-                )
+        else:
+            r = re.compile(r"character '\\u(.*)'")
+            replaced = []
+            for row in data:
+                try:
+                    writer.writerow([i.encode(encoding).decode(encoding) for i in row])
+                except UnicodeEncodeError as e:
+                    m = r.search(str(e))
+                    if m:
+                        s = chr(int(m.group(1), 16))
+                        if s not in replaced:
+                            replaced.append(s)
+                    writer.writerow(
+                        [i.encode(encoding, "replace").decode(encoding) for i in row]
+                    )
+            if replaced:
+                msg = "Some characters can't be encoded correctly with {}: {}"
+                logger.debug(msg.format(encoding, ", ".join(replaced)))
