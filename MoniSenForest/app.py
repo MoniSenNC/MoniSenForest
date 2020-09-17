@@ -429,20 +429,11 @@ class DataCheckWorker(threading.Thread):
             filepath = Path(self.filepaths.pop(0)).expanduser()
             logger.debug("Checking {} ...".format(filepath.name))
 
-            try:
-                d = read_data(
-                    filepath, comment_chr=self.comment_chr, encoding=self.enc_in
-                )
-            except UnicodeDecodeError:
-                msg = (
-                    "Can not decode {}. Make sure the file is encoded in UTF-8 "
-                    " (without BOM)."
-                ).format(filepath.name)
-                logger.warning(msg)
-                continue
-            except RuntimeError as e:
-                msg = ("Can not read {}. {}").format(filepath.name, str(e))
-                logger.warning(msg)
+            d = self._read_data(
+                filepath, comment_chr=self.comment_chr, encoding=self.enc_in
+            )
+
+            if not d:
                 continue
 
             try:
@@ -477,6 +468,30 @@ class DataCheckWorker(threading.Thread):
             logger.warning(msg)
         else:
             logger.debug("Data checking job finished.")
+
+    def _read_data(self, filepath, **kwargs):
+        try:
+            d = read_data(filepath, **kwargs)
+        except UnicodeDecodeError:
+            msg = (
+                "Can not decode {}. Make sure the file is encoded in UTF-8 "
+                " (without BOM)."
+            ).format(filepath.name)
+            logger.warning(msg)
+            return None
+        except RuntimeError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except IndexError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except FileNotFoundError as e:
+            logger.warning(str(e))
+            return None
+        else:
+            return d
 
     def stop(self):
         self._stop_event.set()
@@ -570,20 +585,10 @@ class FileExportWorker(threading.Thread):
                         break
                     i += 1
 
-            try:
-                d = read_data(
-                    filepath, comment_chr=self.comment_chr, encoding=self.enc_in
-                )
-            except UnicodeDecodeError:
-                msg = (
-                    "Can not decode {}. Make sure the file is encoded in UTF-8"
-                    " (without BOM)."
-                ).format(filepath.name)
-                logger.warning(msg)
-                continue
-            except RuntimeError as e:
-                msg = ("Can not read {}. {}").format(filepath.name, str(e))
-                logger.warning(msg)
+            d = self._read_data(
+                filepath, comment_chr=self.comment_chr, encoding=self.enc_in
+            )
+            if not d:
                 continue
 
             if d.data_type == "tree" and self.add_status:
@@ -601,6 +606,30 @@ class FileExportWorker(threading.Thread):
             logger.warning(msg)
         else:
             logger.debug("Data exporting job finished.")
+
+    def _read_data(self, filepath, **kwargs):
+        try:
+            d = read_data(filepath, **kwargs)
+        except UnicodeDecodeError:
+            msg = (
+                "Can not decode {}. Make sure the file is encoded in UTF-8 "
+                " (without BOM)."
+            ).format(filepath.name)
+            logger.warning(msg)
+            return None
+        except RuntimeError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except IndexError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except FileNotFoundError as e:
+            logger.warning(str(e))
+            return None
+        else:
+            return d
 
     def add_classification(self, d):
         global dict_sp
