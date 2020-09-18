@@ -166,9 +166,10 @@ class CheckDataCommon(MonitoringData):
         uniq, cnt = np.unique(name_std, return_counts=True)
         dups = uniq[np.where(cnt > 1)]
         for sp in dups:
-            synonyms = sp_in_list[np.where(name_std == sp)]
-            msg = "同種が2つの名前で入力 ({})".format("/".join(synonyms))
-            errors.append(ErrDat(self.plot_id, "", "", msg))
+            if sp:
+                synonyms = sp_in_list[np.where(name_std == sp)]
+                msg = "同種が2つの名前で入力 ({})".format("/".join(synonyms))
+                errors.append(ErrDat(self.plot_id, "", "", msg))
         return errors
 
     def check_local_name(self):
