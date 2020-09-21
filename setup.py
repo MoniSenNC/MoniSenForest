@@ -47,9 +47,16 @@ setup(
     packages=find_packages(),
     install_requires=["dataclasses;python_version=='3.6'", "numpy>=1.18.1", "openpyxl"],
     python_requires=">=3.6",
-    package_data={"MoniSenForest": ["suppl_data/*.json", "suppl_data/*.md"]},
+    package_data={
+        "MoniSenForest": [
+            "suppl_data/*.json",
+            "suppl_data/*.md",
+            "icons/*.png",
+            "icons/*.svg",
+        ],
+    },
     entry_points={
-        "gui_scripts": [
+        "console_scripts": [
             "monisenforest = MoniSenForest.app:main",
         ]
     },

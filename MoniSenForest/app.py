@@ -1,3 +1,4 @@
+import base64
 import json
 import logging
 import re
@@ -663,29 +664,12 @@ class FileExportWorker(threading.Thread):
         self._stop_event.set()
 
 
-class QueueCheckWorker(threading.Thread):
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        self._stop_event = threading.Event()
-
-    def run(self):
-        while not self._stop_event.is_set():
-            self.parent.frame2.check_queue()
-            self.parent.frame1.btn4_state_set()
-            time.sleep(0.1)
-
-    def stop(self):
-        self._stop_event.set()
-
-
 class MyHandler(logging.Handler):
     def __init__(self, parent: MainWindow):
         super().__init__()
         self.parent = parent
 
     def emit(self, record):
-        # self.parent.frame2.check_queue()
         msg = self.format(record)
         self.parent.frame2.print_log(msg, record.levelname)
         self.parent.frame1.btn4_state_set()
@@ -705,6 +689,10 @@ def main():
     elif root.tk.call("tk", "windowingsystem") == "aqua" and tk.TkVersion < 8.6:
         # Fix for running on macOS with Tk version < 8.6
         style.configure("TNotebook.Tab", padding=(12, 8, 12, 0))
+
+    imgpath = Path(__file__).resolve().parents[0].joinpath("icons", "icon.png")
+    img = tk.Image("photo", file=imgpath)
+    root.tk.call("wm", "iconphoto", root._w, img)
 
     app = MainWindow(master=root)
     app.master.mainloop()
