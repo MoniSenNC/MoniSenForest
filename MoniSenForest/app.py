@@ -1,4 +1,4 @@
-import base64
+import codecs
 import json
 import logging
 import re
@@ -272,7 +272,7 @@ class SettingFrame(ttk.LabelFrame):
         #     self.wg12, text="UTF-8", value="utf-8", variable=self.parent.enc_in
         # )
         # self.wg12_rb2 = ttk.Radiobutton(
-        #     self.wg12, text="Shift-JIS", value="shift-jis", variable=self.parent.enc_in
+        #     self.wg12, text="UTF-8 [+BOM]", value="utf-8-sig", variable=self.parent.enc_in
         # )
         # self.lab12.grid(column=0, row=1, sticky=(E, W), padx=5, pady=5)
         # self.wg12.grid(column=1, row=1, sticky=(E, W), padx=5, pady=5)
@@ -307,7 +307,10 @@ class SettingFrame(ttk.LabelFrame):
             self.wg23, text="UTF-8", value="utf-8", variable=self.parent.enc_out
         )
         self.wg23_rb2 = ttk.Radiobutton(
-            self.wg23, text="Shift-JIS", value="shift-jis", variable=self.parent.enc_out
+            self.wg23,
+            text="UTF-8 [+BOM]",
+            value="utf-8-sig",
+            variable=self.parent.enc_out,
         )
         self.lab23.grid(column=0, row=2, sticky=(E, W), padx=5, pady=5)
         self.wg23.grid(column=1, row=2, sticky=(E, W), padx=5, pady=5)
@@ -403,7 +406,39 @@ class SettingFrame(ttk.LabelFrame):
         self.parent.path_ignore.set(selected)
 
 
-class DataCheckWorker(threading.Thread):
+class BaseWorker(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        self._stop_event = threading.Event()
+
+    def _read_data(self, filepath, **kwargs):
+        try:
+            if check_utf8_bom(filepath):
+                kwargs["encoding"] = "utf-8-sig"
+            d = read_data(filepath, **kwargs)
+        except UnicodeDecodeError:
+            msg = "Can not decode {}. Make sure the file is encoded in UTF-8"
+            logger.warning(msg.format(filepath.name))
+            return None
+        except RuntimeError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except IndexError as e:
+            msg = ("Can not read {}. {}").format(filepath.name, str(e))
+            logger.warning(msg)
+            return None
+        except FileNotFoundError as e:
+            logger.warning(str(e))
+            return None
+        else:
+            return d
+
+    def stop(self):
+        self._stop_event.set()
+
+
+class DataCheckWorker(BaseWorker):
     def __init__(
         self,
         filepaths=None,
@@ -413,7 +448,6 @@ class DataCheckWorker(threading.Thread):
         **kwargs
     ):
         super().__init__()
-        self._stop_event = threading.Event()
         self.filepaths = filepaths.copy()
         self.outdir = outdir
         self.enc_in = enc_in
@@ -470,35 +504,8 @@ class DataCheckWorker(threading.Thread):
         else:
             logger.debug("Data checking job finished.")
 
-    def _read_data(self, filepath, **kwargs):
-        try:
-            d = read_data(filepath, **kwargs)
-        except UnicodeDecodeError:
-            msg = (
-                "Can not decode {}. Make sure the file is encoded in UTF-8 "
-                " (without BOM)."
-            ).format(filepath.name)
-            logger.warning(msg)
-            return None
-        except RuntimeError as e:
-            msg = ("Can not read {}. {}").format(filepath.name, str(e))
-            logger.warning(msg)
-            return None
-        except IndexError as e:
-            msg = ("Can not read {}. {}").format(filepath.name, str(e))
-            logger.warning(msg)
-            return None
-        except FileNotFoundError as e:
-            logger.warning(str(e))
-            return None
-        else:
-            return d
 
-    def stop(self):
-        self._stop_event.set()
-
-
-class FileExportWorker(threading.Thread):
+class FileExportWorker(BaseWorker):
     """
     Export a data file as a csv file.
 
@@ -540,7 +547,6 @@ class FileExportWorker(threading.Thread):
         **kwargs
     ):
         super().__init__()
-        self._stop_event = threading.Event()
         self.filepaths = filepaths.copy()
         self.outdir = outdir
         self.suffix = suffix
@@ -608,30 +614,6 @@ class FileExportWorker(threading.Thread):
         else:
             logger.debug("Data exporting job finished.")
 
-    def _read_data(self, filepath, **kwargs):
-        try:
-            d = read_data(filepath, **kwargs)
-        except UnicodeDecodeError:
-            msg = (
-                "Can not decode {}. Make sure the file is encoded in UTF-8 "
-                " (without BOM)."
-            ).format(filepath.name)
-            logger.warning(msg)
-            return None
-        except RuntimeError as e:
-            msg = ("Can not read {}. {}").format(filepath.name, str(e))
-            logger.warning(msg)
-            return None
-        except IndexError as e:
-            msg = ("Can not read {}. {}").format(filepath.name, str(e))
-            logger.warning(msg)
-            return None
-        except FileNotFoundError as e:
-            logger.warning(str(e))
-            return None
-        else:
-            return d
-
     def add_classification(self, d):
         global dict_sp
 
@@ -660,9 +642,6 @@ class FileExportWorker(threading.Thread):
         d.data = np.hstack((d.data, np.vstack((cols, add_cols))))
         return d
 
-    def stop(self):
-        self._stop_event.set()
-
 
 class MyHandler(logging.Handler):
     def __init__(self, parent: MainWindow):
@@ -673,6 +652,12 @@ class MyHandler(logging.Handler):
         msg = self.format(record)
         self.parent.frame2.print_log(msg, record.levelname)
         self.parent.frame1.btn4_state_set()
+
+
+def check_utf8_bom(filepath: str) -> bool:
+    with open(filepath, "rb") as f:
+        raw = f.read(4)
+    return raw.startswith(codecs.BOM_UTF8)
 
 
 def main():

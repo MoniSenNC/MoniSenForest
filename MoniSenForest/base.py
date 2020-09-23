@@ -1,4 +1,5 @@
 import csv
+import os
 import re
 import unicodedata
 from datetime import datetime
@@ -602,8 +603,14 @@ def data_to_csv(
 
     data = np.where(data == "nan", na_rep, data)
 
-    with open(outpath, "w", encoding=encoding) as f:
-        writer = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    with open(outpath, "w", newline="", encoding=encoding) as f:
+        writer = csv.writer(
+            f,
+            delimiter=",",
+            quotechar='"',
+            quoting=csv.QUOTE_MINIMAL,
+            lineterminator=os.linesep,
+        )
         if encoding == "utf-8":
             for row in data:
                 writer.writerow(row)
