@@ -585,7 +585,7 @@ class CheckDataLitter(CheckDataCommon):
         """
         # 同じ時期でも数日に分けて回収した場合などもあり、必ずしもエラーではない
         errors = []
-        trap_in_use = [k for k, v in self.trap_list.items() if v['use']]
+        trap_in_use = [k for k, v in self.trap_list.items() if v["use"]]
         for period_s, n_trap in zip(*np.unique(self.period, return_counts=True)):
             s_date1_s, s_date2_s = period_s.split("-")
             trap_s = self.select_cols("trap_id")[np.where(self.period == period_s)[0]]
@@ -718,9 +718,7 @@ class CheckDataLitter(CheckDataCommon):
         meas_c = np.vectorize(lambda x: isvalid(x, "^NA$|^na$|^-$", return_value=True))(
             meas_wdry
         )
-        # with np.errstate(inkvalid="ignore"):
-        #     meas_c[meas_c < 0] = np.nan
-        meas_c[meas_c < 0] = np.nan
+        meas_c[np.less(meas_c, 0.0, where=~np.isnan(meas_c))] = np.nan
 
         msg = "{}は外れ値の可能性あり"
         errors = []
@@ -966,11 +964,15 @@ def find_anomaly_tukey(x, k=3.0):
 
     """
     x = np.array(x)
-    q1, q3 = np.percentile(x, q=[25, 75])
+    mask = ~np.isnan(x)
+    out = mask.copy()
+    xs = x[mask]
+    q1, q3 = np.percentile(xs, q=[25, 75])
     iqr = q3 - q1
     lower_bound = q1 - k * iqr
     upper_bound = q3 + k * iqr
-    return (x < lower_bound) | (x > upper_bound)
+    out[np.where(mask)] = np.where((xs < lower_bound) | (xs > upper_bound), True, False)
+    return out
 
 
 # def smirnov_grubbs(x, alpha=0.05):
