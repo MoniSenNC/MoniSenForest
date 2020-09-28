@@ -19,7 +19,7 @@ def get_version(rel_path):
         raise RuntimeError("Unable to find version string.")
 
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
@@ -55,9 +55,5 @@ setup(
             "icons/*.svg",
         ],
     },
-    entry_points={
-        "console_scripts": [
-            "monisenforest = MoniSenForest.app:main",
-        ]
-    },
+    entry_points={"console_scripts": ["monisenforest = MoniSenForest.app:main"]},
 )

@@ -50,13 +50,13 @@ class CheckDataCommon(MonitoringData):
         if self.data_type in ["tree", "seed"]:
             if not path_spdict:
                 path_spdict = str(self.__path_spdict_default)
-            with open(path_spdict) as f:
+            with open(path_spdict, "rb") as f:
                 self.dict_sp = json.load(f)
 
         if self.data_type == "tree":
             if not path_xy:
                 path_xy = str(self.__path_xy_default)
-            with open(path_xy) as f:
+            with open(path_xy, "rb") as f:
                 dict_xy = json.load(f)
             if self.plot_id in dict_xy:
                 self.xy_combn = list(product(*dict_xy[self.plot_id].values()))
@@ -66,7 +66,7 @@ class CheckDataCommon(MonitoringData):
         if self.data_type in ["litter", "seed"]:
             if not path_trap:
                 path_trap = str(self.__path_trap_default)
-            with open(path_trap) as f:
+            with open(path_trap, "rb") as f:
                 dict_trap = json.load(f)
             if self.plot_id in dict_trap:
                 self.trap_list = dict_trap[self.plot_id]

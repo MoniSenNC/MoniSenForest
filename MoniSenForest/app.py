@@ -24,7 +24,7 @@ logger.propagate = False
 
 fd = Path(__file__).resolve().parents[0]
 path_spdict = fd.joinpath("suppl_data", "species_dict.json")
-with open(path_spdict) as f:
+with open(path_spdict, "rb") as f:
     dict_sp = json.load(f)
 
 
@@ -272,7 +272,10 @@ class SettingFrame(ttk.LabelFrame):
         #     self.wg12, text="UTF-8", value="utf-8", variable=self.parent.enc_in
         # )
         # self.wg12_rb2 = ttk.Radiobutton(
-        #     self.wg12, text="UTF-8 [+BOM]", value="utf-8-sig", variable=self.parent.enc_in
+        #     self.wg12,
+        #     text="UTF-8 [+BOM]",
+        #     value="utf-8-sig",
+        #     variable=self.parent.enc_in,
         # )
         # self.lab12.grid(column=0, row=1, sticky=(E, W), padx=5, pady=5)
         # self.wg12.grid(column=1, row=1, sticky=(E, W), padx=5, pady=5)
