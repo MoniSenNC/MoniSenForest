@@ -439,12 +439,15 @@ class CheckDataTree(CheckDataCommon):
 
         成長量が基準より大きいあるいは小さい
         """
+        errors = []
+        if self.meas.shape[1] == 1:
+            return errors
+
         # NOTE: 前回の値にcd, vn, viが付く場合はスキップ
         meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         pat_vc = r"^vi|^vn|^cd"
         match_vc = np.vectorize(lambda x: find_pattern(x, pat_vc))(self.meas)
 
-        errors = []
         for i, row in enumerate(meas_c):
             index_notnull = np.where(~np.isnan(row))[0]
             if len(index_notnull) == 0:
@@ -482,6 +485,10 @@ class CheckDataTree(CheckDataCommon):
 
         新規加入個体（naの次のgbhが数値）のサイズが基準より大きい
         """
+        errors = []
+        if self.meas.shape[1] > 1:
+            return errors
+
         meas_c = np.vectorize(lambda x: isvalid(x, return_value=True))(self.meas)
         notnull = ~np.isnan(meas_c)
         pat_na = r"^na$|^NA$"
