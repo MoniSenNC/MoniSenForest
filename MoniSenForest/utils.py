@@ -1,10 +1,20 @@
 import copy
+import json
+from pathlib import Path
 from typing import Any
 
 import numpy as np
 
 from MoniSenForest.base import MonitoringData
 from MoniSenForest.datacheck import find_pattern, isvalid, retrive_year
+from MoniSenForest.logger import get_logger
+
+logger = get_logger(__name__)
+
+fd = Path(__file__).resolve().parents[0]
+path_spdict = fd.joinpath("suppl_data", "species_dict.json")
+with open(path_spdict, "rb") as f:
+    dict_sp = json.load(f)
 
 
 def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
@@ -28,11 +38,12 @@ def fill_after(x: np.ndarray, val: Any = 1, fill: Any = 2) -> np.ndarray:
     return x
 
 
-def add_state_columns(d: MonitoringData) -> MonitoringData:
+def add_extra_columns_tree(d: MonitoringData) -> MonitoringData:
     """
-    Add columns for error, death, recruitment status.
+    Add error/death/recruitment columns to a tree gbh data.
 
     毎木データに、エラー、死亡、加入の状態を表す列を追加。
+    公開データに含まれるCSV2（*.transf.csv）。
 
     Parameters
     ----------
@@ -108,7 +119,7 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
     recr = recr.astype(np.int64)
 
     # 元の計測値を全て、nd等の記号を取り除いた数値のみのデータに置換
-    # NOTE: 元データがUnicode型なので、np.nanが文字列の'nan'になる
+    # NOTE: np.nanが文字列の'nan'になるので注意
     for j, c in enumerate(colnames):
         d.values[:, d.columns.tolist().index(c)] = values_c[:, j]
 
@@ -121,4 +132,57 @@ def add_state_columns(d: MonitoringData) -> MonitoringData:
     recr = np.vstack((recr_colnames, recr))
 
     d.data = np.hstack((d.data, error, dead, recr))
+    return d
+
+
+def add_taxon_info(
+    d: MonitoringData, scientific_name: bool = True, classification: bool = False
+) -> MonitoringData:
+    """
+    Add taxonomic information to tree-gbh/seed data.
+
+    毎木/種子データに、種和名に基づいて分類学的情報を付加。
+
+    Parameters
+    ----------
+    d : MonitoringData
+        MonitoringData object of tree-gbh/seed data
+    scientific_name : bool, default True
+        If add scientific name
+    classfication : bool, default True
+        If add classification
+    """
+    if d.data_type not in ["tree", "seed"]:
+        logger.warning("Input data is not tree data or seed data")
+        return d
+
+    global dict_sp
+
+    class_cols = ["genus", "family", "order", "family_jp", "order_jp"]
+    if scientific_name and classification:
+        cols = ["species"] + class_cols
+    elif scientific_name:
+        cols = ["species"]
+    elif classification:
+        cols = class_cols
+    else:
+        logger.warning("No columns added.")
+        return d
+
+    add_cols = []
+    not_found = []
+    for i in d.select_cols(regex="^spc_japan$|^spc$"):
+        if i in dict_sp:
+            add_cols.append([dict_sp[i][j] for j in cols])
+        else:
+            add_cols.append([""] * len(cols))
+            if i not in not_found:
+                not_found.append(i)
+
+    if not_found:
+        for i in not_found:
+            msg = "{} not found in the species dictionary".format(i)
+            logger.warning(msg)
+
+    d.data = np.hstack((d.data, np.vstack((cols, add_cols))))
     return d

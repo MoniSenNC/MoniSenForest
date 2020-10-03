@@ -1,5 +1,4 @@
 import codecs
-import json
 import logging
 import re
 import signal
@@ -12,20 +11,13 @@ from tkinter import E, N, S, W, filedialog, ttk
 from tkinter.scrolledtext import ScrolledText
 from typing import Optional
 
-import numpy as np
-
 from MoniSenForest.base import read_data
 from MoniSenForest.datacheck import check_data, save_errors_to_xlsx
 from MoniSenForest.logger import get_logger, log_queue
-from MoniSenForest.tree_data_transform import add_state_columns
+from MoniSenForest.utils import add_extra_columns_tree, add_taxon_info
 
 logger = get_logger(__name__)
 logger.propagate = False
-
-fd = Path(__file__).resolve().parents[0]
-path_spdict = fd.joinpath("suppl_data", "species_dict.json")
-with open(path_spdict, "rb") as f:
-    dict_sp = json.load(f)
 
 
 class MainWindow(ttk.Frame):
@@ -213,7 +205,6 @@ class LoggerFrame(ttk.LabelFrame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.create_widgets()
-        # self.create_logginghandler()
 
     def create_widgets(self):
         self.scrolled_text = ScrolledText(self, state="disabled", height=12)
@@ -264,23 +255,6 @@ class SettingFrame(ttk.LabelFrame):
         self.wg11.grid(column=1, row=0, sticky=(E, W), padx=5, pady=5)
         self.wg11_entry.grid(column=0, row=0, sticky=(E, W), padx=5, pady=2)
         self.wg11_lab.grid(column=1, row=0, sticky=(E, W), padx=5, pady=2)
-
-        # DEPRECATED: Text enconding option for data import
-        # self.lab12 = ttk.Label(self.tab1, text="Text encoding (csv):")
-        # self.wg12 = ttk.Frame(self.tab1)
-        # self.wg12_rb1 = ttk.Radiobutton(
-        #     self.wg12, text="UTF-8", value="utf-8", variable=self.parent.enc_in
-        # )
-        # self.wg12_rb2 = ttk.Radiobutton(
-        #     self.wg12,
-        #     text="UTF-8 [+BOM]",
-        #     value="utf-8-sig",
-        #     variable=self.parent.enc_in,
-        # )
-        # self.lab12.grid(column=0, row=1, sticky=(E, W), padx=5, pady=5)
-        # self.wg12.grid(column=1, row=1, sticky=(E, W), padx=5, pady=5)
-        # self.wg12_rb1.grid(column=0, row=0, sticky=(E, W), padx=5, pady=2)
-        # self.wg12_rb2.grid(column=1, row=0, sticky=(E, W), padx=5, pady=2)
 
     def create_widgets2(self):
         self.lab21 = ttk.Label(self.tab2, text="Output directory:")
@@ -387,8 +361,7 @@ class SettingFrame(ttk.LabelFrame):
         else:
             initialdir = self.parent.outdir.get()
         selected = filedialog.askdirectory(
-            initialdir=initialdir,
-            title="Select Output Directory",
+            initialdir=initialdir, title="Select Output Directory",
         )
         self.parent.outdir.set(selected)
 
@@ -602,10 +575,10 @@ class FileExportWorker(BaseWorker):
                 continue
 
             if d.data_type == "tree" and self.add_status:
-                d = add_state_columns(d)
+                d = add_extra_columns_tree(d)
 
             if d.data_type in ["tree", "seed"] and (self.add_sciname or self.add_class):
-                d = self.add_classification(d)
+                d = add_taxon_info(d, self.add_sciname, self.add_class)
 
             d.to_csv(outpath, **self.params)
             logger.info("{} is created.".format(outpath.name))
@@ -616,34 +589,6 @@ class FileExportWorker(BaseWorker):
             logger.warning(msg)
         else:
             logger.debug("Data exporting job finished.")
-
-    def add_classification(self, d):
-        global dict_sp
-
-        class_cols = ["genus", "family", "order", "family_jp", "order_jp"]
-        if self.add_sciname and self.add_class:
-            cols = ["species"] + class_cols
-        elif self.add_sciname:
-            cols = ["species"]
-        else:
-            cols = class_cols
-        add_cols = []
-        not_found = []
-        for i in d.select_cols(regex="^spc_japan$|^spc$"):
-            if i in dict_sp:
-                add_cols.append([dict_sp[i][j] for j in cols])
-            else:
-                add_cols.append([""] * len(cols))
-                if i not in not_found:
-                    not_found.append(i)
-
-        if not_found:
-            for i in not_found:
-                msg = "{} not found in the species dictionary".format(i)
-                logger.warning(msg)
-
-        d.data = np.hstack((d.data, np.vstack((cols, add_cols))))
-        return d
 
 
 class MyHandler(logging.Handler):
