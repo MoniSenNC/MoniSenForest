@@ -14,13 +14,13 @@ Currently, MoniSenForest implements functions such as data cleaning and translat
 
 ## Installation
 
-    git clone https://github.com/kohyamat/MoniSenForest
+    git clone https://github.com/MoniSenNC/MoniSenForest
     cd MoniSenForest
     python3 setup.py install
 
 Alternatively, you can install the package using pip.
 
-    pip3 install git+https://github.com/kohyamat/MoniSenForest
+    pip3 install git+https://github.com/MoniSenNC/MoniSenForest
 
 ## Usage
 
