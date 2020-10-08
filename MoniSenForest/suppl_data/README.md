@@ -1,7 +1,6 @@
-Supplementary data of MoniSenForest
------------------------------------
-  
-* species_dict.json - 生物種和名-学名辞書（[Green List](http://www.rdplants.org/gl/)準拠）
+## Supplementary data of MoniSenForest
+
+- species_dict.json - 生物種和名-学名辞書（[Green List](http://www.rdplants.org/gl/)準拠）
 
 ```JSON
 {
@@ -28,10 +27,10 @@ Supplementary data of MoniSenForest
     "categ4": "1, Pteridophyte; 2, Gymnosperm; 3, Angiosperm",
     "categ5": "1, woody; 2, herbaceous",
     "fruit_type": "fruit type in Japanese"
-  },
+  }
 }
 ```
 
-* grid_xy.json - グリッドxy座標データ
+- grid_xy.json - グリッド xy 座標データ
 
-* trap_list.json - リタートラップリスト
+- trap_list.json - リタートラップリスト
