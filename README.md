@@ -1,10 +1,12 @@
+Language: [日本語](README_jp.md)
+
 # MoniSenForest
 
 MoniSenForest is a tool for handling the tree census data and litterfall data of the Monitoring Sites 1000 Project (also called as "Moni-Sen").
 
 ## Overview
 
-MoniSenForest has been developed to assist data collectors in checking data and provide an easy-to-use data preprocessing methods for people who work with data.
+MoniSenForest has been developed to assist data collectors in checking data and provide easy-to-use data preprocessing methods for people who work with data.
 
 Currently, MoniSenForest implements functions such as data cleaning and translation of species names from Japanese names to scientific names. In future updates, we plan to implement functions for data aggregation and estimation of population dynamics parameters.
 
@@ -14,19 +16,25 @@ Currently, MoniSenForest implements functions such as data cleaning and translat
 
 ## Installation
 
-    git clone https://github.com/MoniSenNC/MoniSenForest
-    cd MoniSenForest
-    python3 setup.py install
+```bash
+git clone https://github.com/MoniSenNC/MoniSenForest
+cd MoniSenForest
+python3 setup.py install
+```
 
 Alternatively, you can install the package using pip.
 
-    pip3 install git+https://github.com/MoniSenNC/MoniSenForest
+```bash
+pip3 install git+https://github.com/MoniSenNC/MoniSenForest
+```
 
 ## Usage
 
 ### Launch GUI application
 
-    monisenforest
+```bash
+monisenforest
+```
 
 ## Datasets of the Monitoring Sites 1000 Project
 
