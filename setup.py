@@ -25,9 +25,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="MoniSenForest",
     version=get_version("MoniSenForest/__init__.py"),
-    description="Tool for handling MoniSen Forest data",
+    description="Tool for handling forest plot data of the the Monitoring Sites 1000 Project",
     long_description=long_description,
-    url="https://github.com/kohyamat/MoniSenForest",
+    url="https://github.com/MoniSenNC/MoniSenForest",
     author="Tetsuo I. Kohyama",
     author_email="tetsuo.kohyama@gmail.com",
     license="MIT",
