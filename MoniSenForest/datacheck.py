@@ -89,17 +89,17 @@ class CheckDataCommon(MonitoringData):
         else:
             raise TypeError("The data is not in the format of Moni-sen data")
 
-        self.meas = self.select_cols(regex=pat_meas_col)
+        self.meas = self.select(regex=pat_meas_col)
         self.col_meas = np.array([x for x in self.columns if re.match(pat_meas_col, x)])
         na_cols = (self.meas == "NA").all(axis=0)
         self.meas = self.meas[:, ~na_cols]
         self.col_meas = self.col_meas[~na_cols]
         self.meas_orig = self.meas.copy()
-        self.rec_id = self.select_cols(pat_rec_id)
+        self.rec_id = self.select(pat_rec_id)
         self.pat_except = pat_except
 
         if self.data_type in ["litter", "seed"]:
-            self.trap_id = self.select_cols("trap_id")
+            self.trap_id = self.select("trap_id")
         else:
             self.trap_id = None
 
@@ -113,7 +113,7 @@ class CheckDataCommon(MonitoringData):
         調査日に不正な入力値
         """
         date_cols = list(filter(lambda x: re.match("^s_date", x), self.columns))
-        date = self.select_cols(regex="^s_date")
+        date = self.select(regex="^s_date")
         date_orig = date.copy()
         date = np.vectorize(lambda x: re.sub("^NA$|^na$|^nd|^$", "11111111", x))(date)
         valid = np.vectorize(lambda x: isdate(x))(date)
@@ -138,13 +138,13 @@ class CheckDataCommon(MonitoringData):
         errors = []
         if not self.dict_sp:
             return errors
-        splist_obs = np.unique(self.select_cols(regex="^spc$|^spc_japan$"))
+        splist_obs = np.unique(self.select(regex="^spc$|^spc_japan$"))
         sp_not_in_list = [sp for sp in splist_obs if sp not in self.dict_sp]
         msg = "変則的な種名もしくは標準和名だがリストにない種 ({})"
         if sp_not_in_list:
             for sp in sp_not_in_list:
                 if self.data_type == "tree":
-                    tag = self.rec_id[np.where(self.select_cols("spc_japan") == sp)]
+                    tag = self.rec_id[np.where(self.select("spc_japan") == sp)]
                     rec_id1 = "; ".join(tag)
                 else:
                     rec_id1 = ""
@@ -160,7 +160,7 @@ class CheckDataCommon(MonitoringData):
         errors = []
         if not self.dict_sp:
             return errors
-        splist_obs = np.unique(self.select_cols(regex="^spc$|^spc_japan$"))
+        splist_obs = np.unique(self.select(regex="^spc$|^spc_japan$"))
         sp_in_list = np.array([sp for sp in splist_obs if sp in self.dict_sp])
         name_std = np.array([self.dict_sp[sp]["name_jp_std"] for sp in sp_in_list])
         uniq, cnt = np.unique(name_std, return_counts=True)
@@ -181,7 +181,7 @@ class CheckDataCommon(MonitoringData):
         errors = []
         if not self.dict_sp:
             return errors
-        splist_obs = np.unique(self.select_cols(regex="^spc$|^spc_japan$"))
+        splist_obs = np.unique(self.select(regex="^spc$|^spc_japan$"))
         sp_in_list = np.array([sp for sp in splist_obs if sp in self.dict_sp])
         name_std = np.array([self.dict_sp[sp]["name_jp_std"] for sp in sp_in_list])
         for sp, spstd in zip(sp_in_list, name_std):
@@ -189,7 +189,7 @@ class CheckDataCommon(MonitoringData):
                 if spstd and not spstd.endswith(("科", "属", "節", "類")):
                     msg = "{}は非標準和名（{}の別名）".format(sp, spstd)
                     if self.data_type == "tree":
-                        tag = self.rec_id[np.where(self.select_cols("spc_japan") == sp)]
+                        tag = self.rec_id[np.where(self.select("spc_japan") == sp)]
                         rec_id1 = "; ".join(tag)
                     else:
                         rec_id1 = ""
@@ -295,7 +295,7 @@ class CheckDataTree(CheckDataCommon):
 
         indv_noが空白またはna
         """
-        indv_no = self.select_cols("indv_no")
+        indv_no = self.select("indv_no")
         indv_no = np.array(["" if i in ["na", "NA"] else i for i in indv_no])
         msg = "indv_noが空白またはna"
         return [
@@ -310,10 +310,10 @@ class CheckDataTree(CheckDataCommon):
         同株で樹種が異なる
         """
         errors = []
-        indv_no = self.select_cols("indv_no")
+        indv_no = self.select("indv_no")
         indv_no = np.array(["" if i in ["na", "NA"] else i for i in indv_no])
         indv_counts = np.unique(indv_no, return_counts=True)
-        sp = self.select_cols("spc_japan")
+        sp = self.select("spc_japan")
         msg = "同株だが樹種が異なる"
         for i in indv_counts[0][np.where(indv_counts[1] > 1)]:
             s = np.where(indv_no == i)
@@ -335,7 +335,7 @@ class CheckDataTree(CheckDataCommon):
         if not self.xy_combn:
             return errors
 
-        for i, xy in enumerate(self.select_cols(regex="^mesh_[xy]cord$")):
+        for i, xy in enumerate(self.select(regex="^mesh_[xy]cord$")):
             tag = self.rec_id[i]
             target = "mesh_xycord={}".format(str(xy))
             try:
@@ -363,7 +363,7 @@ class CheckDataTree(CheckDataCommon):
         if not self.xy_combn:
             return errors
 
-        for i, xy in enumerate(self.select_cols(regex="^stem_[xy]cord$")):
+        for i, xy in enumerate(self.select(regex="^stem_[xy]cord$")):
             tag = self.rec_id[i]
             target = "stem_xycord={}".format(str(xy))
             try:
@@ -581,7 +581,7 @@ class CheckDataLitter(CheckDataCommon):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
-            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])]
+            [i + "-" + j for i, j in self.select(["s_date1", "s_date2"])]
         )
 
     def check_trap_date_combinations(self):
@@ -595,7 +595,7 @@ class CheckDataLitter(CheckDataCommon):
         trap_in_use = [k for k, v in self.trap_list.items() if v["use"]]
         for period_s, n_trap in zip(*np.unique(self.period, return_counts=True)):
             s_date1_s, s_date2_s = period_s.split("-")
-            trap_s = self.select_cols("trap_id")[np.where(self.period == period_s)[0]]
+            trap_s = self.select("trap_id")[np.where(self.period == period_s)[0]]
             trap_dup = find_duplicates(trap_s)
             if trap_dup.size > 0:
                 msg = "同じ設置・回収日の組み合わせでトラップの重複あり"
@@ -683,8 +683,8 @@ class CheckDataLitter(CheckDataCommon):
         """
         errors = []
         for trap in np.unique(self.trap_id):
-            s_date1_s = self.select_cols("s_date1")[self.trap_id == trap]
-            s_date2_s = self.select_cols("s_date2")[self.trap_id == trap]
+            s_date1_s = self.select("s_date1")[self.trap_id == trap]
+            s_date2_s = self.select("s_date2")[self.trap_id == trap]
             s_date1_s_dt = np.array(list(map(as_datetime, s_date1_s)))
             s_date2_s_dt = np.array(list(map(as_datetime, s_date2_s)))
 
@@ -787,7 +787,7 @@ class CheckDataSeed(CheckDataCommon):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.period = np.array(
-            [i + "-" + j for i, j in self.select_cols(["s_date1", "s_date2"])]
+            [i + "-" + j for i, j in self.select(["s_date1", "s_date2"])]
         )
 
     def check_trap(self):

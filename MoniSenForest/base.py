@@ -113,9 +113,9 @@ class MonitoringData(object):
 
     def __getitem__(self, key):
         if isinstance(key, str):
-            data_s = self.select_cols(key, add_header=True)
+            data_s = self.select(key, add_header=True)
         elif isinstance(key, list) and all([isinstance(i, str) for i in key]):
-            data_s = self.select_cols(key, add_header=True)
+            data_s = self.select(key, add_header=True)
         elif isinstance(key, slice):
             data_s = np.vstack((self.columns, self.values[key]))
         elif isinstance(key, tuple) and all([isinstance(i, slice) for i in key]):
@@ -200,7 +200,7 @@ class MonitoringData(object):
             msg = "Column name duplication detected."
             logger.warning(msg.format(cn_orig, cn))
 
-    def select_cols(
+    def select(
         self,
         col: Union[str, List[str], None] = None,
         regex: Union[str, None] = None,

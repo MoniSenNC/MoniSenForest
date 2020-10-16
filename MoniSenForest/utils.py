@@ -53,7 +53,7 @@ def add_extra_columns_tree(d: MonitoringData) -> MonitoringData:
     """
     d = copy.deepcopy(d)
     pat_gbh_col = "^gbh([0-9]{2})$"
-    gbh_data = d.select_cols(regex=pat_gbh_col, add_header=True)
+    gbh_data = d.select(regex=pat_gbh_col, add_header=True)
     values = gbh_data[1:]
     colnames = gbh_data[0]
     yrs = np.array(list(map(retrive_year, colnames)))
@@ -171,7 +171,7 @@ def add_taxon_info(
 
     add_cols = []
     not_found = []
-    for i in d.select_cols(regex="^spc_japan$|^spc$"):
+    for i in d.select(regex="^spc_japan$|^spc$"):
         if i in dict_sp:
             add_cols.append([dict_sp[i][j] for j in cols])
         else:
