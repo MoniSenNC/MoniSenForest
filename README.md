@@ -6,9 +6,9 @@ MoniSenForest is a tool for handling the tree census data and litterfall data of
 
 ## Overview
 
-MoniSenForest has been developed to assist data collectors in checking data and provide easy-to-use data preprocessing methods for people who work with data.
+MoniSenForest has been developed to assist data collectors in data-checking and provide easy-to-use data preprocessing methods for people who work with data.
 
-Currently, MoniSenForest implements functions such as data cleaning and translation of species names from Japanese names to scientific names. In future updates, we plan to implement functions for data aggregation and estimation of population dynamics parameters.
+In the current version, MoniSenForest implements functions such as data cleaning and translation of species names from Japanese names to scientific names. In future updates, we plan to implement functions for data aggregation and estimation of population dynamics parameters.
 
 ## Requirements
 

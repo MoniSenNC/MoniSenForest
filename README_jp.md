@@ -71,18 +71,25 @@ print(d.values)  # 値の表示
 
 "path/to/datafile"はデータファイルのパスに置き換えてください。読み込み可能なファイル形式は、.xlsx および .csv です。
 
-#### 列の抽出
+#### 行・列の抽出
 
 ```python
 # 列名を指定して抽出
-d.select_cols("spc_japan")
-d.select_cols(["spc_japan", "gbh15"])
+d.select("spc_japan")
+d.select(["spc_japan", "gbh15"])
 
 # 正規表現を利用した列抽出 (例：毎木調査データのgbh列を抽出)
-d.select_cols(regex="^gbh[0-9]{2}")
+d.select(regex="^gbh[0-9]{2}")
 
-# スライスによる抽出 (例：先頭から5列目までを抽出)
+# スライスによる列の抽出 (例：先頭から5列目までを抽出)
 d[:, :5]
+
+# スライスによる行の抽出 (例：先頭から5行目までを抽出)
+d[:5]  # same as d[:5, :]
+
+# 条件に一致する行の抽出 (例：毎木調査データで種名がヒノキの行を抽出)
+d[d.select("spc_japan") == "ヒノキ"]
+
 ```
 
 #### CSV ファイルへの書き出し
@@ -118,9 +125,9 @@ MoniSenForest のデータチェックでは、データが調査マニュアル
 
 2. Suzuki SN, Ishihara MI, Nakamura M _et al._ (2012) Nation-wide litter fall data from 21 forests of the Monitoring Sites 1000 Project in Japan. _Ecological Research_, **27**, 989–990. [DOI: 10.1007/s11284-012-0980-2](https://doi.org/10.1007/s11284-012-0980-2)
 
-3. [モニタリングサイト 1000 森林・草原調査 コアサイト設定・毎木調査マニュアル](http://www.biodic.go.jp/moni1000/manual/tree.pdf)
+3. [モニタリングサイト 1000 森林・草原調査 コアサイト設定・毎木調査マニュアル](http://www.biodic.go.jp/moni1000/manual/tree.pdf)
 
-4. [モニタリングサイト 1000 森林・草原調査 落葉落枝・落下種子調査マニュアル](http://www.biodic.go.jp/moni1000/manual/litter_ver3.pdf)
+4. [モニタリングサイト 1000 森林・草原調査 落葉落枝・落下種子調査マニュアル](http://www.biodic.go.jp/moni1000/manual/litter_ver3.pdf)
 
 ## ライセンス
 
