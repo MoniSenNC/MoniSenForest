@@ -301,7 +301,7 @@ class SettingFrame(ttk.LabelFrame):
         )
         self.wg24_cb2 = ttk.Checkbutton(
             self.wg24,
-            text="Data cleaning (remove whitespaces, unicode normalization, etc.)",
+            text="Data cleaning (trimming whitespaces, unicode normalization, etc.)",
             variable=self.parent.clean,
         )
         self.wg24_cb3 = ttk.Checkbutton(
@@ -316,10 +316,7 @@ class SettingFrame(ttk.LabelFrame):
         )
         self.wg24_cb5 = ttk.Checkbutton(
             self.wg24,
-            text=(
-                "Remove special characters and add error, death, recruit columns "
-                "(GBH data)"
-            ),
+            text=("Add error, death, recruit columns (GBH data)"),
             variable=self.parent.add_status,
         )
         self.lab24.grid(column=0, row=3, sticky=(N, E, W), padx=5, pady=5)
@@ -361,7 +358,8 @@ class SettingFrame(ttk.LabelFrame):
         else:
             initialdir = self.parent.outdir.get()
         selected = filedialog.askdirectory(
-            initialdir=initialdir, title="Select Output Directory",
+            initialdir=initialdir,
+            title="Select Output Directory",
         )
         self.parent.outdir.set(selected)
 
