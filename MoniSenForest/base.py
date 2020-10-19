@@ -73,10 +73,7 @@ class MonitoringData(object):
 
         self.data = data
         self.plot_id = plot_id
-        if len(data) > 1:
-            self.header = header
-        else:
-            self.header = False
+        self.header = header
         if data_type:
             self.data_type = data_type
         else:
@@ -145,6 +142,17 @@ class MonitoringData(object):
     @classmethod
     def __getitem_return(cls, data, **kwargs):
         return cls(data, **kwargs)
+
+    def __setitem__(self, key, values):
+        if any([isinstance(values, t) for t in [list, tuple, np.ndarray]]):
+            if len(values) == self.values.shape[0]:
+                self.data = np.hstack((self.data, np.append(key, values)[:, None]))
+            else:
+                msg = "Length of values ({}) does not match length of index ({})"
+                raise ValueError(msg.format(len(values), self.values.shape[0]))
+        else:
+            values_rep = [values] * self.values.shape[0]
+            self.data = np.hstack((self.data, np.append(key, values_rep)[:, None]))
 
     def __guess_data_type(self):
         """Guess data type from the header line of the data."""
