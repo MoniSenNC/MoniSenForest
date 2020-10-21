@@ -32,14 +32,14 @@
 
 ### リターデータの追加チェック項目（クラス: `MoniSenForest.datacheck.CheckDataLitter`）
 
-| 関数名                           | 説明                                                                                         |
-| -------------------------------- | -------------------------------------------------------------------------------------------- |
-| `check_trap_date_combinations()` | 同じ設置・回収日でトラップの重複・欠落がないか                                               |
-| `check_installation_period1()`   | トラップ設置期間が通常より長い/短い                                                          |
-| `check_installation_period2()`   | 同じ回収日で設置期間がトラップによって異なる                                                 |
-| `check_installation_period3()`   | 設置日と前回の回収日のずれ                                                                   |
-| `find_anomaly()`                 | 測定値の外れ値の検出（重量を対数変換後 Tukey's fences により回収日・器官ごとに外れ値を検出） |
-| `check_all(throughly=False)`     | すべての項目を一括でチェック                                                                 |
+| 関数名                           | 説明                                           |
+| -------------------------------- | ---------------------------------------------- |
+| `check_trap_date_combinations()` | 同じ設置・回収日でトラップの重複・欠落がないか |
+| `check_installation_period1()`   | トラップ設置期間が通常より長い/短い            |
+| `check_installation_period2()`   | 同じ回収日で設置期間がトラップによって異なる   |
+| `check_installation_period3()`   | 設置日と前回の回収日のずれ                     |
+| `find_anomaly()`                 | 測定値の外れ値の検出                           |
+| `check_all(throughly=False)`     | すべての項目を一括でチェック                   |
 
 ### 種子データの追加チェック項目（クラス: `MoniSenForest.datacheck.CheckDataSeed`）
 
@@ -50,8 +50,8 @@
 
 > 補足：
 > 
-> `CheckDataTree`, `CheckDataLitter`, `CheckDataSeed`は`CheckDataCommon`のサブクラスです。
-> 
+> - `CheckDataTree`, `CheckDataLitter`, `CheckDataSeed`は`CheckDataCommon`のサブクラスです。
+> - リターデータの外れ値検出方法 - 重量を対数変換後、Tukey's fences により回収日・器官ごとに外れ値を検出
 
 ### 個別項目についてチェックする場合のコード例（毎木データ）
 
@@ -60,7 +60,7 @@ import MoniSenForest
 from MoniSenForest.datacheck import CheckDataTree
 
 d = MoniSenForest.read_data(filepath="path/to/datafile")
-cd = CheckDataTree(**var(d))
+cd = CheckDataTree(**vars(d))
 res = cd.check_invalid_values()
 print(res)
 ```
