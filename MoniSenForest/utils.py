@@ -96,6 +96,8 @@ def add_extra_columns_tree(d: MonitoringData) -> MonitoringData:
     recr[:, 0][not_recr_init & (error[:, 0] == 0)] = -1
 
     change_state = np.apply_along_axis(np.diff, 1, np.isnan(values_c) | below_cutoff)
+    not_recr_a = (change_state.sum(axis=1) == 0) & (not_recr_init & (error[:, 0] == 0))
+    recr[np.where(not_recr_a)[0], :] = -1
 
     for i, j in zip(*np.where(change_state)):
         if np.isnan(values_c[i, j + 1]):
